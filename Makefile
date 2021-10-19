@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+         #
+#    By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
-#    Updated: 2021/10/19 18:45:40 by tschmitt         ###   ########.fr        #
+#    Updated: 2021/10/19 19:02:04 by tblaase          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@
 CC = gcc
 CC_FLAGS = -Wall -Werror -Wextra
 INCLUDE_FLAGS = -I ./include/ -I $(LIBFT_PATH)include/
+RM = rm
 
 # EXECUTABLE
 NAME = minishell
