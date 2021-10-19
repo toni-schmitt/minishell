@@ -6,7 +6,7 @@
 #    By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
-#    Updated: 2021/10/19 18:45:40 by tschmitt         ###   ########.fr        #
+#    Updated: 2021/10/19 18:59:11 by tschmitt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@
 CC = gcc
 CC_FLAGS = -Wall -Werror -Wextra
 INCLUDE_FLAGS = -I ./include/ -I $(LIBFT_PATH)include/
+RM = rm -f
 
 # EXECUTABLE
 NAME = minishell
@@ -72,7 +73,7 @@ clean:
 fclean: clean
 	@make -C $(LIBFT_PATH) fclean
 	@if [ -f "$(NAME)" ]; then \
-		$(RM) -r $(NAME); \
+		$(RM) $(NAME); \
 		echo $(R)Cleaning" "[$(NAME)]...$(X); \
 	fi;
 
