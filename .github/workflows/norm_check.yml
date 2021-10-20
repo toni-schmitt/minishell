@@ -1,0 +1,21 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: install pip
+      run: python3 -m pip install --upgrade pip setuptools
+    - name: install norm
+      run: python3 -m pip install norminette
+    - name: make norm
+      run: make norm
