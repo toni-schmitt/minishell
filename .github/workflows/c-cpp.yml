@@ -1,10 +1,6 @@
 name: C/C++ CI
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -15,9 +11,3 @@ jobs:
     - uses: actions/checkout@v2
     - name: make
       run: make
-    - name: install pip
-      run: python3 -m pip install --upgrade pip setuptools
-    - name: install norm
-      run: python3 -m pip install norminette
-    - name: make norm
-      run: make norm
