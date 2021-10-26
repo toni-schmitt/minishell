@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/19 18:29:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/26 21:34:38 by tschmitt         ###   ########.fr       */
+/*   Created: 2021/10/26 21:34:02 by tschmitt          #+#    #+#             */
+/*   Updated: 2021/10/26 21:34:54 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include "libft.h"
-# include <readline/history.h>
-# include <readline/readline.h>
-
-#endif
+int	lexer(void)
+{
+	return (EXIT_FAILURE);
+}
