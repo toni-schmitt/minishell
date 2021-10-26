@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/19 18:28:36 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/26 14:33:30 by tblaase          ###   ########.fr       */
+/*   Created: 2021/10/26 14:12:17 by tblaase           #+#    #+#             */
+/*   Updated: 2021/10/26 14:35:24 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
-int	main(int argc, char **argv)
+void	ft_del_last(char *s)
 {
-	if (argc != 2)
+	char	*del;
+
+	del = ft_strrchr(s, '/');
+}
+
+int	cd(char **argv)
+{
+	char	*cwd;
+
+	cwd = NULL;
+	cwd = getcwd(cwd, 0);
+	if (ft_strstr(argv[1], ".."))
 	{
-		perror("Error: wrong argumen-count for cd");
-		return (EXIT_FAILURE);
+		ft_del_last(cwd);
 	}
-	if (cd(argv) == 1)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	return (0);
 }
