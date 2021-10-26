@@ -6,7 +6,7 @@
 #    By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
-#    Updated: 2021/10/23 16:39:44 by tblaase          ###   ########.fr        #
+#    Updated: 2021/10/26 14:05:01 by tblaase          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ LIBFT_PATH = ./libft/
 
 # FILES
 SRC =	$(SRC_PATH)main.c\
-		$(SRC_PATH)pwd.c\
+		$(SRC_PATH)pwd.c
 OBJ = $(patsubst $(SRC_PATH)%.c, $(OBJ_PATH)%.o, $(SRC))
 
 # COLORS
