@@ -6,28 +6,23 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 14:12:17 by tblaase           #+#    #+#             */
-/*   Updated: 2021/10/26 14:35:24 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/10/26 21:58:24 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
-void	ft_del_last(char *s)
-{
-	char	*del;
-
-	del = ft_strrchr(s, '/');
-}
-
-int	cd(char **argv)
+int	cd(int argc, char **argv)
 {
 	char	*cwd;
 
-	cwd = NULL;
-	cwd = getcwd(cwd, 0);
-	if (ft_strstr(argv[1], ".."))
+	if (argv[1] == NULL)
+		return (0);
+	else if (opendir(argv[1]) == NULL && errno != 0)
 	{
-		ft_del_last(cwd);
+		perror("Error");
+		return (1);
 	}
+	chdir(argv[1]);
 	return (0);
 }

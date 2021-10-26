@@ -6,7 +6,7 @@
 #    By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
-#    Updated: 2021/10/26 14:36:26 by tblaase          ###   ########.fr        #
+#    Updated: 2021/10/26 21:49:58 by tblaase          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,8 +26,8 @@ OBJ_PATH = ./obj/
 LIBFT_PATH = ./libft/
 
 # FILES
-SRC =	$(SRC_PATH)main.c\
-		$(SRC_PATH)cd.c
+SRC =	$(SRC_PATH)main.c \
+		$(SRC_PATH)inbuilt/cd.c
 OBJ = $(patsubst $(SRC_PATH)%.c, $(OBJ_PATH)%.o, $(SRC))
 
 # COLORS
@@ -58,7 +58,7 @@ $(LIBFT_NAME):
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@echo $(Y)Compiling [$@]...$(X)
-	@mkdir -p $(OBJ_PATH)
+	@mkdir -p $(dir $@)
 	@$(CC) $(CC_FLAGS) $(INCLUDE_FLAGS) -o $@ -c $<
 	@printf $(UP)$(CUT)
 	@echo $(G)Finished [$@]$(X)
