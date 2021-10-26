@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/19 18:29:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/26 13:57:02 by tblaase          ###   ########.fr       */
+/*   Created: 2021/10/26 13:48:30 by tblaase           #+#    #+#             */
+/*   Updated: 2021/10/26 13:57:18 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../include/minishell.h"
 
-# include "../libft/include/libft.h"
+int	env(char **envp)
+{
+	int	i;
 
-int	main(int argc, char **argv, char **envp);
-int	env(char **envp);
-
-#endif
+	i = 0;
+	while (envp[i] != NULL)
+	{
+		if (printf("%s\n", envp[i++]) == 0)
+			return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
+}
