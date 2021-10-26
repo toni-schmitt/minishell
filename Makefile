@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+         #
+#    By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
-#    Updated: 2021/10/26 14:42:51 by tblaase          ###   ########.fr        #
+#    Updated: 2021/10/26 21:32:40 by tschmitt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,7 @@ $(LIBFT_NAME):
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@echo $(Y)Compiling [$@]...$(X)
-	@mkdir -p $(OBJ_PATH)
+	@mkdir -p $(dir $@)
 	@$(CC) $(CC_FLAGS) $(INCLUDE_FLAGS) -o $@ -c $<
 	@printf $(UP)$(CUT)
 	@echo $(G)Finished [$@]$(X)
