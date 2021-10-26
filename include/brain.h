@@ -1,19 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   brain.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/19 18:29:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/26 22:21:54 by tschmitt         ###   ########.fr       */
+/*   Created: 2021/10/26 22:21:31 by tschmitt          #+#    #+#             */
+/*   Updated: 2021/10/26 22:21:45 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef BRAIN_H
+# define BRAIN_H
 
-# include "libft.h"
-# include "brain.h"
+# include <readline/history.h>
+# include <readline/readline.h>
+
+// BRAIN
+int	lexer(void);
+int	parser(void);
+int	expander(void);
+int	executor(void);
 
 #endif
