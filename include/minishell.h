@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:29:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/26 21:42:36 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/10/26 21:42:51 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <readline/readline.h>
 
 // BRAIN
+int	lexer(void);
 int	expander(void);
 
 #endif
