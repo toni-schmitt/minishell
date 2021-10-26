@@ -6,7 +6,7 @@
 #    By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
-#    Updated: 2021/10/19 19:05:56 by tschmitt         ###   ########.fr        #
+#    Updated: 2021/10/26 21:33:24 by tschmitt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,7 @@ $(LIBFT_NAME):
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@echo $(Y)Compiling [$@]...$(X)
-	@mkdir -p $(OBJ_PATH)
+	@mkdir -p $(dir $@)
 	@$(CC) $(CC_FLAGS) $(INCLUDE_FLAGS) -o $@ -c $<
 	@printf $(UP)$(CUT)
 	@echo $(G)Finished [$@]$(X)
