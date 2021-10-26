@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/19 18:29:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/26 21:42:36 by tschmitt         ###   ########.fr       */
+/*   Created: 2021/10/26 21:39:06 by tschmitt          #+#    #+#             */
+/*   Updated: 2021/10/26 21:39:24 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include "libft.h"
-# include <readline/history.h>
-# include <readline/readline.h>
-
-// BRAIN
-int	expander(void);
-
-#endif
+int	expander(void)
+{
+	return (EXIT_FAILURE);
+}
