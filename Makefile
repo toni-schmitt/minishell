@@ -6,7 +6,7 @@
 #    By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
-#    Updated: 2021/10/27 21:36:37 by tschmitt         ###   ########.fr        #
+#    Updated: 2021/10/27 21:57:51 by tschmitt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ all: $(NAME)
 	@echo $(G)"|_|_|_|_|_|_|_|___|_|_|___|_|_|"$(X)
 	@printf "\n\n"
 
-$(NAME): $(OBJ) $(LIBFT_NAME)
+$(NAME): $(LIBFT_NAME) $(OBJ)
 	@echo $(Y)Compiling [$(NAME)]...$(X)
 	@$(CC) $(CC_FLAGS) $(INCLUDE_FLAGS) $(LIBFT_NAME) $(OBJ) -o $(NAME)
 	@echo $(G)Finished [$(NAME)]$(X)
