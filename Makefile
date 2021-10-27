@@ -6,7 +6,7 @@
 #    By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
-#    Updated: 2021/10/26 21:44:44 by tschmitt         ###   ########.fr        #
+#    Updated: 2021/10/27 17:30:41 by tschmitt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,10 +14,11 @@
 CC = gcc
 CC_FLAGS = -Wall -Werror -Wextra
 INCLUDE_FLAGS = -I ./include/ -I $(LIBFT_PATH)include/
+L_FLAGS = -lreadline
 RM = rm -f
 
 # EXECUTABLE
-NAME = minishell
+NAME = ./minishell
 LIBFT_NAME = $(LIBFT_PATH)lib/libft.a
 
 # PATHS
@@ -49,7 +50,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT_NAME)
 	@echo $(Y)Compiling [$(NAME)]...$(X)
-	@$(CC) $(CC_FLAGS) $(INCLUDE_FLAGS) $(LIBFT_NAME) $(OBJ) -o $(NAME)
+	@$(CC) $(CC_FLAGS) $(INCLUDE_FLAGS) $(L_FLAGS) $(LIBFT_NAME) $(OBJ) -o $(NAME)
 	@echo $(G)Finished [$(NAME)]$(X)
 
 $(LIBFT_NAME):
@@ -85,6 +86,9 @@ norm:
 	@echo $(G)Checking Norminette...$(X)
 	norminette
 	@echo $(G)Done$(X)
+
+run: all
+	$(NAME)
 
 
 .PHONY: all, clean, fclean, re, norm
