@@ -6,13 +6,14 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:34:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/26 21:34:54 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/10/27 17:31:04 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	lexer(void)
+int	lexer(char *envp[])
 {
+	(void)envp;
 	return (EXIT_FAILURE);
 }
