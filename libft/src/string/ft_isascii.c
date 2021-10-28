@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 13:58:27 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/07/07 14:34:35 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/10/28 18:28:10 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 int	ft_isascii(int c)
 {
 	if (c >= 0 && c <= 127)
-		return (TRUE);
-	return (FALSE);
+		return (true);
+	return (false);
 }
