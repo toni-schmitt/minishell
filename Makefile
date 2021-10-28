@@ -6,7 +6,7 @@
 #    By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
-#    Updated: 2021/10/28 16:20:11 by tschmitt         ###   ########.fr        #
+#    Updated: 2021/10/28 16:22:45 by tschmitt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ all: $(NAME)
 
 $(NAME): $(LIBFT_NAME) $(OBJ)
 	@echo $(Y)Compiling [$(NAME)]...$(X)
-	$(CC) $(CC_FLAGS) $(INCLUDE_FLAGS) $(LIBFT_NAME) $(OBJ) -o $(NAME)
+	$(CC) $(CC_FLAGS) $(INCLUDE_FLAGS) ./libft/obj/*.o $(OBJ) -o $(NAME)
 	@echo $(G)Finished [$(NAME)]$(X)
 
 $(LIBFT_NAME):
