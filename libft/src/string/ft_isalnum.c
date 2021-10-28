@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 13:57:16 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/07/07 12:26:39 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/10/28 18:27:17 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 int	ft_isalnum(int c)
 {
 	if (ft_isalpha(c) || ft_isdigit(c))
-		return (TRUE);
-	return (FALSE);
+		return (true);
+	return (false);
 }

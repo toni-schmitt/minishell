@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/02 14:08:50 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/09/02 14:10:28 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/10/28 18:27:17 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@ int	ft_isspace(int c)
 {
 	if (c == ' ' || c == '\t' || c == '\n'
 		|| c == '\v' || c == '\f' || c == '\r')
-		return (TRUE);
-	return (FALSE);
+		return (true);
+	return (false);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 17:23:59 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/09/12 16:45:50 by toni             ###   ########.fr       */
+/*   Updated: 2021/10/28 18:27:23 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,7 @@
 # include <stdlib.h>
 # include <stdarg.h>
 # include <stddef.h>
-
-/* DEFINES */
-# ifndef FALSE
-#  define FALSE 0
-# endif
-# ifndef TRUE
-#  define TRUE 1
-# endif
+# include <stdbool.h>
 
 /* LIST */
 typedef struct s_list

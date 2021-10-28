@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 13:56:21 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/07/07 12:22:15 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/10/28 18:27:17 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
-		return (TRUE);
-	return (FALSE);
+		return (true);
+	return (false);
 }
