@@ -20,11 +20,9 @@
 
 /* INBUILD */
 int	echo(char *arg);
-
 int	export(char **argv, char **envp);
-
 int	env(char **envp);
-
+void	pwd(void);
 int	cd(char **argv);
 
 #endif
