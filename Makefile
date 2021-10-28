@@ -6,7 +6,7 @@
 #    By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
-#    Updated: 2021/10/28 16:22:45 by tschmitt         ###   ########.fr        #
+#    Updated: 2021/10/28 16:32:44 by tschmitt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@
 CC = gcc
 CC_FLAGS = -Wall -Werror -Wextra
 INCLUDE_FLAGS = -I ./include/ -I $(LIBFT_PATH)include/
+L_FLAGS = -L $(LIBFT_PATH)lib -l ft -l readline
 RM = rm -f
 
 # EXECUTABLE
@@ -49,12 +50,12 @@ all: $(NAME)
 
 $(NAME): $(LIBFT_NAME) $(OBJ)
 	@echo $(Y)Compiling [$(NAME)]...$(X)
-	$(CC) $(CC_FLAGS) $(INCLUDE_FLAGS) ./libft/obj/*.o $(OBJ) -o $(NAME)
+	@$(CC) $(CC_FLAGS) $(INCLUDE_FLAGS) $(L_FLAGS) $(OBJ) -o $(NAME)
 	@echo $(G)Finished [$(NAME)]$(X)
 
 $(LIBFT_NAME):
 	@echo $(Y)Compiling [$(LIBFT_NAME)]...$(X)
-	make -C $(LIBFT_PATH) all
+	@make -C $(LIBFT_PATH) all
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@echo $(Y)Compiling [$@]...$(X)
