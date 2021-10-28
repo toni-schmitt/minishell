@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+         #
+#    By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
 #    Updated: 2021/10/28 17:00:41 by tschmitt         ###   ########.fr        #
@@ -26,8 +26,8 @@ OBJ_PATH = ./obj/
 LIBFT_PATH = ./libft/
 
 # FILES
-SRC = 	$(SRC_PATH)main.c \
-		$(SRC_PATH)inbuilt/echo.c
+SRC = $(SRC_PATH)main.c \
+		$(SRC_PATH)inbuilt/export.c $(SRC_PATH)inbuilt/echo.c
 OBJ = $(patsubst $(SRC_PATH)%.c, $(OBJ_PATH)%.o, $(SRC))
 
 # COLORS
