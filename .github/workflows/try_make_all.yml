@@ -9,5 +9,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: testing
+      run: ls libft/* && ls 
     - name: make
       run: make
+    - name: testing2
+      run: ls libft/* && ls 
