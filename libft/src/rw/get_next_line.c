@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 17:34:18 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/09/03 19:19:27 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/10/28 18:24:56 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*get_next_line(int fd)
 	char		*buffer;
 	ssize_t		bytes_read;
 
-	bytes_read = TRUE;
+	bytes_read = true;
 	if (fd < 0 || BUFFER_SIZE < 0)
 		return (NULL);
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(*buffer));
