@@ -12,10 +12,7 @@
 
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+int	main(void)
 {
-	(void)argc;
-	if (export(argv, envp) == 1)
-		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
