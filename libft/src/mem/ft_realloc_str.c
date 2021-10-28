@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 19:55:37 by tblaase           #+#    #+#             */
-/*   Updated: 2021/10/28 21:04:22 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/10/28 21:10:44 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ new: adress of the reallocated string
 	char	*new;
 	int		i;
 
-	if (size <= ft_strlen(str))
+	if (size <= (size_t)ft_strlen(str))
 		return (str);
 	i = 0;
 	new = ft_calloc(size, sizeof(char));
@@ -38,6 +38,6 @@ new: adress of the reallocated string
 		new[i] = str[i];
 		i++;
 	}
-	ft_free(str);
+	free(str);
 	return (new);
 }
