@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 14:12:17 by tblaase           #+#    #+#             */
-/*   Updated: 2021/10/26 22:27:52 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/10/28 18:04:21 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ int	cd(char **argv)
 		perror("Error");
 		return (1);
 	}
-	chdir(argv[1]);
+	if (chdir(argv[1]) != 0)
+	{
+		perror("Error");
+		return (1);
+	}
 	return (0);
 }
