@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/19 18:28:36 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/28 17:51:09 by tblaase          ###   ########.fr       */
+/*   Created: 2021/10/26 14:12:17 by tblaase           #+#    #+#             */
+/*   Updated: 2021/10/26 22:27:52 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(void)
+int	cd(char **argv)
 {
-	return (EXIT_SUCCESS);
+	if (argv[1] == NULL)
+		return (0);
+	else if (opendir(argv[1]) == NULL && errno != 0)
+	{
+		perror("Error");
+		return (1);
+	}
+	chdir(argv[1]);
+	return (0);
 }
