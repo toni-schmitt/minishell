@@ -60,14 +60,14 @@ all: $(NAME)
 $(NAME): $(OBJ_IO) $(OBJ_LST) $(OBJ_MEM) $(OBJ_RW) $(OBJ_STRING) $(OBJ_UTILS)
 	@mkdir -p lib
 	@echo $(Y)Compiling [$(NAME)]...$(X)
-	$(AR) $(ARFLAGS) $(NAME) $(OBJ_IO) $(OBJ_LST) $(OBJ_MEM) $(OBJ_RW) $(OBJ_STRING) $(OBJ_UTILS)
+	@$(AR) $(ARFLAGS) $(NAME) $(OBJ_IO) $(OBJ_LST) $(OBJ_MEM) $(OBJ_RW) $(OBJ_STRING) $(OBJ_UTILS)
 	@printf $(UP)$(CUT)
 	@echo $(G)Finished [$(NAME)]...$(X)
 
 $(OBJ_DIR)/%.o: ./src/*/%.c
 	@echo $(Y)Compiling [$@]...$(X)
 	@mkdir -p obj
-	$(CC) $(CCFLAGS) -I ./include -o $@ -c $<
+	@$(CC) $(CCFLAGS) -I ./include -o $@ -c $<
 	@printf $(UP)$(CUT)
 
 clean:
