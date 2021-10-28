@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 17:23:59 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/28 21:00:55 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/10/28 21:06:57 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	*ft_memmove(void *dst, const void *src, size_t n);
 void	*ft_memchr(const void *s, int c, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 char	*realloc_str(char *str, size_t size);
+char	**ft_realloc_str_arr(char **arr, size_t size);
 
 /* READ / WRITE */
 char	*get_next_line(int fd);

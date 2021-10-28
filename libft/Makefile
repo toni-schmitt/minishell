@@ -17,7 +17,7 @@ SRC_LST = \
 	ft_lstlast.c ft_lstmap.c ft_lstnew.c ft_lstsize.c
 SRC_MEM = \
 	ft_bzero.c ft_calloc.c ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c \
-	ft_realloc_str.c
+	ft_realloc_str.c ft_realloc_str_arr.c
 SRC_RW = \
 	get_next_line.c ft_get_line_count.c
 SRC_STRING = \
