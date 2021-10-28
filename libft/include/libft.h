@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 17:23:59 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/28 20:53:48 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/10/28 21:00:55 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ char	*ft_itoa(int nbr);
 char	*ft_getlongeststr(char **array);
 int		ft_chrcount(const char *str, char ch);
 char	**ft_str_arr_dup(char **arr);
+int		ft_str_arr_len(char **arr);
 
 /* UTILS */
 int		ft_hexnbrlen(unsigned long long nbr);
