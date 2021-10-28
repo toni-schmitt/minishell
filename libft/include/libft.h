@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 17:23:59 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/28 18:25:19 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/10/28 19:48:33 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ char	*ft_htoa(unsigned long long dec, int uppercase);
 char	*ft_itoa(int nbr);
 char	*ft_getlongeststr(char **array);
 int		ft_chrcount(const char *str, char ch);
+char	**ft_str_arr_dup(char **arr);
 
 /* UTILS */
 int		ft_hexnbrlen(unsigned long long nbr);
