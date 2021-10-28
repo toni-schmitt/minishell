@@ -6,7 +6,7 @@
 #    By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
-#    Updated: 2021/10/27 21:57:51 by tschmitt         ###   ########.fr        #
+#    Updated: 2021/10/28 16:17:46 by tschmitt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ LIBFT_PATH = ./libft/
 
 # FILES
 SRC = 	$(SRC_PATH)main.c \
-		$(SRC_PATH)inbuild/echo.c
+		$(SRC_PATH)inbuilt/echo.c
 OBJ = $(patsubst $(SRC_PATH)%.c, $(OBJ_PATH)%.o, $(SRC))
 
 # COLORS
