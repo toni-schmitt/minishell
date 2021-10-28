@@ -26,8 +26,8 @@ OBJ_PATH = ./obj/
 LIBFT_PATH = ./libft/
 
 # FILES
-SRC =	$(SRC_PATH)main.c\
-		$(SRC_PATH)inbuilt/env.c
+SRC = $(SRC_PATH)main.c \
+		$(SRC_PATH)inbuilt/export.c $(SRC_PATH)inbuilt/echo.c $(SRC_PATH)inbuilt/env.c
 OBJ = $(patsubst $(SRC_PATH)%.c, $(OBJ_PATH)%.o, $(SRC))
 
 # COLORS

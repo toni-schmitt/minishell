@@ -14,6 +14,12 @@
 # define MINISHELL_H
 
 # include "libft.h"
+# include <stdbool.h>
+
+/* INBUILD */
+int	echo(char *arg);
+
+int	export(char **argv, char **envp);
 
 int	env(char **envp);
 
