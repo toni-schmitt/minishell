@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+         #
+#    By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
-#    Updated: 2021/10/28 17:45:41 by tblaase          ###   ########.fr        #
+#    Updated: 2021/10/28 18:17:55 by tschmitt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ INCLUDE_FLAGS = -I ./include/ -I $(LIBFT_PATH)include/
 RM = rm -f
 
 # EXECUTABLE
-NAME = minishell
+NAME = ./minishell
 LIBFT_NAME = $(LIBFT_PATH)lib/libft.a
 
 # PATHS
