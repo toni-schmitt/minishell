@@ -6,7 +6,7 @@
 #    By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
-#    Updated: 2021/10/28 16:17:46 by tschmitt         ###   ########.fr        #
+#    Updated: 2021/10/28 16:20:11 by tschmitt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,17 +49,17 @@ all: $(NAME)
 
 $(NAME): $(LIBFT_NAME) $(OBJ)
 	@echo $(Y)Compiling [$(NAME)]...$(X)
-	@$(CC) $(CC_FLAGS) $(INCLUDE_FLAGS) $(LIBFT_NAME) $(OBJ) -o $(NAME)
+	$(CC) $(CC_FLAGS) $(INCLUDE_FLAGS) $(LIBFT_NAME) $(OBJ) -o $(NAME)
 	@echo $(G)Finished [$(NAME)]$(X)
 
 $(LIBFT_NAME):
 	@echo $(Y)Compiling [$(LIBFT_NAME)]...$(X)
-	@make -C $(LIBFT_PATH) all
+	make -C $(LIBFT_PATH) all
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@echo $(Y)Compiling [$@]...$(X)
 	@mkdir -p $(dir $@)
-	@$(CC) $(CC_FLAGS) $(INCLUDE_FLAGS) -o $@ -c $<
+	$(CC) $(CC_FLAGS) $(INCLUDE_FLAGS) -o $@ -c $<
 	@printf $(UP)$(CUT)
 	@echo $(G)Finished [$@]$(X)
 	@printf $(UP)$(CUT)
