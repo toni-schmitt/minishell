@@ -6,7 +6,7 @@
 #    By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
-#    Updated: 2021/10/28 16:34:37 by tschmitt         ###   ########.fr        #
+#    Updated: 2021/10/28 16:47:57 by tschmitt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 CC = gcc
 CC_FLAGS = -Wall -Werror -Wextra
 INCLUDE_FLAGS = -I ./include/ -I $(LIBFT_PATH)include/
-L_FLAGS = -L $(LIBFT_PATH)lib -l ft -l readline
+L_FLAGS = -L $(LIBFT_PATH)lib -l ft
 RM = rm -f
 
 # EXECUTABLE
@@ -50,6 +50,8 @@ all: $(NAME)
 
 $(NAME): $(LIBFT_NAME) $(OBJ)
 	@echo $(Y)Compiling [$(NAME)]...$(X)
+	ls libft/*
+	ls
 	$(CC) $(CC_FLAGS) $(INCLUDE_FLAGS) $(L_FLAGS) $(OBJ) -o $(NAME)
 	@echo $(G)Finished [$(NAME)]$(X)
 
@@ -60,7 +62,7 @@ $(LIBFT_NAME):
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@echo $(Y)Compiling [$@]...$(X)
 	@mkdir -p $(dir $@)
-	$(CC) $(CC_FLAGS) $(INCLUDE_FLAGS) -o $@ -c $<
+	@$(CC) $(CC_FLAGS) $(INCLUDE_FLAGS) -o $@ -c $<
 	@printf $(UP)$(CUT)
 	@echo $(G)Finished [$@]$(X)
 	@printf $(UP)$(CUT)
