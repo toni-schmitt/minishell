@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 19:55:37 by tblaase           #+#    #+#             */
-/*   Updated: 2021/10/28 20:52:47 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/10/28 21:04:22 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ this function is similar to realloc, but only for strings
 ++ instead of malloc this uses calloc
 -- it will create a new adress and free the old one of str
 if allocation of the new size fails str wont be freed
-if size is smaller than str, str will get returned
+if size is <= to the size of str, str will get returned
 str: adress of the string you want to realloc
 size: number of elements you want to realloc
 new: adress of the reallocated string
@@ -27,7 +27,7 @@ new: adress of the reallocated string
 	char	*new;
 	int		i;
 
-	if (size < ft_strlen(str))
+	if (size <= ft_strlen(str))
 		return (str);
 	i = 0;
 	new = ft_calloc(size, sizeof(char));
