@@ -6,7 +6,7 @@
 #    By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
-#    Updated: 2021/10/28 16:32:44 by tschmitt         ###   ########.fr        #
+#    Updated: 2021/10/28 16:34:37 by tschmitt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,7 @@ all: $(NAME)
 
 $(NAME): $(LIBFT_NAME) $(OBJ)
 	@echo $(Y)Compiling [$(NAME)]...$(X)
-	@$(CC) $(CC_FLAGS) $(INCLUDE_FLAGS) $(L_FLAGS) $(OBJ) -o $(NAME)
+	$(CC) $(CC_FLAGS) $(INCLUDE_FLAGS) $(L_FLAGS) $(OBJ) -o $(NAME)
 	@echo $(G)Finished [$(NAME)]$(X)
 
 $(LIBFT_NAME):
