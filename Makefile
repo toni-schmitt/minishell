@@ -6,7 +6,7 @@
 #    By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
-#    Updated: 2021/10/27 17:30:41 by tschmitt         ###   ########.fr        #
+#    Updated: 2021/10/29 16:17:27 by tschmitt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ LIBFT_PATH = ./libft/
 
 # FILES
 SRC = 	$(SRC_PATH)main.c \
-		$(SRC_PATH)brain/lexer.c $(SRC_PATH)brain/parser.c $(SRC_PATH)brain/expander.c $(SRC_PATH)brain/executor.c
+		$(SRC_PATH)brain/lexer.c $(SRC_PATH)brain/parser.c $(SRC_PATH)brain/expander.c $(SRC_PATH)brain/executor.c \
+		$(SRC_PATH)brain/utils/envp_utils.c
 OBJ = $(patsubst $(SRC_PATH)%.c, $(OBJ_PATH)%.o, $(SRC))
 
 # COLORS

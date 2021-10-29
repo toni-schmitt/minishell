@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   brain.h                                            :+:      :+:    :+:   */
+/*   envp_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/26 22:21:31 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/29 16:17:08 by tschmitt         ###   ########.fr       */
+/*   Created: 2021/10/29 16:12:12 by tschmitt          #+#    #+#             */
+/*   Updated: 2021/10/29 16:17:54 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BRAIN_H
-# define BRAIN_H
+#include "minishell.h"
 
-# include <readline/history.h>
-# include <readline/readline.h>
+static char	**_get_envp(char *envp[])
+{
+	static char	**static_envp;
 
-// BRAIN
-int		lexer(char *line);
-int		parser(char **tokens);
-int		expander(void);
-int		executor(void);
+	if (envp != NULL)
+		static_envp = envp;
+	return (static_envp);
+}
 
-// BRAINS UTILS
-void	set_envp(char *envp[]);
-char	**get_envp(void);
+void	set_envp(char *envp[])
+{
+	_get_envp(envp);
+}
 
-#endif
+char	**get_envp(void)
+{
+	return (_get_envp(NULL));
+}
