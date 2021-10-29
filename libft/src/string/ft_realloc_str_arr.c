@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 20:35:01 by tblaase           #+#    #+#             */
-/*   Updated: 2021/10/29 14:25:29 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/10/29 14:41:03 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,6 @@ new: adress of the reallocated array of strings
 		new[i] = ft_strdup(arr[i]);
 		i++;
 	}
-	ft_free_split(arr);
+	ft_free_str_array(arr);
 	return (new);
 }

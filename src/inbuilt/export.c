@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 17:49:07 by tblaase           #+#    #+#             */
-/*   Updated: 2021/10/28 21:36:25 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/10/29 14:40:19 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	export(char **argv, char **envp)
 		{
 			var_split = ft_split(argv[j], '=');
 			var = ft_strdup(var_split[0]);
-			ft_free_split(var_split);
+			ft_free_str_array(var_split);
 			i = 0;
 			while (env_var[i])
 			{
