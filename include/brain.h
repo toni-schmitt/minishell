@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 22:21:31 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/29 22:31:14 by toni             ###   ########.fr       */
+/*   Updated: 2021/10/29 22:32:25 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 // BRAIN
 int		lexer(char *line);
-int		parser(void);
+int		parser(char *tokens[]);
 int		expander(void);
 int		executor(void);
 
