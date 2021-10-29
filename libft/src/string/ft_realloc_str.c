@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_realloc_str.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 19:55:37 by tblaase           #+#    #+#             */
-/*   Updated: 2021/10/28 21:10:44 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/10/29 14:24:53 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,14 @@ new: adress of the reallocated string
 	char	*new;
 	int		i;
 
+	if (str == NULL)
+		return (NULL);
 	if (size <= (size_t)ft_strlen(str))
 		return (str);
-	i = 0;
-	new = ft_calloc(size, sizeof(char));
-	if (!new)
+	new = ft_calloc(size, sizeof(*new));
+	if (new == NULL)
 		return (NULL);
+	i = 0;
 	while (str && str[i])
 	{
 		new[i] = str[i];

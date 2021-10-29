@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 17:23:59 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/28 21:06:57 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/10/29 14:26:32 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ void	*ft_memccpy(void *dst, const void *src, int c, size_t n);
 void	*ft_memmove(void *dst, const void *src, size_t n);
 void	*ft_memchr(const void *s, int c, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
-char	*realloc_str(char *str, size_t size);
-char	**ft_realloc_str_arr(char **arr, size_t size);
 
 /* READ / WRITE */
 char	*get_next_line(int fd);
@@ -108,6 +106,8 @@ char	*ft_getlongeststr(char **array);
 int		ft_chrcount(const char *str, char ch);
 char	**ft_str_arr_dup(char **arr);
 int		ft_str_arr_len(char **arr);
+char	*realloc_str(char *str, size_t size);
+char	**ft_realloc_str_arr(char **arr, size_t size);
 
 /* UTILS */
 int		ft_hexnbrlen(unsigned long long nbr);

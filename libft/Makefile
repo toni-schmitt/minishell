@@ -16,8 +16,7 @@ SRC_LST = \
 	ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c ft_lstiter.c \
 	ft_lstlast.c ft_lstmap.c ft_lstnew.c ft_lstsize.c
 SRC_MEM = \
-	ft_bzero.c ft_calloc.c ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c \
-	ft_realloc_str.c ft_realloc_str_arr.c
+	ft_bzero.c ft_calloc.c ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c 
 SRC_RW = \
 	get_next_line.c ft_get_line_count.c
 SRC_STRING = \
@@ -25,7 +24,8 @@ SRC_STRING = \
 	ft_itoa.c ft_split.c ft_strchr.c ft_strdup.c ft_striteri.c ft_strjoin.c ft_strlcat.c \
 	ft_strlcpy.c ft_strlen.c ft_strmapi.c ft_strnstr.c ft_strncmp.c ft_strrchr.c ft_strstr.c ft_strtrim.c \
 	ft_substr.c ft_tolower.c ft_toupper.c ft_strhas.c ft_strndup.c ft_htoa.c ft_getlongeststr.c \
-	ft_atol.c ft_isspace.c ft_chrcount.c ft_issign.c ft_strcmp.c ft_str_arr_dup.c ft_str_arr_len.c
+	ft_atol.c ft_isspace.c ft_chrcount.c ft_issign.c ft_strcmp.c ft_str_arr_dup.c ft_str_arr_len.c \
+	ft_realloc_str.c ft_realloc_str_arr.c
 SRC_UTILS = \
 	ft_free.c ft_hexnbrlen.c ft_nbrlen.c ft_free_split.c
 
