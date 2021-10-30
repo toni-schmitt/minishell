@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:34:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/30 22:54:01 by toni             ###   ########.fr       */
+/*   Updated: 2021/10/31 00:25:41 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	*get_next_token(char **token)
 
 	tmp = *token;
 	next_special = get_next_special(tmp);
-	next_token = ft_calloc(ft_strchr(tmp, next_special) - tmp + 1, \
+	next_token = ft_calloc(get_next_token_size(tmp, next_special) + 1, \
 			sizeof(*next_token));
 	if (next_token == NULL)
 		return (NULL);
@@ -86,6 +86,10 @@ int	lexer(char *line)
 	if (tokens == NULL)
 		return (EXIT_FAILURE);
 	if (parser(tokens) == EXIT_FAILURE)
+	{
+		ft_free_split(tokens);
 		return (EXIT_FAILURE);
+	}
+	ft_free_split(tokens);
 	return (EXIT_SUCCESS);
 }
