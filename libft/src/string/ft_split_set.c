@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:20:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/30 16:05:27 by toni             ###   ########.fr       */
+/*   Updated: 2021/10/30 16:16:03 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,7 @@ static int	get_arr_len(char *str, char *set)
 	return (arr_len);
 }
 
-static void	*free_arr(char **arr)
-{
-	int	j;
-
-	j = 0;
-	while (arr && arr[j])
-		free(arr[j++]);
-	free(arr);
-	return (NULL);
-}
-
-size_t	get_element_size(char *str, char *set)
+static size_t	get_element_size(char *str, char *set)
 {
 	size_t	size;
 
@@ -79,7 +68,7 @@ char	**ft_split_set(char *str, char *set)
 			str++;
 		arr[i] = ft_calloc(get_element_size(str, set) + 1, sizeof(*arr[i]));
 		if (arr[i] == NULL)
-			return (free_arr(arr));
+			return (ft_free_split(arr));
 		j = 0;
 		while (*str && ft_strchr(set, *str) == NULL)
 			arr[i][j++] = *str++;
