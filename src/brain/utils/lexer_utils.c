@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/30 22:23:11 by toni              #+#    #+#             */
-/*   Updated: 2021/10/30 22:52:40 by toni             ###   ########.fr       */
+/*   Updated: 2021/10/31 00:24:52 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@ size_t	get_next_token_size(char *token, char next_special)
 	size_t	size;
 
 	size = 0;
+	if (*token == next_special && *(token + 1) && *(token + 1) == next_special)
+		return (2);
+	else if (*token == next_special)
+		return (1);
 	while (*token && *token != next_special)
 	{
 		size++;
