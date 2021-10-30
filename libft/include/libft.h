@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 17:23:59 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/30 16:15:32 by toni             ###   ########.fr       */
+/*   Updated: 2021/10/30 16:42:44 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ char	*ft_itoa(int nbr);
 char	*ft_getlongeststr(char **array);
 int		ft_chrcount(const char *str, char ch);
 char	**ft_split_set(char *str, char *set);
+char	*ft_strset(char *str, char *set);
 
 /* UTILS */
 int		ft_hexnbrlen(unsigned long long nbr);
