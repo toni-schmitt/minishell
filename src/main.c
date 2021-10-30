@@ -6,15 +6,20 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:28:36 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/31 00:26:54 by toni             ###   ########.fr       */
+/*   Updated: 2021/10/31 00:40:51 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* 
+ * STILL USES clear_history INSTEAD OF rl_clear_history
+ * SUBJECT.PDF DOES NOT ALLOW CLEAR_HISTORY
+ * GITHUB ACTION ONLY KNOWS clear_history!!!
+ */
 static int	exit_routine(void *to_free, int exit_status)
 {
-	rl_clear_history();
+	clear_history(); // CHANGE TO rl_clear_history();
 	free(to_free);
 	return (exit_status);
 }
