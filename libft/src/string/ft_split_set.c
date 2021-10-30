@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_set.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:20:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/29 16:18:32 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/10/30 16:05:27 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,24 @@
 
 static int	get_arr_len(char *str, char *set)
 {
-	int	arr_len;
+	char	*trimmed_str;
+	int		arr_len;
+	int		i;
 
+	trimmed_str = ft_strtrim(str, set);
+	if (trimmed_str == NULL)
+		return (-1);
 	arr_len = 0;
-	if (ft_strchr(set, *str) == NULL)
+	i = 0;
+	if (ft_strchr(set, trimmed_str[i]) == NULL)
 		arr_len++;
-	while (*str)
+	while (trimmed_str[i])
 	{
-		if (ft_strchr(set, *str) != NULL)
+		if (ft_strchr(set, trimmed_str[i]) != NULL)
 			arr_len++;
-		str++;
+		i++;
 	}
+	free(trimmed_str);
 	return (arr_len);
 }
 
@@ -37,6 +44,19 @@ static void	*free_arr(char **arr)
 		free(arr[j++]);
 	free(arr);
 	return (NULL);
+}
+
+size_t	get_element_size(char *str, char *set)
+{
+	size_t	size;
+
+	size = 0;
+	while (*str && ft_strchr(set, *str) == NULL)
+	{
+		size++;
+		str++;
+	}
+	return (size);
 }
 
 char	**ft_split_set(char *str, char *set)
@@ -53,11 +73,11 @@ char	**ft_split_set(char *str, char *set)
 	if (arr == NULL)
 		return (NULL);
 	i = 0;
-	while (i < arr_len)
+	while (i < arr_len && *str)
 	{
 		while (*str && ft_strchr(set, *str) != NULL)
 			str++;
-		arr[i] = ft_calloc(100, sizeof(*arr[i]));
+		arr[i] = ft_calloc(get_element_size(str, set) + 1, sizeof(*arr[i]));
 		if (arr[i] == NULL)
 			return (free_arr(arr));
 		j = 0;
