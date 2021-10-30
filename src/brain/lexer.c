@@ -6,11 +6,12 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:34:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/31 00:25:41 by toni             ###   ########.fr       */
+/*   Updated: 2021/10/31 01:21:57 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "lexer_utils.h"
 
 static void	*free_tokens(char **tokens, char **adjusted)
 {

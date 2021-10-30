@@ -6,11 +6,12 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/30 22:23:11 by toni              #+#    #+#             */
-/*   Updated: 2021/10/31 00:24:52 by toni             ###   ########.fr       */
+/*   Updated: 2021/10/31 01:22:42 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "lexer_utils.h"
 
 static bool	is_special_char(char curr, char next)
 {
