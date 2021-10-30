@@ -6,11 +6,18 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:28:36 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/29 21:52:32 by toni             ###   ########.fr       */
+/*   Updated: 2021/10/31 00:26:54 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	exit_routine(void *to_free, int exit_status)
+{
+	rl_clear_history();
+	free(to_free);
+	return (exit_status);
+}
 
 static char	*get_nosebang(char *line)
 {
@@ -61,19 +68,13 @@ static int	routine(void)
 		if (ft_strstr(buf, "<<"))
 		{
 			if (wait_for_nosebang(buf) == EXIT_FAILURE)
-			{
-				free(buf);
-				return (EXIT_FAILURE);
-			}
+				return (exit_routine((void *)buf, EXIT_FAILURE));
 		}
 		if (lexer(buf) == EXIT_FAILURE)
-		{
-			free(buf);
-			return (EXIT_FAILURE);
-		}
+			return (exit_routine((void *)buf, EXIT_FAILURE));
 		free(buf);
 	}
-	return (EXIT_FAILURE);
+	return (exit_routine((void *)buf, EXIT_FAILURE));
 }
 
 int	main(int argc, char *argv[], char *envp[])
