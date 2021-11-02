@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_realloc_str_arr.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 20:35:01 by tblaase           #+#    #+#             */
-/*   Updated: 2021/10/29 14:41:03 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/11/02 12:01:26 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ new: adress of the reallocated array of strings
 		return (NULL);
 	if (size <= (size_t)ft_str_arr_len(arr))
 		return (arr);
-	new = ft_calloc(size, sizeof(*new));
+	new = ft_calloc(size + 1, sizeof(*new));
 	if (new == NULL)
 		return (NULL);
 	i = 0;
