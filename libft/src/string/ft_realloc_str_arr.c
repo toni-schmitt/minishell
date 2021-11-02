@@ -6,13 +6,12 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 20:35:01 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/02 12:01:26 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/02 16:17:12 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	**ft_realloc_str_arr(char **arr, size_t size)
 /*
 this function is similar to realloc, but only for string-arrays
 ++ instead of malloc this uses calloc
@@ -23,6 +22,7 @@ arr: adress of the array you want to realloc
 size: number of elements you want to realloc
 new: adress of the reallocated array of strings
 */
+char	**ft_realloc_str_arr(char **arr, size_t size)
 {
 	char	**new;
 	int		i;

@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_realloc_str.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 19:55:37 by tblaase           #+#    #+#             */
-/*   Updated: 2021/10/29 14:24:53 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/11/02 16:16:55 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_realloc_str(char *str, size_t size)
 /*
 this function is similar to realloc, but only for strings
 ++ instead of malloc this uses calloc
@@ -23,6 +22,7 @@ str: adress of the string you want to realloc
 size: number of elements you want to realloc
 new: adress of the reallocated string
 */
+char	*ft_realloc_str(char *str, size_t size)
 {
 	char	*new;
 	int		i;

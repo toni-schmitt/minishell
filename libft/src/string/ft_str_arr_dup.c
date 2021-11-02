@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_str_arr_dup.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 18:12:28 by tblaase           #+#    #+#             */
-/*   Updated: 2021/10/29 14:33:04 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/11/02 16:17:01 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	**ft_str_arr_dup(char **arr)
 /*
 strdup for string arrays
 arr: the array to copy
 cpy: the copied array that gets returned
 */
+char	**ft_str_arr_dup(char **arr)
 {
 	char	**cpy;
 	int		i;
