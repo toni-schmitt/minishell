@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+         #
+#    By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
-#    Updated: 2021/10/28 18:17:55 by tschmitt         ###   ########.fr        #
+#    Updated: 2021/11/02 15:53:15 by tblaase          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ LIBFT_PATH = ./libft/
 
 # FILES
 SRC = $(SRC_PATH)main.c \
-		$(SRC_PATH)inbuilt/export.c $(SRC_PATH)inbuilt/echo.c $(SRC_PATH)inbuilt/env.c $(SRC_PATH)inbuilt/cd.c $(SRC_PATH)inbuilt/pwd.c
+		$(SRC_PATH)inbuilt/export.c $(SRC_PATH)inbuilt/echo.c $(SRC_PATH)inbuilt/env.c $(SRC_PATH)inbuilt/cd.c $(SRC_PATH)inbuilt/pwd.c $(SRC_PATH)inbuilt/unset.c
 OBJ = $(patsubst $(SRC_PATH)%.c, $(OBJ_PATH)%.o, $(SRC))
 
 # COLORS
