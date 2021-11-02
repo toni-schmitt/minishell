@@ -1,6 +1,6 @@
 # Commands & Flags
 CC = gcc
-CCFLAGS = -Wall -Werror -Wextra
+CCFLAGS = -Wall -Werror -Wextra -g
 
 RM = rm
 
@@ -16,7 +16,7 @@ SRC_LST = \
 	ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c ft_lstiter.c \
 	ft_lstlast.c ft_lstmap.c ft_lstnew.c ft_lstsize.c
 SRC_MEM = \
-	ft_bzero.c ft_calloc.c ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c 
+	ft_bzero.c ft_calloc.c ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memmove.c ft_memset.c
 SRC_RW = \
 	get_next_line.c ft_get_line_count.c
 SRC_STRING = \
@@ -27,7 +27,7 @@ SRC_STRING = \
 	ft_atol.c ft_isspace.c ft_chrcount.c ft_issign.c ft_strcmp.c ft_str_arr_dup.c ft_str_arr_len.c \
 	ft_realloc_str.c ft_realloc_str_arr.c
 SRC_UTILS = \
-	ft_free.c ft_hexnbrlen.c ft_nbrlen.c ft_free_str_array.c
+	ft_free.c ft_hexnbrlen.c ft_nbrlen.c ft_free_str_array.c ft_free_str.c
 
 OBJ_DIR = ./obj
 
