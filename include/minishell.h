@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:29:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/02 15:52:30 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/03 13:33:34 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ char	**export(char **argv, char **env_var);
 char	**unset(char **argv, char **env_var);
 int		env(char **envp);
 int		pwd(void);
-int		cd(char **argv);
+int		cd(char **argv, char **envp, char **env_var);
 
 #endif
