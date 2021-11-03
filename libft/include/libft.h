@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 17:23:59 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/03 20:52:36 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/03 21:19:02 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int		ft_isspace(int c);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_strjoin(const char *s1, const char *s2);
+char	*ft_strjoin(char *s1, const char *s2);
 char	*ft_strtrim(char const *s1, char const *set);
 char	**ft_split(const char *s, char c);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
@@ -108,7 +108,7 @@ char	**ft_str_arr_dup(char **arr);
 int		ft_str_arr_len(char **arr);
 char	*realloc_str(char *str, size_t size);
 char	**ft_realloc_str_arr(char **arr, size_t size);
-char	*ft_strstrjoin(const char *s1, const char *s2, char *divider);
+char	*ft_strstrjoin(char *s1, char *s2, char *divider);
 
 /* UTILS */
 int		ft_hexnbrlen(unsigned long long nbr);
