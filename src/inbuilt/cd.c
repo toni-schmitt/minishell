@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 14:12:17 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/03 17:25:58 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/03 22:13:22 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ static char	*find_home(char **envp, char **env_var)
 int	cd(char **argv, char **envp, char **env_var)
 {
 	char	*home;
+	char	**split;
+	int		i;
 
 	home = find_home(envp, env_var);
 printf("homefolder found:%s\n", home);
@@ -55,7 +57,14 @@ printf("homefolder found:%s\n", home);
 	if (ft_strchr(argv[1], '~') != NULL)
 	{
 		// argv[1] = home; // need to refine that depending on the real input, probably leaks
-
+		split = ft_split(argv[1], '~'); // dont need to split, i need to replace every occurance of it with home
+	printf("split: %s, %s, %s\n", split[0], split[1], split[2]);
+		i = 0;
+		while (split[i + 1])
+		{
+			split[0] = ft_strstrjoin(split[0], split[i++], home);
+		printf("argv[1]: %s\n", argv[1]);
+		}
 	}
 	else if (opendir(argv[1]) == NULL && errno != 0)
 	{
