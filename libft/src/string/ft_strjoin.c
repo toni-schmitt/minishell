@@ -3,16 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 17:35:48 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/09/12 17:26:22 by toni             ###   ########.fr       */
+/*   Updated: 2021/11/03 21:20:19 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(const char *s1, const char *s2)
+/*
+will append s2 to s1
+will free s1 afterwards
+*/
+char	*ft_strjoin(char *s1, const char *s2)
 {
 	char	*joined;
 	int		joined_len;
@@ -28,5 +32,6 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	while (s2 && *s2)
 		*joined++ = *s2++;
 	*joined = '\0';
+	ft_free_str(&s1);
 	return (joined - joined_len);
 }
