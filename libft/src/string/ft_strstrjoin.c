@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 20:51:07 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/03 21:18:08 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/04 18:36:48 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,25 @@ char	*ft_strstrjoin(char *s1, char *s2, char *divider)
 	char	*out;
 	int		i;
 	int		j;
+	char	*s1_new;
 
 	if (!s1 || !divider)
 		return (NULL);
 	i = 0;
 	j = 0;
-	s1 = ft_strjoin(s1, divider);
-	out = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	s1_new = ft_strjoin(s1, divider);
+	out = malloc(ft_strlen(s1_new) + ft_strlen(s2) + 1);
 	if (out == NULL)
 		return (0);
-	while (s1[i])
+	while (s1_new[i])
 	{
-		out[i] = s1[i];
+		out[i] = s1_new[i];
 		i++;
 	}
 	while (s2 && s2[j])
 		out[i++] = s2[j++];
 	out[i] = '\0';
 	ft_free_str(&s1);
+	ft_free_str(&s1_new);
 	return (out);
 }
