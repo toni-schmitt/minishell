@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 17:23:59 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/03 21:19:02 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/04 17:32:50 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char	*ft_getlongeststr(char **array);
 int		ft_chrcount(const char *str, char ch);
 char	**ft_str_arr_dup(char **arr);
 int		ft_str_arr_len(char **arr);
-char	*realloc_str(char *str, size_t size);
+char	*ft_realloc_str(char *str, size_t size);
 char	**ft_realloc_str_arr(char **arr, size_t size);
 char	*ft_strstrjoin(char *s1, char *s2, char *divider);
 
