@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:34:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/31 01:21:57 by toni             ###   ########.fr       */
+/*   Updated: 2021/11/09 22:24:19 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,63 @@ static char	*get_next_token(char **token)
 	return (next_token);
 }
 
+static bool	token_is_subshell(char *token)
+{
+	if (ft_strchr(token, '(') != NULL \
+	|| ft_strchr(token, ')') != NULL)
+		return (true);
+	return (false);
+}
+
+// echo hi && ( echo hi ; ( echo hi )) && ( echo hi )
+static int	get_subshell_count(char *tokens[], int i)
+{
+	int	count;
+	int	opened_brackets;
+
+	count = 0;
+	opened_brackets = 0;
+	while (tokens[i])
+	{
+		if (ft_strchr(tokens[i], '('))
+		{
+			opened_brackets++;
+			count++;
+		}
+		else if (ft_strchr(tokens[i], ')'))
+		{
+			opened_brackets--;
+			count++;
+		}
+		if (opened_brackets == 0)
+			break ;
+		i++;
+	}
+	return (count);
+}
+
+static char	*get_subshell_token(char *tokens[], int *i)
+{
+	char	*subshell_token;
+	int		subshell_count;
+
+	subshell_token = NULL;
+	subshell_count = get_subshell_count(tokens, *i);
+	while (tokens[*i] && subshell_count)
+	{
+		subshell_token = ft_append(&subshell_token, tokens[*i]);
+		if (subshell_token == NULL)
+			return (NULL);
+		subshell_token = ft_append(&subshell_token, " ");
+		if (subshell_token == NULL)
+			return (NULL);
+		if (token_is_subshell(tokens[*i]))
+			subshell_count--;
+		(*i)++;
+	}
+	return (subshell_token);
+}
+
 static char	**adjust_tokens(char **tokens)
 {
 	char	**adjusted;
@@ -61,7 +118,9 @@ static char	**adjust_tokens(char **tokens)
 	j = 0;
 	while (tokens[i])
 	{
-		if (!token_is_unadjusted(tokens[i]))
+		if (token_is_subshell(tokens[i]))
+			adjusted[j] = get_subshell_token(tokens, &i);
+		else if (!token_is_unadjusted(tokens[i]))
 		{
 			adjusted[j] = ft_strdup(tokens[i]);
 			i++;
