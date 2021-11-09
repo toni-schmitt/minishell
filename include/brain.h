@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   brain.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 22:21:31 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/31 01:23:04 by toni             ###   ########.fr       */
+/*   Updated: 2021/11/10 00:08:19 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,33 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 
+enum
+{
+	std = -1,
+	pipe_redir = 0,
+	in_redir = 1,
+	out_redir = 2,
+	out_append = 3,
+	heredoc = 4,
+	subshell = 5,
+	and = 6,
+	or = 7,
+	semicolon = 8,	
+};
+
+typedef struct s_parser_tok
+{
+	int		type;
+	char	*cmd;
+	char	*args;
+	char	**in;
+	char	**out;
+}	t_parser_tok;
+
 // BRAIN
 int		lexer(char *line);
-int		parser(char *tokens[]);
-int		expander(void);
+int		parser(char *lexer_tokens[]);
+int		expander(t_parser_tok *parser_tokens);
 int		executor(void);
 
 // BRAIN UTILS
