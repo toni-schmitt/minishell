@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:29:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/09 18:08:37 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/09 18:40:29 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct s_environment
 int		echo(char **args);
 char	**export(char **argv, char **env_var);
 char	**unset(char **argv, char **env_var);
-int		env(char **envp);
+int		env(t_environment *environment);
 int		pwd(void);
 int		cd(char **argv, t_environment *environment);
 
