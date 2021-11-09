@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: toni <toni@student.42.fr>                  +#+  +:+       +#+         #
+#    By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
-#    Updated: 2021/10/30 22:54:49 by toni             ###   ########.fr        #
+#    Updated: 2021/11/09 22:38:17 by tschmitt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ LIBFT_PATH = ./libft/
 # FILES
 SRC = 	$(SRC_PATH)main.c \
 		$(SRC_PATH)brain/lexer.c $(SRC_PATH)brain/parser.c $(SRC_PATH)brain/expander.c $(SRC_PATH)brain/executor.c \
-		$(SRC_PATH)brain/utils/lexer_utils.c $(SRC_PATH)brain/utils/envp_utils.c
+		$(SRC_PATH)brain/utils/lexer_utils/subshell_token_utils.c $(SRC_PATH)brain/utils/lexer_utils/token_utils.c $(SRC_PATH)brain/utils/envp_utils.c
 OBJ = $(patsubst $(SRC_PATH)%.c, $(OBJ_PATH)%.o, $(SRC))
 
 # COLORS
