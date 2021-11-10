@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/22 16:22:09 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/09 18:27:13 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/10 16:22:31 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,14 @@ int	pwd(void)
 	cwd = NULL;
 	cwd = getcwd(cwd, 0);
 	if (cwd == NULL)
+	{
 		perror("Error");
-	if (ft_printf("%s\n", cwd) != ft_strlen(cwd) + 1)
+		return (EXIT_FAILURE);
+	}
+	else if (ft_printf("%s\n", cwd) != ft_strlen(cwd) + 1)
 	{
 		ft_free_str(&cwd);
+		perror("\nError: printf failed");
 		return (EXIT_FAILURE);
 	}
 	ft_free_str(&cwd);
