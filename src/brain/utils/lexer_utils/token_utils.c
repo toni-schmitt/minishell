@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 22:35:27 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/09 23:30:33 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/11/10 19:53:15 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ size_t	get_new_tokens_size(char **tokens)
 	while (tokens[i])
 	{
 		if (token_is_subshell(tokens[i]))
-			i = jump_to_end_of_subshell(tokens, i);
+			i = jump_to_end_of_subshell(tokens, i) - 1;
 		else if (token_is_unadjusted(tokens[i]))
 		{
 			j = 0;
