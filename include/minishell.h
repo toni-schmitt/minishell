@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:29:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/09 21:20:23 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/10 15:07:57 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ typedef struct s_environment
 }			t_environment;
 
 /* INBUILD */
-int		echo(char **args);
-int		export(char **argv, t_environment *environment);
-char	**unset(char **argv, char **env_var);
-int		env(t_environment *environment);
-int		pwd(void);
-int		cd(char **argv, t_environment *environment);
+int	echo(char **args);
+int	export(char **argv, t_environment *environment);
+int	unset(char **argv, t_environment *environment);
+int	env(t_environment *environment);
+int	pwd(void);
+int	cd(char **argv, t_environment *environment);
 
 #endif
