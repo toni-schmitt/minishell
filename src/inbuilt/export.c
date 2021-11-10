@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 17:49:07 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/10 14:15:11 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/10 16:54:15 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static int	export_only(t_environment *environment)
 		}
 		else if (ft_printf("declare -x %s\n", env_var_cpy[i]) != 12 + ft_strlen(env_var_cpy[i]))
 		{
-			printf("FAIL 74\n");
+			printf("FAIL 74\n"); //for testing
 			return (EXIT_FAILURE);
 		}
 		i++;
