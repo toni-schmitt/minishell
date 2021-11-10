@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 20:35:01 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/02 16:17:12 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/10 13:43:09 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,6 @@ char	**ft_realloc_str_arr(char **arr, size_t size)
 		new[i] = ft_strdup(arr[i]);
 		i++;
 	}
-	ft_free_str_array(arr);
+	ft_free_str_array(&arr);
 	return (new);
 }
