@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 17:49:07 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/09 22:34:29 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/10 14:15:11 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,39 @@
 static int	export_only(t_environment *environment)
 {
 	char	*temp;
-	char	*position;
-	int		arr_len;
+	char	**env_var_cpy;
 	int		i;
 	int		j;
 
-	// printf("\nNOW SORTED\n\n");
-	i = 0;
 	temp = NULL;
-	arr_len = ft_str_arr_len(environment->env_var);
+	env_var_cpy = ft_str_arr_dup(environment->env_var);
 	i = 0;
-	while (i < arr_len) ///////////// rewirte this sorting part so it worts it into a new 2D array
+	// printf("ORIGINAL ENV_VAR:\n");
+	// while (environment->env_var[i] != NULL)
+	// 	printf("%s\n", environment->env_var[i++]);
+	// printf("------------------------------------\n");
+	if (env_var_cpy == NULL)
+		return (EXIT_FAILURE);
+	i = 0;
+	while (env_var_cpy[i] != NULL && env_var_cpy[i + 1] != NULL) ///////////// rewirte this sorting part so it worts it into a new 2D array
 	{
 		j = i + 1;
-		while (j < arr_len)
+		while (env_var_cpy[j] != NULL)
 		{
-			if (ft_strcmp(environment->env_var[i], environment->env_var[j]) > 0)
+			if (ft_strcmp(env_var_cpy[i], env_var_cpy[j]) > 0)
 			{
-				temp = ft_strdup(environment->env_var[i]);
+				temp = ft_strdup(env_var_cpy[i]);
 				if (temp == NULL)
+				{
+					ft_free_str_array(&env_var_cpy);
 					return (EXIT_FAILURE);
-				ft_free_str(&environment->env_var[i]);
-				environment->env_var[i] = environment->env_var[j];
+				}
+				ft_free_str(&env_var_cpy[i]);
+				env_var_cpy[i] = env_var_cpy[j];
 				// if (environment->env_var[i] == NULL)
 				// 	return (EXIT_FAILURE);
 				// ft_free_str(&environment->env_var[j]);
-				environment->env_var[j] = temp;
+				env_var_cpy[j] = temp;
 				// if (environment->env_var[j] == NULL)
 				// 	return (EXIT_FAILURE);
 				// ft_free_str(&temp);
@@ -50,30 +57,37 @@ static int	export_only(t_environment *environment)
 		i++;
 	}
 	i = 0;
-	while (i < arr_len)
+	while (env_var_cpy[i] != NULL)
 	{
-		position = ft_strchr(environment->env_var[i], '=');
-		if (position != NULL)
+		if (ft_strchr(env_var_cpy[i], '=') != NULL)
 		{
-			if (ft_printf("declare -x ") != ft_strlen("decalre -x ")) // is this protection needed??????
+			if (ft_printf("declare -x ") != ft_strlen("decalre -x "))
 				return (EXIT_FAILURE);
-			while (*environment->env_var[i])
+			j = 0;
+			while (env_var_cpy[i][j])
 			{
-				if (*environment->env_var[i] == *position)
+				if (&env_var_cpy[i][j] == ft_strchr(env_var_cpy[i], '='))
 				{
-					ft_printf("%c\"", *environment->env_var[i]++);
+					if (ft_printf("%c\"", env_var_cpy[i][j++]) != 2)
+						return (EXIT_FAILURE);
 				}
-				else
-					ft_printf("%c", *environment->env_var[i]++);
+				else if (ft_printf("%c", env_var_cpy[i][j++]) != 1)
+					return (EXIT_FAILURE);
 			}
-			ft_printf("\"\n");
+			if (ft_printf("\"\n") != 2)
+				return (EXIT_FAILURE);
 		}
-		else
-			ft_printf("declare -x %s\n", environment->env_var[i]);
+		else if (ft_printf("declare -x %s\n", env_var_cpy[i]) != 12 + ft_strlen(env_var_cpy[i]))
+		{
+			printf("FAIL 74\n");
+			return (EXIT_FAILURE);
+		}
 		i++;
 	}
+	ft_free_str_array(&env_var_cpy);
 	// printf("env_var has %d values\n", ft_str_arr_len(environment->env_var));
 	// printf("\nORIGINAL OUTPUT OF export\n\n");
+
 	return (EXIT_SUCCESS);
 }
 
@@ -117,7 +131,7 @@ int	export(char **argv, t_environment *environment)
 		{
 			var_split = ft_split(argv[j], '=');
 			var = ft_strdup(var_split[0]);
-			ft_free_str_array(var_split);
+			ft_free_str_array(&var_split);
 			i = 0;
 			while (environment->env_var[i])
 			{
