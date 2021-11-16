@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 22:21:31 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/10 00:08:19 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/11/16 21:01:32 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,23 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 
-enum
+typedef enum e_parser_tok_type
 {
-	std = -1,
-	pipe_redir = 0,
-	in_redir = 1,
-	out_redir = 2,
-	out_append = 3,
-	heredoc = 4,
-	subshell = 5,
-	and = 6,
-	or = 7,
-	semicolon = 8,	
-};
+	std = 0,
+	pipe_redir = 1,
+	in_out_redir = 2,
+	subshell = 3,
+	and = 4,
+	or = 5,
+	heredoc = 6,
+}	t_par_tok_type;
 
 typedef struct s_parser_tok
 {
-	int		type;
-	char	*cmd;
-	char	*args;
-	char	**in;
-	char	**out;
+	t_par_tok_type	type;
+	char			**cmd;
+	char			**in;
+	char			**out;
 }	t_parser_tok;
 
 // BRAIN
