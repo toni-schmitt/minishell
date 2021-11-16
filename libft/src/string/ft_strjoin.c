@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 17:35:48 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/04 18:34:53 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/16 19:58:03 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,5 @@ char	*ft_strjoin(char *s1, const char *s2)
 	while (s2 && *s2)
 		*joined++ = *s2++;
 	*joined = '\0';
-	// ft_free_str(&s1);
 	return (joined - joined_len);
 }
