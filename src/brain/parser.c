@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:35:35 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/16 21:20:28 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/11/16 21:27:53 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,15 +165,25 @@ static char	*try_get_token_cmd(char *token)
 	{
 		if (ft_strstr(token, ">>"))
 			return (NULL);
+		if (ft_strstr(token, "&&"))
+			return (NULL);
+		if (ft_strstr(token, "||"))
+			return (NULL);
 	}
 	return (ft_strdup(token));
 }
 
 int	try_get_special_token(char *lex_toks[], t_parser_tok *tokens, t_iterator *iter)
 {
-	if (ft_strlen(lex_toks[iter[lex]]) == 2)
+	int	i;
+
+	if (iter[lex] == 0)
+		i = 0;
+	else
+		i = iter[lex] - 1;
+	if (ft_strlen(lex_toks[i]) == 2)
 	{
-		if (ft_strstr(lex_toks[iter[lex]], "&&"))
+		if (ft_strstr(lex_toks[i], "&&"))
 		{
 			iter[par]++;
 			tokens[par].cmd = NULL;
@@ -182,7 +192,7 @@ int	try_get_special_token(char *lex_toks[], t_parser_tok *tokens, t_iterator *it
 			tokens[par].type = and;
 			return (TOKEN_FOUND);
 		}
-		if (ft_strstr(lex_toks[iter[lex]], "||"))
+		if (ft_strstr(lex_toks[i], "||"))
 		{
 			iter[par]++;
 			tokens[par].cmd = NULL;
@@ -216,9 +226,9 @@ static t_parser_tok	*get_tokens(char *lex_toks[])
 			if (try_get_redir_token(lex_toks, tokens, iter) == EXIT_FAILURE)
 				return (exit_get_tokens(tokens, iter));	
 			tokens[iter[par]].cmd[iter[cmd]++] = try_get_token_cmd(lex_toks[iter[lex]]);
-			// if (try_get_special_token(lex_toks, tokens, iter) == TOKEN_FOUND)
-			// 	break ;
 			iter[lex]++;
+			if (try_get_special_token(lex_toks, tokens, iter) == TOKEN_FOUND)
+				break ;
 			if (is_end_of_token(lex_toks[iter[lex] - 1]))
 				break ;
 		}
