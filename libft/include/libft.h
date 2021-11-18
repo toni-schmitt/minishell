@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 17:23:59 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/30 16:42:44 by toni             ###   ########.fr       */
+/*   Updated: 2021/11/18 16:40:48 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ char	*ft_getlongeststr(char **array);
 int		ft_chrcount(const char *str, char ch);
 char	**ft_split_set(char *str, char *set);
 char	*ft_strset(char *str, char *set);
+char	**ft_str_arr_realloc(char *array[], size_t size);
 
 /* UTILS */
 int		ft_hexnbrlen(unsigned long long nbr);
