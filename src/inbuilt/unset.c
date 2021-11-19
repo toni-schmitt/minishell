@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 15:50:27 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/10 15:38:02 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/19 16:23:24 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	ft_inner_loop(char **argv, t_environment *environment, int i, int k)
 			|| ft_strncmp(var, argv[k], ft_strlen(argv[k]) != 0))
 		{
 			ft_free_str(&var);
-			return (-1);
+			return (2);
 		}
 		ft_del_var(environment, i);
 	}
@@ -78,7 +78,7 @@ int	unset(char **argv, t_environment *environment)
 		while (environment->env_var[i])
 		{
 			inner_out = ft_inner_loop(argv, environment, i, k);
-			if (inner_out == -1)
+			if (inner_out == 2)
 				break ;
 			else if (inner_out == EXIT_FAILURE)
 				return (EXIT_FAILURE);
