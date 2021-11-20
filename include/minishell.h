@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:29:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/20 12:39:36 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/20 13:04:41 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_export
 int		echo(char **args);
 int		export(char **argv, t_env *envv);
 int		unset(char **argv, t_env *envv);
-int		env(t_env *envv);
+int		env(t_env *envv, char **argv);
 int		pwd(void);
 int		cd(char **argv, t_env *envv);
 
