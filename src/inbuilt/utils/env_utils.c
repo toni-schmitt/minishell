@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 11:29:18 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/20 12:40:09 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/20 13:52:21 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*search_env_var(char **env_var, char *var)
 	i = 0;
 	while (env_var && env_var[i] != NULL && ft_strcmp(var, env_var[i]) != 0)
 		i++;
-	if (env_var[i] != NULL)
+	if (env_var[i] != NULL && ft_strlen(ft_strchr(env_var[i], '=')) > 0)
 		value = ft_strdup(ft_strchr(env_var[i], '=') + 1);
 	return (value);
 }
