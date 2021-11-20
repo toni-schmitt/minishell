@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 14:12:17 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/20 12:16:45 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/20 14:08:22 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,8 @@ static char	*find_home(char **env_var)
 	char	*path;
 
 	i = 0;
-	path = NULL;
-	while (env_var && env_var[i] && ft_strcmp(env_var[i], "HOME=") != 0)
-		i++;
-	if (env_var[i] == NULL || ft_strlen(env_var[i]) <= 5)
+	path = search_env_var(env_var, "HOME");
+	if (path == NULL || ft_strlen(path) == 0)
 		ft_printf("cd: HOME not set\n");
 	else
 		path = ft_strdup(ft_strchr(env_var[i], '=') + 1);
@@ -78,8 +76,6 @@ static int	ft_cd_home(t_env *envv, char **home_path, char **cwd)
 	return (ft_exit_cd(home_path, cwd, EXIT_SUCCESS));
 }
 
-// check why it prints error when running ./minishell
-
 int	cd(char **argv, t_env *envv)
 {
 	char	*cwd;
@@ -92,12 +88,15 @@ int	cd(char **argv, t_env *envv)
 		return (EXIT_FAILURE);
 	if (argv[1] == NULL)
 	{
-		home_path = find_home(envv->env_var);
-		if (home_path == NULL)
+		home_path = find_home(envv->env_var); // maybe include this content of the if statement into the find home function to save some lines
+		if (home_path == NULL || ft_strlen(home_path) < 1)
+		{
+			ft_free_str(&home_path);
 			return (EXIT_FAILURE);
+		}
 	}
 	cwd = getcwd(cwd, 0);
-	if (argv[1] == NULL)
+	if (argv[1] == NULL) // include this into line 89
 		return (ft_cd_home(envv, &home_path, &cwd));
 	directory = opendir(argv[1]);
 	if (directory == NULL)
