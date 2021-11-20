@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 17:49:07 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/20 12:43:28 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/20 14:11:39 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static int	ft_export_loop(t_env *envv, t_export *exp, char **argv)
 	return (EXIT_SUCCESS);
 }
 
-int	export(char **argv, t_env *envv)
+int	export(char **argv, t_env *envv) // may have mistake where when first set HOME2 and then set HOME, HOME2 is gone
 {
 	t_export	*exp;
 
