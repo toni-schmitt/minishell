@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 18:57:16 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/16 19:56:40 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/20 12:04:17 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	ft_print_with_value(char **env_var_cpy, int i)
 	return (EXIT_SUCCESS);
 }
 
-int	export_only(t_environment *environment)
+int	export_only(t_env *environment)
 {
 	char	**env_var_cpy;
 	int		i;
