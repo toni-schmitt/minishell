@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 13:48:30 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/20 13:20:26 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/20 13:26:04 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	env(t_env *envv, char **argv)
 {
 	int	i;
-	DIR	*directory;
 
 	if (envv == NULL || envv->env_var == NULL)
 		return (EXIT_FAILURE);
