@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 15:50:27 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/20 12:19:27 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/22 18:41:59 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ static int	ft_inner_loop(char **argv, t_env *envv, int i, int k)
 	char	*var;
 
 	var = NULL;
-	if (ft_strcmp(envv->env_var[i], argv[k]) == 0)
+	if (ft_strcmp(envv->env_var[i], argv[k]) == 0
+		|| ft_strcmp(envv->env_var[i], argv[k]) == 61)
 	{
 		var = ft_get_var(envv, i);
 		if (var == NULL)
