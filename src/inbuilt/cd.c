@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 14:12:17 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/20 14:08:22 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/22 17:01:54 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,22 @@
 
 static char	*find_home(char **env_var)
 {
-	int		i;
 	char	*path;
 
-	i = 0;
 	path = search_env_var(env_var, "HOME");
 	if (path == NULL || ft_strlen(path) == 0)
 		ft_printf("cd: HOME not set\n");
-	else
-		path = ft_strdup(ft_strchr(env_var[i], '=') + 1);
 	return (path);
 }
 
-static void	ft_update_env_var(t_env *envv, char *var,
-char *value)
+static void	ft_update_env_var(t_env *envv, char *var, char *value)
 {
 	int	i;
 
 	i = 0;
 	while (envv->env_var && envv->env_var[i])
 	{
-		if (ft_strcmp(envv->env_var[i], var) == 0
+		if (ft_strncmp(envv->env_var[i], var, ft_strlen(var)) == 0
 			&& (envv->env_var[i][ft_strlen(var)] == '='
 			|| envv->env_var[i][ft_strlen(var)] == '\0'))
 		{
@@ -94,10 +89,10 @@ int	cd(char **argv, t_env *envv)
 			ft_free_str(&home_path);
 			return (EXIT_FAILURE);
 		}
+		cwd = getcwd(cwd, 0);
+		return (ft_cd_home(envv, &home_path, &cwd));
 	}
 	cwd = getcwd(cwd, 0);
-	if (argv[1] == NULL) // include this into line 89
-		return (ft_cd_home(envv, &home_path, &cwd));
 	directory = opendir(argv[1]);
 	if (directory == NULL)
 		return (ft_exit_cd(&home_path, &cwd, EXIT_FAILURE));
