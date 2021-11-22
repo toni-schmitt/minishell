@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 11:29:18 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/20 13:52:21 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/22 18:39:34 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,23 @@
 
 /* searches for var inside of env_var, allocates its value after the '='
 value: allocated value or NULL */
-char	*search_env_var(char **env_var, char *var)
+char	*get_env_var_value(char **env_var, char *var)
 {
 	int		i;
 	char	*value;
 
 	value = NULL;
 	i = 0;
-	while (env_var && env_var[i] != NULL && ft_strcmp(var, env_var[i]) != 0)
+	while (env_var && env_var[i] != NULL)
+	{
+		if (ft_strcmp(var, env_var[i]) == -61
+			|| ft_strcmp(var, env_var[i]) == 0)
+		{
+			value = ft_strdup(ft_strchr(env_var[i], '=') + 1);
+			break ;
+		}
 		i++;
-	if (env_var[i] != NULL && ft_strlen(ft_strchr(env_var[i], '=')) > 0)
-		value = ft_strdup(ft_strchr(env_var[i], '=') + 1);
+	}
 	return (value);
 }
 
@@ -38,8 +44,8 @@ t_env	*init_envv(char **envp)
 	{
 		envv->envp = envp;
 		envv->env_var = ft_str_arr_dup(envp);
-		envv->pwd = search_env_var(envv->env_var, "PWD");
-		envv->oldpwd = search_env_var(envv->env_var, "OLDPWD");
+		envv->pwd = get_env_var_value(envv->env_var, "PWD");
+		envv->oldpwd = get_env_var_value(envv->env_var, "OLDPWD");
 		if (envv->env_var != NULL && envv->pwd != NULL && envv->oldpwd != NULL)
 			return (envv);
 	}
