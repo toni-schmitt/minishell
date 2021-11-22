@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 16:22:31 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/08/24 16:29:27 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/11/22 14:24:16 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
+/* returns the value of the difference found in two strings, 0 if equal */
 int	ft_strcmp(const char *s1, const char *s2)
 {
 	const unsigned char	*buf1;
@@ -28,5 +30,9 @@ int	ft_strcmp(const char *s1, const char *s2)
 		buf1++;
 		buf2++;
 	}
+	if (*buf1 == '\0' && *buf2 != '\0')
+		return (-1);
+	else if (*buf2 == '\0' && *buf1 != '\0')
+		return (1);
 	return (0);
 }
