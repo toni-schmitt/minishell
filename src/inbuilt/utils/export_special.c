@@ -6,12 +6,15 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 18:57:16 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/20 12:04:17 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/23 13:49:24 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+is used to cleanly exit with the given exit_status
+*/
 static int	ft_export_exit(char ***array, bool exit_status)
 {
 	ft_free_str_array(array);
@@ -20,7 +23,10 @@ static int	ft_export_exit(char ***array, bool exit_status)
 	return (EXIT_SUCCESS);
 }
 
-static int	ft_export_loop(char **env_var_cpy, int i, int j)
+/*
+loops through all elements of env_var_cpy and sorts them by ascending order
+*/
+static int	ft_sort_loop(char **env_var_cpy, int i, int j)
 {
 	char	*temp;
 
@@ -49,6 +55,9 @@ static int	ft_export_loop(char **env_var_cpy, int i, int j)
 	return (EXIT_SUCCESS);
 }
 
+/*
+will print the variables with their value just as export does
+*/
 static int	ft_print_with_value(char **env_var_cpy, int i)
 {
 	int	j;
@@ -71,6 +80,9 @@ static int	ft_print_with_value(char **env_var_cpy, int i)
 	return (EXIT_SUCCESS);
 }
 
+/*
+mimics the behavior of calling export without any arguments
+*/
 int	export_only(t_env *environment)
 {
 	char	**env_var_cpy;
@@ -82,7 +94,7 @@ int	export_only(t_env *environment)
 		return (EXIT_FAILURE);
 	i = 0;
 	j = 0;
-	if (ft_export_loop(env_var_cpy, i, j) == EXIT_FAILURE)
+	if (ft_sort_loop(env_var_cpy, i, j) == EXIT_FAILURE)
 		return (ft_export_exit(&env_var_cpy, EXIT_FAILURE));
 	while (env_var_cpy[i] != NULL)
 	{

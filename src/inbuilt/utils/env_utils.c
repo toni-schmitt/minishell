@@ -6,14 +6,16 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 11:29:18 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/22 18:39:34 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/23 16:04:04 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* searches for var inside of env_var, allocates its value after the '='
-value: allocated value or NULL */
+/*
+searches for var inside of env_var, allocates its value after the '='
+value: allocated value or NULL
+*/
 char	*get_env_var_value(char **env_var, char *var)
 {
 	int		i;
@@ -34,7 +36,10 @@ char	*get_env_var_value(char **env_var, char *var)
 	return (value);
 }
 
-/* will create envv */
+/*
+will create envv by duplicating envp into t_env *envv
+everything except envp inside t_env is allocated
+*/
 t_env	*init_envv(char **envp)
 {
 	t_env	*envv;
@@ -52,7 +57,9 @@ t_env	*init_envv(char **envp)
 	return (NULL);
 }
 
-/* will free all allocated values of t_env and set them to NULL */
+/*
+will free all allocated values of t_env and set them to NULL
+*/
 void	free_envv(t_env **envv)
 {
 	(*envv)->envp = NULL;
