@@ -6,12 +6,15 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 17:49:07 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/22 16:48:52 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/23 15:09:47 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+will change the value of the found element
+*/
 static int	ft_export_found(t_env *envv, t_export *exp, char **argv)
 {
 	if (ft_strcmp(envv->env_var[exp->i], exp->var) == 0
@@ -27,6 +30,10 @@ static int	ft_export_found(t_env *envv, t_export *exp, char **argv)
 	return (EXIT_SUCCESS);
 }
 
+/*
+will reallocate env_var for one additional element
+will append the new element
+*/
 static int	ft_export_new(t_env *envv, t_export *exp, char **argv)
 {
 	if (envv->env_var[exp->i] == NULL)
@@ -56,6 +63,9 @@ static void	ft_split_var(t_export *exp, char **argv)
 	}
 }
 
+/*
+loops through all arguments and triggers either export_found or export_new
+*/
 static int	ft_export_loop(t_env *envv, t_export *exp, char **argv)
 {
 	int		check;
@@ -84,7 +94,10 @@ static int	ft_export_loop(t_env *envv, t_export *exp, char **argv)
 	return (EXIT_SUCCESS);
 }
 
-int	export(char **argv, t_env *envv)
+/*
+mimics the behavior of the export function in bash
+*/
+int	export(char **argv, t_env *envv) //when creating PWD or OLDPWD without a value, insert the stored PWD/OLDPWD value
 {
 	t_export	*exp;
 
@@ -92,6 +105,8 @@ int	export(char **argv, t_env *envv)
 		return (EXIT_FAILURE);
 	if (argv[1] == NULL)
 		export_only(envv);
+	else if (export_input_error(argv) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	else
 	{
 		exp = ft_calloc(1, sizeof(t_export));
