@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:00:54 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/23 16:06:32 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/23 16:31:06 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,15 @@ int	export_input_error(char **argv)
 		ft_free_str_array(&split);
 		if (var == NULL)
 			return (EXIT_FAILURE);
-		if (ft_isalpha(var[j]) == 0 && var[j] != '_')
+		while (var[j] != '\0')
 		{
-			ft_printf("export: `%s': not a valid identifier\n", argv[i]);
-			ft_free_str(&var);
-			return (EXIT_FAILURE);
+			if (ft_isalnum(var[j]) == 0 && var[j] != '_')
+			{
+				ft_printf("export: `%s': not a valid identifier\n", argv[i]);
+				ft_free_str(&var);
+				return (EXIT_FAILURE);
+			}
+			j++;
 		}
 		i++;
 	}
