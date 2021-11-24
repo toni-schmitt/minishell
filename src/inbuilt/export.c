@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 17:49:07 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/24 14:24:33 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/24 17:14:25 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,11 @@ int	export(char **argv, t_env *envv)
 		if (exp == NULL)
 			return (EXIT_FAILURE);
 		exp->j = 1;
+		if (*envv->env_var == NULL)
+		{
+			envv->env_var = ft_realloc_str_arr(envv->env_var, 2);
+			envv->env_var[0] = ft_strdup(argv[1]);
+		}
 		if (ft_export_loop(envv, exp, argv) == EXIT_FAILURE)
 		{
 			free(exp);
