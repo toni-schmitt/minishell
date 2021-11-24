@@ -6,7 +6,7 @@
 #    By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
-#    Updated: 2021/11/23 19:55:40 by tblaase          ###   ########.fr        #
+#    Updated: 2021/11/24 12:42:41 by tblaase          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ LIBFT_PATH = ./libft/
 # FILES
 SRC = $(SRC_PATH)main.c \
 		$(SRC_PATH)inbuilt/export.c $(SRC_PATH)inbuilt/echo.c $(SRC_PATH)inbuilt/env.c $(SRC_PATH)inbuilt/cd.c $(SRC_PATH)inbuilt/pwd.c $(SRC_PATH)inbuilt/unset.c \
-		$(SRC_PATH)inbuilt/utils/export_special.c $(SRC_PATH)inbuilt/utils/env_utils.c $(SRC_PATH)inbuilt/utils/export_input_error.c
+		$(SRC_PATH)inbuilt/utils/export_special.c $(SRC_PATH)inbuilt/utils/env_utils.c $(SRC_PATH)inbuilt/utils/export_input_error.c $(SRC_PATH)inbuilt/utils/export_only.c
 OBJ = $(patsubst $(SRC_PATH)%.c, $(OBJ_PATH)%.o, $(SRC))
 
 # COLORS
