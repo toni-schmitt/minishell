@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:00:54 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/23 16:31:06 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/24 14:28:02 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,12 @@ int	export_input_error(char **argv)
 
 	i = 1;
 	j = 0;
+	var = NULL;
 	while (argv && argv[i])
 	{
-		split = ft_split(argv[i], '=');
+		split = ft_split(argv[i], '=');//check for NULL, SEGFAULT!!!!!!
+		 if (split == NULL)
+		 	return (NULL);
 		var = ft_strdup(split[0]);
 		ft_free_str_array(&split);
 		if (var == NULL)
@@ -42,6 +45,7 @@ int	export_input_error(char **argv)
 			j++;
 		}
 		i++;
+		ft_free_str(&var);
 	}
 	return (EXIT_SUCCESS);
 }
