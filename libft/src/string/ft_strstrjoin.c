@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/03 20:51:07 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/09 17:39:11 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/24 14:22:06 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*
 will append s2 to s1
-will do nothing if s1 or divider is NULL
+will do nothing if s1 is NULL
 it will ad the divider string between the strings
 will free s1
 */
@@ -24,7 +24,7 @@ char	*ft_strstrjoin(char *s1, char *s2, char *divider)
 	int		i;
 	int		j;
 
-	if (!s1 || !divider)
+	if (!s1)
 		return (NULL);
 	i = 0;
 	j = 0;
