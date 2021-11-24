@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 12:42:50 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/24 14:19:55 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/24 15:41:18 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,17 @@ int	export_special(t_env *envv, t_export *exp)
 	if (envv->env_var == NULL)
 		return (EXIT_FAILURE);
 	if (ft_strcmp(envv->env_var[exp->i], "PWD") == 0)
-		envv->env_var[exp->i] = ft_strstrjoin(envv->env_var[exp->i], envv->pwd, "=");
+		envv->env_var[exp->i] = ft_strstrjoin(envv->env_var[exp->i],
+				envv->pwd, "=");
 	else if (ft_strcmp(envv->env_var[exp->i], "PWD=") == 0)
-		envv->env_var[exp->i] = ft_strstrjoin(envv->env_var[exp->i], envv->pwd, NULL);
+		envv->env_var[exp->i] = ft_strstrjoin(envv->env_var[exp->i],
+				envv->pwd, NULL);
 	else if (ft_strcmp(envv->env_var[exp->i], "OLDPWD") == 0)
-		envv->env_var[exp->i] = ft_strstrjoin(envv->env_var[exp->i], envv->oldpwd, "=");
+		envv->env_var[exp->i] = ft_strstrjoin(envv->env_var[exp->i],
+				envv->oldpwd, "=");
 	else if (ft_strcmp(envv->env_var[exp->i], "OLDPWD=") == 0)
-		envv->env_var[exp->i] = ft_strstrjoin(envv->env_var[exp->i], envv->oldpwd, NULL);
+		envv->env_var[exp->i] = ft_strstrjoin(envv->env_var[exp->i],
+				envv->oldpwd, NULL);
 	if (envv->env_var[exp->i] == NULL)
 	{
 		printf("########export_special failed\n");
