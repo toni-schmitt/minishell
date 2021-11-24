@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:29:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/23 14:02:29 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/24 13:23:44 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int		cd(char **argv, t_env *envv);
 /* INBUILD_UTILS */
 int		export_only(t_env *envv);
 int		export_input_error(char **argv);
+int		export_special(t_env *envv, t_export *exp);
 t_env	*init_envv(char **envp);
 char	*get_env_var_value(char **env_var, char *var);
 void	free_envv(t_env **envv);

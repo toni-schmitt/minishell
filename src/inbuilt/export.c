@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 17:49:07 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/23 15:09:47 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/24 14:24:33 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ static int	ft_export_new(t_env *envv, t_export *exp, char **argv)
 		envv->env_var[exp->i] = ft_strdup(argv[exp->j++]);
 		ft_free_str(&exp->var);
 		if (envv->env_var == NULL || envv->env_var[exp->i] == NULL)
+			return (EXIT_FAILURE);
+		if (export_special(envv, exp) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		return (2);
 	}
@@ -97,7 +99,7 @@ static int	ft_export_loop(t_env *envv, t_export *exp, char **argv)
 /*
 mimics the behavior of the export function in bash
 */
-int	export(char **argv, t_env *envv) //when creating PWD or OLDPWD without a value, insert the stored PWD/OLDPWD value
+int	export(char **argv, t_env *envv)
 {
 	t_export	*exp;
 
