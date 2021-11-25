@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 14:12:17 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/24 17:20:39 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/25 16:42:39 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ static int	ft_cd_home(t_env *envv)
 	return (ft_exit_cd(&cwd, EXIT_SUCCESS));
 }
 
-int	cd(char **argv, t_env *envv)
+int	cd(char **argv, t_env *envv) //try to segfault it again!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 {
 	char	*cwd;
 	DIR		*directory;
