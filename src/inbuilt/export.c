@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 17:49:07 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/24 17:14:25 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/25 16:27:30 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,11 @@ static int	ft_export_loop(t_env *envv, t_export *exp, char **argv)
 		if (exp->var == NULL)
 			return (EXIT_FAILURE);
 		exp->i = 0;
+		if (ft_strcmp(exp->var, "PWD") == 0 || ft_strcmp(exp->var, "OLDPWD"))
+		{
+			if (export_wd(envv, exp, argv) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
+		}
 		while (envv->env_var[exp->i])
 		{
 			check = ft_export_found(envv, exp, argv);
