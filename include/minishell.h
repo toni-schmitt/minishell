@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:29:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/26 22:21:54 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/11/24 22:19:44 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,5 @@
 # define MINISHELL_H
 
 # include "libft.h"
-# include "brain.h"
 
 #endif
