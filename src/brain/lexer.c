@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:34:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/26 18:03:33 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/26 18:11:34 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	lexer(char *line)
 		return (EXIT_FAILURE);
 	// if (parser(tokens) == EXIT_FAILURE)
 	// {
-	// 	ft_free_str_array(tokens);
+	// 	ft_free_str_array(&tokens);
 	// 	return (EXIT_FAILURE);
 	// }
 	int i = 0;
@@ -125,6 +125,6 @@ int	lexer(char *line)
 		i++;
 	}
 	//
-	ft_free_str_array(tokens);
+	ft_free_str_array(&tokens);
 	return (EXIT_SUCCESS);
 }
