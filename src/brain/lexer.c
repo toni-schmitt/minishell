@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:34:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/26 17:54:57 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/26 18:03:33 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 static void	*free_tokens(char **tokens, char **adjusted)
 {
-	ft_free_str_array(tokens),
-	ft_free_str_array(adjusted);
+	ft_free_split(tokens),
+	ft_free_split(adjusted);
 	return (NULL);
 }
 
@@ -93,7 +93,7 @@ static char	**adjust_tokens(char **tokens)
 			return (free_tokens(tokens, adjusted));
 		j++;
 	}
-	ft_free_str_array(tokens);
+	ft_free_split(tokens);
 	return (adjusted);
 }
 

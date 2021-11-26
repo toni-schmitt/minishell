@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:35:35 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/26 14:22:03 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/16 21:27:53 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ static void	*exit_get_tokens(t_parser_tok *tokens, t_iterator *iter)
 	i = 0;
 	while (&tokens[i])
 	{
-		ft_free_str_array(tokens[i].cmd);
-		ft_free_str_array(tokens[i].in);
-		ft_free_str_array(tokens[i].out);
+		ft_free_split(tokens[i].cmd);
+		ft_free_split(tokens[i].in);
+		ft_free_split(tokens[i].out);
 		i++;
 	}
 	free(tokens);
@@ -224,7 +224,7 @@ static t_parser_tok	*get_tokens(char *lex_toks[])
 		{
 			tokens[iter[par]].type = try_get_token_type(lex_toks[iter[lex]]);
 			if (try_get_redir_token(lex_toks, tokens, iter) == EXIT_FAILURE)
-				return (exit_get_tokens(tokens, iter));
+				return (exit_get_tokens(tokens, iter));	
 			tokens[iter[par]].cmd[iter[cmd]++] = try_get_token_cmd(lex_toks[iter[lex]]);
 			iter[lex]++;
 			if (try_get_special_token(lex_toks, tokens, iter) == TOKEN_FOUND)
