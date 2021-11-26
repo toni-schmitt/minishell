@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 14:09:09 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/16 21:14:01 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/11/24 22:26:53 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strdup(const char *str)
 	int		duped_len;
 
 	duped_len = ft_strlen(str);
-	if (duped_len == 0)
+	if (str == NULL)
 		return (NULL);
 	duped = malloc((duped_len + 1) * sizeof(*duped));
 	if (duped == NULL)
