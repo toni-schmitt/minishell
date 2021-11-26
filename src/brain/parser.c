@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:35:35 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/26 20:49:44 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/11/26 23:14:51 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,9 +148,8 @@ static int	get_tokens(char *lex_toks[])
 		get_special_tok(lex_toks, par_toks, iter) == EXIT_FAILURE)
 			return (free_parser(par_toks, iter, EXIT_FAILURE));
 	}
-	// interprete_vars(par_toks);
-	// return (check_syntax(par_toks));
-	return (EXIT_SUCCESS);
+	interprete_vars(par_toks);
+	return (check_syntax(par_toks));
 }
 
 void prnt_token(t_par_tok *tok[])
