@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 17:23:59 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/26 18:02:21 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/26 18:19:36 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,5 +118,6 @@ int		ft_nbrlen(long nbr);
 void	*ft_free_split(char **split);
 void	*ft_free(void **p);
 void	ft_free_str(char **str);
+void	ft_free_str_array(char ***str);
 
 #endif
