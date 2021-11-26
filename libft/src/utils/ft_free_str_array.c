@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 17:05:35 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/30 16:14:04 by toni             ###   ########.fr       */
+/*   Updated: 2021/11/26 14:22:45 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * Assumes that ft_split successfully split the string.
  * Returns NULL
 */
-void	*ft_free_split(char **split)
+void	*ft_free_str_array(char **split)
 {
 	int	i;
 

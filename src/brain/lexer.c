@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:34:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/26 22:24:48 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/11/26 23:17:24 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 static void	*free_tokens(char **tokens, char **adjusted)
 {
-	ft_free_split(tokens),
-	ft_free_split(adjusted);
+	ft_free_str_array(tokens),
+	ft_free_str_array(adjusted);
 	return (NULL);
 }
 
@@ -96,7 +96,7 @@ static char	**adjust_tokens(char **tokens)
 			return (free_tokens(tokens, adjusted));
 		j++;
 	}
-	ft_free_split(tokens);
+	ft_free_str_array(tokens);
 	return (adjusted);
 }
 
@@ -112,9 +112,9 @@ int	lexer(char *line)
 		return (EXIT_FAILURE);
 	if (parser(tokens) == EXIT_FAILURE)
 	{
-		ft_free_split(tokens);
+		ft_free_str_array(tokens);
 		return (EXIT_FAILURE);
 	}
-	ft_free_split(tokens);
+	ft_free_str_array(tokens);
 	return (EXIT_SUCCESS);
 }

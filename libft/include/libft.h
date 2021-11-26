@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 17:23:59 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/18 16:40:48 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/11/26 23:17:10 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ char	**ft_str_arr_realloc(char *array[], size_t size);
 /* UTILS */
 int		ft_hexnbrlen(unsigned long long nbr);
 int		ft_nbrlen(long nbr);
-void	*ft_free_split(char **split);
+void	*ft_free_str_array(char **split);
 void	*ft_free(void **p);
 
 #endif
