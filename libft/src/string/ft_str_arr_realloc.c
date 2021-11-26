@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/18 16:39:04 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/26 19:48:54 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/11/26 23:19:35 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ char	**ft_str_arr_realloc(char *array[], size_t size)
 		reallocated[i] = ft_strdup(array[i]);
 		i++;
 	}
-	ft_free_split(array);
+	ft_free_str_array(array);
 	return (reallocated);
 }

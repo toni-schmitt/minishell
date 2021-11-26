@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:35:35 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/26 23:16:56 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/11/26 23:21:23 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,13 +251,12 @@ int	parser(char *lexer_tokens[])
 	}
 	printf("\n");
 	exit_code = get_tokens(lexer_tokens);
-	
 	if (exit_code == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (exit_code == EXIT_SYNTAX_ERROR)
 	{
 		printf("minishell: Syntax Error at unspecified Token\n");
-		ft_free_split(lexer_tokens);
+		ft_free_str_array(lexer_tokens);
 		return (EXIT_SUCCESS);
 	}
 	tokens = get_par_toks();
