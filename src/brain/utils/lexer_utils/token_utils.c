@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 22:35:27 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/10 19:53:15 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/11/26 20:23:33 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,13 @@ char	get_next_special(char *token)
 
 bool	token_is_unadjusted(char *token)
 {
-	if (ft_strchr(token, '|') || ft_strchr(token, '<') \
-	|| ft_strchr(token, '>') || ft_strchr(token, ';'))
+	if ((ft_strchr(token, '|') && !ft_strstr(token, "||")) \
+	|| (ft_strchr(token, '<') && !ft_strstr(token, "<<")) \
+	|| (ft_strchr(token, '>') && !ft_strstr(token, ">>")))
 		if (ft_strlen(token) != 1)
 			return (true);
-	if (ft_strstr(token, "&&"))
+	if (ft_strstr(token, "&&") || ft_strstr(token, "<<") \
+	|| ft_strstr(token, ">>") || ft_strstr(token, "||"))
 		if (ft_strlen(token) != 2)
 			return (true);
 	return (false);
