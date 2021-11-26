@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 17:23:59 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/30 16:42:44 by toni             ###   ########.fr       */
+/*   Updated: 2021/11/26 14:22:03 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ char	*ft_strset(char *str, char *set);
 /* UTILS */
 int		ft_hexnbrlen(unsigned long long nbr);
 int		ft_nbrlen(long nbr);
-void	*ft_free_split(char **split);
+void	*ft_free_str_array(char **split);
 void	*ft_free(void **p);
 
 #endif

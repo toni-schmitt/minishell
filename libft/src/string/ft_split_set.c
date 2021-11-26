@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_set.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 15:20:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/30 16:16:03 by toni             ###   ########.fr       */
+/*   Updated: 2021/11/26 14:22:03 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	**ft_split_set(char *str, char *set)
 			str++;
 		arr[i] = ft_calloc(get_element_size(str, set) + 1, sizeof(*arr[i]));
 		if (arr[i] == NULL)
-			return (ft_free_split(arr));
+			return (ft_free_str_array(arr));
 		j = 0;
 		while (*str && ft_strchr(set, *str) == NULL)
 			arr[i][j++] = *str++;

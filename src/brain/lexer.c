@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:34:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/09 22:43:00 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/11/26 14:22:03 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 static void	*free_tokens(char **tokens, char **adjusted)
 {
-	ft_free_split(tokens),
-	ft_free_split(adjusted);
+	ft_free_str_array(tokens),
+	ft_free_str_array(adjusted);
 	return (NULL);
 }
 
@@ -93,7 +93,7 @@ static char	**adjust_tokens(char **tokens)
 			return (free_tokens(tokens, adjusted));
 		j++;
 	}
-	ft_free_split(tokens);
+	ft_free_str_array(tokens);
 	return (adjusted);
 }
 
@@ -109,9 +109,9 @@ int	lexer(char *line)
 		return (EXIT_FAILURE);
 	if (parser(tokens) == EXIT_FAILURE)
 	{
-		ft_free_split(tokens);
+		ft_free_str_array(tokens);
 		return (EXIT_FAILURE);
 	}
-	ft_free_split(tokens);
+	ft_free_str_array(tokens);
 	return (EXIT_SUCCESS);
 }
