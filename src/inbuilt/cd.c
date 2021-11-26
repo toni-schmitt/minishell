@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 14:12:17 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/25 16:42:39 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/26 12:17:12 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,12 @@ static int	ft_cd_home(t_env *envv)
 	home_path = find_home(envv->env_var);
 	if (home_path == NULL)
 		return (EXIT_FAILURE);
-	// cwd = getcwd(cwd, 0);
 	if (chdir(home_path) != 0)
 	{
 		ft_free_str(&home_path);
 		return (ft_exit_cd(&cwd, EXIT_FAILURE));
 	}
 	ft_update_env_var(envv, "OLDPWD", envv->pwd);
-	// ft_free_str(&cwd);
 	cwd = getcwd(cwd, 0);
 	ft_update_env_var(envv, "PWD", cwd);
 	ft_free_str(&home_path);
@@ -91,7 +89,7 @@ static int	ft_cd_home(t_env *envv)
 	return (ft_exit_cd(&cwd, EXIT_SUCCESS));
 }
 
-int	cd(char **argv, t_env *envv) //try to segfault it again!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+int	cd(char **argv, t_env *envv)
 {
 	char	*cwd;
 	DIR		*directory;
@@ -101,7 +99,6 @@ int	cd(char **argv, t_env *envv) //try to segfault it again!!!!!!!!!!!!!!!!!!!!!
 	if (argv[1] == NULL)
 		return (ft_cd_home(envv));
 	cwd = NULL;
-	// cwd = getcwd(cwd, 0);
 	directory = opendir(argv[1]);
 	if (directory == NULL)
 		return (ft_exit_cd(&cwd, EXIT_FAILURE));
@@ -110,7 +107,6 @@ int	cd(char **argv, t_env *envv) //try to segfault it again!!!!!!!!!!!!!!!!!!!!!
 	else if (chdir(argv[1]) != 0)
 		return (ft_exit_cd(&cwd, EXIT_FAILURE));
 	ft_update_env_var(envv, "OLDPWD", envv->pwd);
-	// ft_free_str(&cwd);
 	cwd = getcwd(cwd, 0);
 	ft_update_env_var(envv, "PWD", cwd);
 	if (envv->pwd == NULL || envv->oldpwd == NULL)
