@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:29:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/25 16:27:52 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/26 13:42:51 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int		export_input_error(char **argv);
 int		export_special(t_env *envv, t_export *exp);
 int		export_wd(t_env *envv, t_export *exp, char **argv);
 t_env	*init_envv(char **envp);
+int		reinit_env_var(t_env *envv, char **argv);
 char	*get_env_var_value(char **env_var, char *var);
 void	free_envv(t_env **envv);
 

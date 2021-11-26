@@ -6,29 +6,11 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 17:49:07 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/25 16:27:30 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/26 13:42:09 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-will change the value of the found element
-*/
-static int	ft_export_found(t_env *envv, t_export *exp, char **argv)
-{
-	if (ft_strcmp(envv->env_var[exp->i], exp->var) == 0
-		|| ft_strcmp(envv->env_var[exp->i], exp->var) == 61)
-	{
-		ft_free_str(&envv->env_var[exp->i]);
-		envv->env_var[exp->i] = ft_strdup(argv[exp->j++]);
-		ft_free_str(&exp->var);
-		if (envv->env_var[exp->i] == NULL)
-			return (EXIT_FAILURE);
-		return (2);
-	}
-	return (EXIT_SUCCESS);
-}
 
 /*
 will reallocate env_var for one additional element
@@ -47,6 +29,36 @@ static int	ft_export_new(t_env *envv, t_export *exp, char **argv)
 		if (export_special(envv, exp) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		return (2);
+	}
+	return (EXIT_SUCCESS);
+}
+
+/*
+will change the value of the found element
+*/
+static int	ft_export_found(t_env *envv, t_export *exp, char **argv)
+{
+	int	check;
+
+	if (ft_strcmp(envv->env_var[exp->i], exp->var) == 0
+		|| ft_strcmp(envv->env_var[exp->i], exp->var) == 61)
+	{
+		ft_free_str(&envv->env_var[exp->i]);
+		envv->env_var[exp->i] = ft_strdup(argv[exp->j++]);
+		ft_free_str(&exp->var);
+		if (envv->env_var[exp->i] == NULL)
+			return (EXIT_FAILURE);
+		exp->i++;
+		return (2);
+	}
+	else
+	{
+		exp->i++;
+		check = ft_export_new(envv, exp, argv);
+		if (check == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		else if (check == 2)
+			return (2);
 	}
 	return (EXIT_SUCCESS);
 }
@@ -72,26 +84,18 @@ static int	ft_export_loop(t_env *envv, t_export *exp, char **argv)
 {
 	int		check;
 
+	exp->j = 1;
 	while (argv[exp->j])
 	{
 		ft_split_var(exp, argv);
 		if (exp->var == NULL)
 			return (EXIT_FAILURE);
 		exp->i = 0;
-		if (ft_strcmp(exp->var, "PWD") == 0 || ft_strcmp(exp->var, "OLDPWD"))
-		{
-			if (export_wd(envv, exp, argv) == EXIT_FAILURE)
-				return (EXIT_FAILURE);
-		}
+		if (export_wd(envv, exp, argv) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
 		while (envv->env_var[exp->i])
 		{
 			check = ft_export_found(envv, exp, argv);
-			if (check == 2)
-				break ;
-			else if (check == EXIT_FAILURE)
-				return (EXIT_FAILURE);
-			exp->i++;
-			check = ft_export_new(envv, exp, argv);
 			if (check == 2)
 				break ;
 			else if (check == EXIT_FAILURE)
@@ -119,12 +123,8 @@ int	export(char **argv, t_env *envv)
 		exp = ft_calloc(1, sizeof(t_export));
 		if (exp == NULL)
 			return (EXIT_FAILURE);
-		exp->j = 1;
-		if (*envv->env_var == NULL)
-		{
-			envv->env_var = ft_realloc_str_arr(envv->env_var, 2);
-			envv->env_var[0] = ft_strdup(argv[1]);
-		}
+		if (reinit_env_var(envv, argv) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
 		if (ft_export_loop(envv, exp, argv) == EXIT_FAILURE)
 		{
 			free(exp);

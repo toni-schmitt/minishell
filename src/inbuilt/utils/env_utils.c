@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 11:29:18 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/23 16:04:04 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/26 13:40:44 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,16 @@ char	*get_env_var_value(char **env_var, char *var)
 	i = 0;
 	while (env_var && env_var[i] != NULL)
 	{
-		if (ft_strcmp(var, env_var[i]) == -61
-			|| ft_strcmp(var, env_var[i]) == 0)
+		if (ft_strcmp(var, env_var[i]) == -61)
 		{
 			value = ft_strdup(ft_strchr(env_var[i], '=') + 1);
 			break ;
 		}
 		i++;
 	}
+	if (value == NULL && (ft_strcmp(var, "PWD") == 0
+			|| ft_strcmp(var, "OLDPWD") == 0))
+		value = ft_calloc(1, sizeof(char));
 	return (value);
 }
 
@@ -68,4 +70,18 @@ void	free_envv(t_env **envv)
 	ft_free_str(&(*envv)->oldpwd);
 	free(*envv);
 	*envv = NULL;
+}
+
+int	reinit_env_var(t_env *envv, char **argv)
+{
+	if (*envv->env_var == NULL)
+	{
+		envv->env_var = ft_realloc_str_arr(envv->env_var, 2);
+		if (envv->env_var == NULL)
+			return (EXIT_FAILURE);
+		envv->env_var[0] = ft_strdup(argv[1]);
+		if (envv->env_var[0] == NULL)
+			return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 12:42:50 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/25 16:36:43 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/26 13:35:40 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,16 @@ will update envv->pwd/oldpwd if exported
 */
 int	export_wd(t_env *envv, t_export *exp, char **argv)
 {
-	if (ft_strlen(argv[exp->j]) > ft_strlen("PWD=") && ft_strncmp(argv[exp->j], "PWD=", 4) == 0)
+	if (ft_strlen(argv[exp->j]) > ft_strlen("PWD=")
+		&& ft_strncmp(argv[exp->j], "PWD=", 4) == 0)
 	{
 		ft_free_str(&envv->pwd);
 		envv->pwd = ft_strdup(ft_strchr(argv[exp->j], '='));
 		if (envv->pwd == NULL)
 			return (EXIT_FAILURE);
 	}
-	else if (ft_strlen(argv[exp->j]) > ft_strlen("OLDPWD=") && ft_strncmp(argv[exp->j], "OLDPWD=", 7) == 0)
+	else if (ft_strlen(argv[exp->j]) > ft_strlen("OLDPWD=")
+		&& ft_strncmp(argv[exp->j], "OLDPWD=", 7) == 0)
 	{
 		ft_free_str(&envv->oldpwd);
 		envv->oldpwd = ft_strdup(ft_strchr(argv[exp->j], '='));
