@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_str_array.c                                :+:      :+:    :+:   */
+/*   ft_str_arr_len.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/24 17:05:35 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/26 17:31:31 by tblaase          ###   ########.fr       */
+/*   Created: 2021/10/28 20:56:50 by tblaase           #+#    #+#             */
+/*   Updated: 2021/11/02 16:25:41 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /*
- * Frees allocated array returned by ft_split function.
- * Assumes that ft_split successfully split the string.
- * Returns NULL
+returns the size of an nullterminated array of strings
 */
-void	*ft_free_str_array(char **split)
+int	ft_str_arr_len(char **arr)
 {
-	//Toni's version!!!!!
 	int	i;
 
 	i = 0;
-	while (split && split[i])
-	{
-		free(split[i]);
+	while (arr && arr[i])
 		i++;
-	}
-	free(split);
-	return (NULL);
+	return (i);
 }

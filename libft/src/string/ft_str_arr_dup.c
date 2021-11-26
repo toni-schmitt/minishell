@@ -1,33 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_str_array.c                                :+:      :+:    :+:   */
+/*   ft_str_arr_dup.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/24 17:05:35 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/26 17:31:31 by tblaase          ###   ########.fr       */
+/*   Created: 2021/10/28 18:12:28 by tblaase           #+#    #+#             */
+/*   Updated: 2021/11/02 16:17:01 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /*
- * Frees allocated array returned by ft_split function.
- * Assumes that ft_split successfully split the string.
- * Returns NULL
+strdup for string arrays
+arr: the array to copy
+cpy: the copied array that gets returned
 */
-void	*ft_free_str_array(char **split)
+char	**ft_str_arr_dup(char **arr)
 {
-	//Toni's version!!!!!
-	int	i;
+	char	**cpy;
+	int		i;
 
+	if (arr == NULL)
+		return (NULL);
+	cpy = ft_calloc(ft_str_arr_len(arr) + 1, sizeof(*cpy));
+	if (cpy == NULL)
+		return (NULL);
 	i = 0;
-	while (split && split[i])
+	while (arr[i])
 	{
-		free(split[i]);
+		cpy[i] = ft_strdup(arr[i]);
 		i++;
 	}
-	free(split);
-	return (NULL);
+	return (cpy);
 }
