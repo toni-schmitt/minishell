@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 01:18:48 by toni              #+#    #+#             */
-/*   Updated: 2021/11/09 22:37:35 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/11/26 22:23:02 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ bool	is_special_char(char curr, char next);
 int		jump_to_end_of_subshell(char *tokens[], int i);
 int		get_subshell_count(char *tokens[], int i);
 bool	token_is_subshell(char *token);
+char	*get_end_of_subshell(char *tokens[], int *i, char *sub_tok);
 
 #endif
