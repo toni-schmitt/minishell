@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 20:11:39 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/26 20:29:59 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/11/26 23:14:23 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ int			get_tok_redir_type(char *lex_tok);
 
 // CHECK SYNTAX
 int			check_syntax(t_par_tok *par_toks[]);
+
+// interprete_vars
+int			interprete_vars(t_par_tok *par_toks[]);
 
 // GETTER / SETTER
 t_par_tok	**get_par_toks(void);

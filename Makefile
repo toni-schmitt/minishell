@@ -6,7 +6,7 @@
 #    By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
-#    Updated: 2021/11/26 20:30:18 by tschmitt         ###   ########.fr        #
+#    Updated: 2021/11/26 23:14:40 by tschmitt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ LIBFT_PATH = ./libft/
 SRC = 	$(SRC_PATH)main.c \
 		$(SRC_PATH)brain/lexer.c $(SRC_PATH)brain/parser.c $(SRC_PATH)brain/expander.c $(SRC_PATH)brain/executor.c \
 		$(SRC_PATH)brain/utils/lexer_utils/subshell_token_utils.c $(SRC_PATH)brain/utils/lexer_utils/token_utils.c $(SRC_PATH)brain/utils/envp_utils.c \
-		$(SRC_PATH)brain/utils/parser_utils/iter_get_set.c $(SRC_PATH)brain/utils/parser_utils/lexer_get_set.c $(SRC_PATH)brain/utils/parser_utils/par_tok_get_set.c $(SRC_PATH)brain/utils/parser_utils/parser_utils.c $(SRC_PATH)brain/utils/parser_utils/tok_redir_utils.c $(SRC_PATH)brain/utils/parser_utils/check_syntax.c
+		$(SRC_PATH)brain/utils/parser_utils/iter_get_set.c $(SRC_PATH)brain/utils/parser_utils/lexer_get_set.c $(SRC_PATH)brain/utils/parser_utils/par_tok_get_set.c $(SRC_PATH)brain/utils/parser_utils/parser_utils.c $(SRC_PATH)brain/utils/parser_utils/tok_redir_utils.c $(SRC_PATH)brain/utils/parser_utils/check_syntax.c $(SRC_PATH)brain/utils/parser_utils/interprete_vars.c
 OBJ = $(patsubst $(SRC_PATH)%.c, $(OBJ_PATH)%.o, $(SRC))
 
 # COLORS
