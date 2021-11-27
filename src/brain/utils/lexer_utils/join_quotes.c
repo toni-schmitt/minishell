@@ -6,48 +6,119 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 15:39:23 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/26 18:18:18 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/27 01:31:52 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static int	get_quotes_pos(char *tok)
+{
+	int	pos_single;
+	int	pos_double;
+
+	pos_single = ft_strclen(tok, '\'');
+	pos_double = ft_strclen(tok, '\"');
+	if (pos_single < pos_double)
+		return (pos_single);
+	return (pos_double);
+}
+
 static int	token_join(char ***tokens, int i)
 {
+	char	*start;
+	char	*end;
+	int		len;
 	int		j;
-	char	**split;
+	bool	is_single;
 
-	j = 0;
-	split = ft_split(*tokens[i], '\"');
-	while (split[j])
-		printf("split: '%s'\n", split[j++]);
-	// ft_free_str(&(*tokens[i]));
-	// if (ft_str_arr_len(split) > 1)
-	// {
-	// 	while (ft_strhas(split[j], '\"') == false)
-	// 	{
-	// 		*tokens[i] = ft_strstrjoin(*tokens[i], split[j], NULL);
-	// 		j++;
-	// 	}
-
-	// }
-
+	j = i;
+	start = (*tokens)[i];
+	len = get_quotes_pos(start);
+	printf("len: %d\n", len);
+	start = start + len;
+	if (*start == '\'')
+		is_single = true;
+	else
+		is_single = false;
+	printf("start:@%s@, is_single=%d\n", start, is_single);
+	if (*(*tokens)[j] != '\'' && *(*tokens)[j] != '\"')
+	{
+		(*tokens)[j++] = ft_realloc_str((*tokens)[i++], len);
+		if ((*tokens)[j - 1] == NULL)
+			return (EXIT_FAILURE);
+		(*tokens)[j] = ft_in_front_div(&(*tokens)[i++], start, " ");
+		if ((*tokens)[j] == NULL)
+			return (EXIT_FAILURE);
+	}
+	else
+	{
+		i++;
+		(*tokens)[j] = ft_strstrjoin((*tokens)[j], (*tokens)[i], " ");
+		if ((*tokens)[j] == NULL)
+			return (EXIT_FAILURE);
+		ft_free_single_str(tokens, i);
+	}
+	if (is_single)
+	{
+		while ((*tokens)[i] != NULL && ft_strhas((*tokens)[i], "\'") == false)
+		{
+			(*tokens)[j] = ft_strstrjoin((*tokens)[j], (*tokens)[i], " ");
+			printf("appended:@%s@\n", (*tokens)[j]);
+			ft_free_single_str(tokens, i);
+		}
+	}
+	else
+	{
+		while ((*tokens)[i] != NULL && ft_strhas((*tokens)[i], "\"") == false)
+		{
+			(*tokens)[j] = ft_strstrjoin((*tokens)[j], (*tokens)[i], " ");
+			printf("appended:@%s@\n", (*tokens)[j]);
+			ft_free_single_str(tokens, i);
+		}
+	}
+	if ((*tokens)[i] == NULL)
+		return (EXIT_SUCCESS);
+	end = (*tokens)[i];
+	if (is_single)
+		len = ft_strclen(end, '\'');
+	else
+		len = ft_strclen(end, '\"');
+	(*tokens)[j] = ft_append_len_div(&(*tokens)[j], end, len + 1, " ");
+	printf("end:@%s@\n", (*tokens)[j]);
+	if (is_single)
+		end = ft_strchr((*tokens)[i], '\'');
+	else
+		end = ft_strchr((*tokens)[i], '\"');
+	if (ft_strlen(end) == 1)
+		ft_free_single_str(tokens, i);
+	else
+	{
+		ft_free_str(&(*tokens)[i]);
+		(*tokens)[i] = ft_strdup(end + 1);
+	}
 	return (EXIT_SUCCESS);
 }
 
 int	join_quotes(char ***tokens)
 {
 	int		i;
-	// char	*start;
-	// char	*end;
 
-	// FOR TESTING TO COMPILE WHILE NOT FINISHEd ONLY
-	// return (EXIT_SUCCESS);
-	//
 	i = 0;
-	while (*tokens[i] && ft_strhas(*tokens[i], "\"")  == false)
-		i++;
-	if (*tokens[i] != NULL)
-		token_join(tokens, i);
+	if (*tokens == NULL)
+		return (EXIT_FAILURE);
+	while ((*tokens)[i])
+	{
+		if ((*tokens)[i] && (ft_strhas((*tokens)[i], "\"") == true
+			|| ft_strhas((*tokens)[i], "\'") == true))
+		{
+			if (token_join(tokens, i) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
+			i++;
+		}
+		else
+			i++;
+	}
+
 	return (EXIT_SUCCESS);
 }
