@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:35:35 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/27 01:48:19 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/27 02:00:40 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,7 +277,7 @@ int	parser(char *lexer_tokens[])
 	if (exit_code == EXIT_SYNTAX_ERROR)
 	{
 		printf("minishell: Syntax Error at unspecified Token\n");
-		ft_free_str_array(lexer_tokens);
+		ft_free_str_array(&lexer_tokens);
 		return (EXIT_SUCCESS);
 	}
 	tokens = get_par_toks();

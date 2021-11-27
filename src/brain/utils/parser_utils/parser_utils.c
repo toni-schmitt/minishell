@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 20:05:39 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/26 23:19:11 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/11/27 02:01:09 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int	free_parser(t_par_tok *par_tok[], t_iter *iter, int exit_status)
 	i = 0;
 	while (par_tok[i])
 	{
-		ft_free_str_array(par_tok[i]->cmd);
-		ft_free_str_array(par_tok[i]->in);
-		ft_free_str_array(par_tok[i]->out);
+		ft_free_str_array(&par_tok[i]->cmd);
+		ft_free_str_array(&par_tok[i]->in);
+		ft_free_str_array(&par_tok[i]->out);
 		free(par_tok[i]);
 		i++;
 	}
