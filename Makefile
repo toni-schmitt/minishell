@@ -6,13 +6,13 @@
 #    By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
-#    Updated: 2021/11/27 01:39:12 by tblaase          ###   ########.fr        #
+#    Updated: 2021/11/27 01:43:00 by tblaase          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # COMMANDS & FLAGS
 CC = gcc
-CC_FLAGS = -Wall -Werror -Wextra
+CC_FLAGS = -Wall -Werror -Wextra -g
 INCLUDE_FLAGS = -I ./include/ -I $(LIBFT_PATH)include/
 L_FLAGS = -lreadline
 RM = rm -f
@@ -29,7 +29,8 @@ LIBFT_PATH = ./libft/
 # FILES
 SRC = 	$(SRC_PATH)main.c \
 		$(SRC_PATH)brain/lexer.c $(SRC_PATH)brain/parser.c $(SRC_PATH)brain/expander.c $(SRC_PATH)brain/executor.c \
-		$(SRC_PATH)brain/utils/lexer_utils/subshell_token_utils.c $(SRC_PATH)brain/utils/lexer_utils/token_utils.c $(SRC_PATH)brain/utils/envp_utils.c $(SRC_PATH)brain/utils/lexer_utils/join_quotes.c
+		$(SRC_PATH)brain/utils/lexer_utils/subshell_token_utils.c $(SRC_PATH)brain/utils/lexer_utils/token_utils.c $(SRC_PATH)brain/utils/envp_utils.c $(SRC_PATH)brain/utils/lexer_utils/join_quotes.c \
+		$(SRC_PATH)brain/utils/parser_utils/iter_get_set.c $(SRC_PATH)brain/utils/parser_utils/lexer_get_set.c $(SRC_PATH)brain/utils/parser_utils/par_tok_get_set.c $(SRC_PATH)brain/utils/parser_utils/parser_utils.c $(SRC_PATH)brain/utils/parser_utils/tok_redir_utils.c $(SRC_PATH)brain/utils/parser_utils/check_syntax.c $(SRC_PATH)brain/utils/parser_utils/interprete_vars.c
 OBJ = $(patsubst $(SRC_PATH)%.c, $(OBJ_PATH)%.o, $(SRC))
 
 # COLORS
@@ -51,7 +52,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT_NAME)
 	@echo $(Y)Compiling [$(NAME)]...$(X)
-	@$(CC) $(CC_FLAGS) $(INCLUDE_FLAGS) $(L_FLAGS) $(LIBFT_NAME) $(OBJ) -o $(NAME)
+	@$(CC) $(OBJ) ./libft/obj/*.o $(CC_FLAGS) $(INCLUDE_FLAGS) $(L_FLAGS)  -o $(NAME)
 	@echo $(G)Finished [$(NAME)]$(X)
 
 $(LIBFT_NAME):

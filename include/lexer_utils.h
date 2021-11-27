@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 01:18:48 by toni              #+#    #+#             */
-/*   Updated: 2021/11/26 15:40:54 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/27 01:43:58 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@ int		jump_to_end_of_subshell(char *tokens[], int i);
 int		get_subshell_count(char *tokens[], int i);
 bool	token_is_subshell(char *token);
 int		join_quotes(char ***tokens);
+char	*get_end_of_subshell(char *tokens[], int *i, char *sub_tok);
 
 #endif

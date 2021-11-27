@@ -3,276 +3,286 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:35:35 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/16 21:27:53 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/11/27 01:48:19 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "brain.h"
+#include "parser_utils.h"
 
-#define TOKEN_FOUND 1
-#define TOKEN_NOT_FOUND 0
-
-static t_par_tok_type	try_get_token_type(char *token)
+static int	get_tok_cmd(
+	char *lex_tok, t_par_tok *par_tok, t_iter *iter
+	)
 {
-	if (ft_strlen(token) == 1)
-	{
-		if (ft_strchr(token, '|'))
-			return (pipe_redir);
-		if (ft_strchr(token, '<'))
-			return (in_out_redir);
-		if (ft_strchr(token, '>'))
-			return (in_out_redir);
-	}
-	if (ft_strlen(token) == 2)
-	{
-		if (ft_strstr(token, "<<"))
-			return (heredoc);
-		if (ft_strstr(token, "&&"))
-			return (and);
-		if (ft_strstr(token, "||"))
-			return (or);
-	}
-	// if (ft_strchr(token, '\''))
-	// 	return (single_quote);
-	// if (ft_strchr(token, '\"'))
-	// 	return (double_quote);
-	return (std);
+	if (((ft_strlen(lex_tok) == 2) && (ft_strstr(lex_tok, "&&") \
+	|| ft_strstr(lex_tok, "||") || ft_strstr(lex_tok, "<<") \
+	|| ft_strstr(lex_tok, ">>"))) \
+	|| ((ft_strlen(lex_tok) == 1) && (ft_strchr(lex_tok, '>') \
+	|| ft_strchr(lex_tok, '<') || ft_strchr(lex_tok, '|'))) \
+	|| (ft_strchr(lex_tok, '(')) || ft_strchr(lex_tok, ')'))
+		return (EXIT_SUCCESS);
+	init_token(&get_par_toks()[get_iter()[par]]);
+	par_tok->cmd_size++;
+	par_tok->cmd = ft_str_arr_realloc(par_tok->cmd, par_tok->cmd_size);
+	if (par_tok->cmd == NULL)
+		return (EXIT_FAILURE);
+	par_tok->cmd[iter[cmd]] = ft_strdup(lex_tok);
+	if (par_tok->cmd[iter[cmd]] == NULL)
+		return (EXIT_FAILURE);
+	iter[lex]++;
+	iter[cmd]++;
+	return (EXIT_SUCCESS);
 }
 
-typedef enum e_iterator
+static int	get_tok_redir(char *lex_toks[], t_iter *iter)
 {
-	lex = 0,
-	par = 1,
-	cmd = 2,
-	in = 3,
-	out = 4,
-}	t_iterator;
+	int		i;
+	t_iter	*buf_iter;
+	char	***buf;
+	size_t	*buf_size;
 
-static int	try_get_redir_token(
-	char *lex_toks[], t_parser_tok *tokens, t_iterator *iter)
-{
-	if (ft_strchr(lex_toks[iter[lex]], '<') && ft_strlen(lex_toks[iter[lex]]) == 1)
+	if (!try_get_tok_redir_buf(&buf, &buf_size, &buf_iter))
+		return (EXIT_SUCCESS);
+	init_token(&get_par_toks()[get_iter()[par]]);
+	get_curr_par_tok()->redir_type \
+	[get_tok_redir_type(lex_toks[iter[lex]])] = true;
+	(*buf_size) += 2;
+	*buf = ft_str_arr_realloc(*buf, *buf_size);
+	if (*buf == NULL)
+		return (EXIT_FAILURE);
+	i = 2;
+	while (i--)
 	{
-		tokens[iter[par]].in[iter[in]] = ft_strdup(lex_toks[iter[lex]]);
-		if (tokens[iter[par]].in[iter[in]] == NULL)
+		(*buf)[*buf_iter] = ft_strdup(lex_toks[iter[lex]++]);
+		if ((*buf)[(*buf_iter)++] == NULL)
 			return (EXIT_FAILURE);
-		iter[in]++;
-		iter[lex]++;
-		tokens[iter[par]].in[iter[in]] = ft_strdup(lex_toks[iter[lex]]);
-		if (tokens[iter[par]].in[iter[in]] == NULL)
-			return (EXIT_FAILURE);
-		iter[in]++;
-		iter[lex]++;
-	}
-	if ((ft_strchr(lex_toks[iter[lex]], '>') && ft_strlen(lex_toks[iter[lex]]) == 1) \
-	|| (ft_strstr(lex_toks[iter[lex]], ">>") && ft_strlen(lex_toks[iter[lex]]) == 2))
-	{
-		tokens[iter[par]].out[iter[out]] = ft_strdup(lex_toks[iter[lex]]);
-		if (tokens[iter[par]].out[iter[out]] == NULL)
-			return (EXIT_FAILURE);
-		iter[out]++;
-		iter[lex]++;
-		tokens[iter[par]].out[iter[out]] = ft_strdup(lex_toks[iter[lex]]);
-		if (tokens[iter[par]].out[iter[out]] == NULL)
-			return (EXIT_FAILURE);
-		iter[out]++;
-		iter[lex]++;
 	}
 	return (EXIT_SUCCESS);
 }
 
-static void	*exit_get_tokens(t_parser_tok *tokens, t_iterator *iter)
+static int	get_special_tok(
+	char *lex_toks[], t_par_tok *par_toks[], t_iter *iter
+	)
 {
-	int i;
+	char	*and_ptr;
+	char	*or_ptr;
+	char	*subshell_ptr;
 
-	i = 0;
-	while (&tokens[i])
+	and_ptr = ft_strstr(lex_toks[iter[lex]], "&&");
+	or_ptr = ft_strstr(lex_toks[iter[lex]], "||");
+	subshell_ptr = ft_strchr(lex_toks[iter[lex]], '(');
+	if ((ft_strlen(lex_toks[iter[lex]]) == 2) && (and_ptr || or_ptr))
 	{
-		ft_free_split(tokens[i].cmd);
-		ft_free_split(tokens[i].in);
-		ft_free_split(tokens[i].out);
-		i++;
+		// ft_free_split(tokens[i].cmd);
+		// ft_free_split(tokens[i].in);
+		// ft_free_split(tokens[i].out);
+		// i++;
+		iter[par]++;
+		init_token(&par_toks[iter[par]]);
+		if (and_ptr)
+			par_toks[iter[par]]->type = and;
+		else if (or_ptr)
+			par_toks[iter[par]]->type = or;
+		iter[par]++;
+		iter[lex]++;
+		return (EXIT_BREAK);
 	}
-	free(tokens);
-	free(iter);
-	return (NULL);
-}
-
-static int	init_token(t_parser_tok *token, t_iterator *iter)
-{
-	iter[cmd] = 0;
-	iter[in] = 0;
-	iter[out] = 0;
-	token->cmd = ft_calloc(100, sizeof(*token->cmd));
-	if (token->cmd == NULL)
-		return (EXIT_FAILURE);
-	token->in = ft_calloc(100, sizeof(*token->in));
-	if (token->in == NULL)
-		return (EXIT_FAILURE);
-	token->out = ft_calloc(100, sizeof(*token->out));
-	if (token->out == NULL)
-		return (EXIT_FAILURE);
-	token->type = std;
+	if (subshell_ptr)
+		return (get_subshell_tok(iter));
 	return (EXIT_SUCCESS);
 }
 
-static bool	is_end_of_token(char *token)
-{
-	if (ft_strlen(token) == 1)
-	{
-		if (ft_strchr(token, '|'))
-			return (true);
-		if (ft_strchr(token, '('))
-			return (true);
-		if (ft_strchr(token, ')'))
-			return (true);
-	}
-	if (ft_strlen(token) == 2)
-	{
-		if (ft_strstr(token, "&&"))
-			return (true);
-		if (ft_strstr(token, "||"))
-			return (true);
-	}
-	return (false);
-}
+#define NO_OF_ITERATORS 5
 
-static bool	is_valid_syntax(t_parser_tok token)
+static int	get_tok_type(char *lex_tok, t_iter *iter)
 {
-	(void)token;
-	return (true);
-}
+	t_par_tok	*par_tok;
 
-static char	*try_get_token_cmd(char *token)
-{
-	if (ft_strlen(token) == 1)
+	init_token(&get_par_toks()[get_iter()[par]]);
+	par_tok = get_curr_par_tok();
+	if (ft_strlen(lex_tok) == 1)
 	{
-		if (ft_strchr(token, '|'))
-			return (NULL);
-		if (ft_strchr(token, '('))
-			return (NULL);
-		if (ft_strchr(token, ')'))
-			return (NULL);
-		if (ft_strchr(token, '>'))
-			return (NULL);
-		if (ft_strchr(token, '<'))
-			return (NULL);
-	}
-	if (ft_strlen(token) == 2)
-	{
-		if (ft_strstr(token, ">>"))
-			return (NULL);
-		if (ft_strstr(token, "&&"))
-			return (NULL);
-		if (ft_strstr(token, "||"))
-			return (NULL);
-	}
-	return (ft_strdup(token));
-}
-
-int	try_get_special_token(char *lex_toks[], t_parser_tok *tokens, t_iterator *iter)
-{
-	int	i;
-
-	if (iter[lex] == 0)
-		i = 0;
-	else
-		i = iter[lex] - 1;
-	if (ft_strlen(lex_toks[i]) == 2)
-	{
-		if (ft_strstr(lex_toks[i], "&&"))
+		if (ft_strchr(lex_tok, '|'))
 		{
+			par_tok->redir_type[is_pipe] = true;
+			iter[lex]++;
 			iter[par]++;
-			tokens[par].cmd = NULL;
-			tokens[par].in = NULL;
-			tokens[par].out = NULL;
-			tokens[par].type = and;
-			return (TOKEN_FOUND);
+			init_token(&get_par_toks()[iter[par]]);
+			get_curr_par_tok()->redir_type[is_pipe] = true;
+			return (EXIT_BREAK);
 		}
-		if (ft_strstr(lex_toks[i], "||"))
-		{
-			iter[par]++;
-			tokens[par].cmd = NULL;
-			tokens[par].in = NULL;
-			tokens[par].out = NULL;
-			tokens[par].type = or;
-			return (TOKEN_FOUND);
-		}
+		if (ft_strchr(lex_tok, '<'))
+			par_tok->redir_type[is_in] = true;
+		if (ft_strchr(lex_tok, '>'))
+			par_tok->redir_type[is_out] = true;
 	}
-	return (TOKEN_NOT_FOUND);
+	if (ft_strlen(lex_tok) == 2 && ft_strstr(lex_tok, "<<"))
+		par_tok->redir_type[is_in_heredoc] = true;
+	if (ft_strlen(lex_tok) == 2 && ft_strstr(lex_tok, ">>"))
+		par_tok->redir_type[is_out_append] = true;
+	return (EXIT_SUCCESS);
 }
 
-static t_parser_tok	*get_tokens(char *lex_toks[])
+static int	get_tokens(char *lex_toks[])
 {
-	t_parser_tok	*tokens;
-	t_iterator		*iter;
+	t_par_tok	**par_toks;
+	t_iter		*iter;
 
-	iter = ft_calloc(6, sizeof(*iter));
+	iter = ft_calloc(NO_OF_ITERATORS + 1, sizeof(*iter));
 	if (iter == NULL)
-		return (NULL);
-	tokens = ft_calloc(100 + 1, sizeof(*tokens));
-	if (tokens == NULL)
-		return (NULL);
+		return (EXIT_FAILURE);
+	set_iter(iter);
+	par_toks = ft_calloc(get_tokens_size(lex_toks) + 1, sizeof(*par_toks));
+	if (par_toks == NULL)
+		return (EXIT_FAILURE);
+	set_par_toks(par_toks);
 	while (lex_toks[iter[lex]])
 	{
-		if (init_token(&tokens[iter[par]], iter) == EXIT_FAILURE)
-			return (NULL);
-		while (lex_toks[iter[lex]])
-		{
-			tokens[iter[par]].type = try_get_token_type(lex_toks[iter[lex]]);
-			if (try_get_redir_token(lex_toks, tokens, iter) == EXIT_FAILURE)
-				return (exit_get_tokens(tokens, iter));	
-			tokens[iter[par]].cmd[iter[cmd]++] = try_get_token_cmd(lex_toks[iter[lex]]);
-			iter[lex]++;
-			if (try_get_special_token(lex_toks, tokens, iter) == TOKEN_FOUND)
-				break ;
-			if (is_end_of_token(lex_toks[iter[lex] - 1]))
-				break ;
-		}
-		if (!is_valid_syntax(tokens[iter[par]]))
-			return ((void *)2);
-		iter[par]++;
+		// if (init_token(&tokens[iter[par]], iter) == EXIT_FAILURE)
+		// 	return (NULL);
+		// while (lex_toks[iter[lex]])
+		// {
+		// 	tokens[iter[par]].type = try_get_token_type(lex_toks[iter[lex]]);
+		// 	if (try_get_redir_token(lex_toks, tokens, iter) == EXIT_FAILURE)
+		// 		return (exit_get_tokens(tokens, iter));
+		// 	tokens[iter[par]].cmd[iter[cmd]++] = try_get_token_cmd(lex_toks[iter[lex]]);
+		// 	iter[lex]++;
+		// 	if (try_get_special_token(lex_toks, tokens, iter) == TOKEN_FOUND)
+		// 		break ;
+		// 	if (is_end_of_token(lex_toks[iter[lex] - 1]))
+		// 		break ;
+		// }
+		// if (!is_valid_syntax(tokens[iter[par]]))
+		// 	return ((void *)2);
+		// iter[par]++;
+		get_tok_type(lex_toks[iter[lex]], iter);
+		if (lex_toks[iter[lex]] && get_tok_redir(lex_toks, iter) == 1)
+			return (free_parser(par_toks, iter, EXIT_FAILURE));
+		if (lex_toks[iter[lex]] && \
+		get_tok_cmd(lex_toks[iter[lex]], par_toks[iter[par]], iter) == 1)
+			return (free_parser(par_toks, iter, EXIT_FAILURE));
+		if (lex_toks[iter[lex]] && \
+		get_special_tok(lex_toks, par_toks, iter) == EXIT_FAILURE)
+			return (free_parser(par_toks, iter, EXIT_FAILURE));
 	}
-	return (tokens);
+	interprete_vars(par_toks);
+	return (check_syntax(par_toks));
 }
 
-void prnt_token(t_parser_tok *tok)
+void prnt_token(t_par_tok *tok[])
 {
-	for (int i = 0; &tok[i]; i++)
+	char *white = "\033[0;37m";
+	char *red = "\033[0;31m";
+	char *green = "\033[0;32m";
+	char *purp = "\033[0;35m";
+	char *boldred = "\033[1;31m";
+	char *boldwhite = "\033[1;37m";
+	for (int i = 0; tok[i]; i++)
 	{
-		printf("Token[%i]\n", i);
-		printf("%p\n", &tok[i]);
-		printf("Token-Type: %i\n", tok[i].type);
-		printf("Token-Cmd:\n");
-		for (int j = 0; tok[i].cmd[j]; j++)
-			printf("%s\t", tok[i].cmd[j]);
-		printf("\n");
-		printf("Token-In:\n");
-		for (int k = 0; tok[i].in[k]; k++)
-			printf("%s\t", tok[i].in[k]);
-		printf("\n");
-		printf("Token-Out:\n");
-		for (int l = 0; tok[i].out[l]; l++)
-			printf("%s\t", tok[i].out[l]);
+		printf("%sToken [%d]:\n%s", boldwhite, i, white);
+		if (tok[i]->type != 0)
+			printf("%sType: %s", purp, white);
+		switch (tok[i]->type)
+		{
+			case 1:
+				printf("subshell\n");
+				break;
+			case 2:
+				printf("%s&&%s\n", boldwhite, white);
+				break;
+			case 3:
+				printf("%s||%s\n", boldwhite, white);
+				break;
+			default:
+				if (tok[i]->type != 0)
+					printf("%s%s%d is unsepcified\n%s", boldred, red, tok[i]->type, white);
+				break;
+		}
+		for (int m = 0; m < 5; m++)
+			if (tok[i]->redir_type[m])
+			{
+				printf("%sRedirections:\n%s", purp, white);
+				break;
+			}
+		for (int m = 0; m < 5; m++)
+		{
+			if (tok[i]->redir_type[m])
+			{
+				switch (m)
+				{
+					case 0:
+						printf("Is Pipe:\t");
+						break;
+					case 1:
+						printf("Is In:\t\t");
+						break;
+					case 2:
+						printf("Is Heredoc:\t");
+						break;
+					case 3:
+						printf("Is Out:\t\t");
+						break;
+					case 4:
+						printf("Is Out-Append:\t");
+						break;
+					default:
+						break;
+				}
+				printf("%strue\n%s", green, white);
+			}
+		}
+		if (tok[i]->cmd)
+		{
+			printf("%sCommand:\n%s", purp, white);
+			for (int j = 0; tok[i]->cmd && tok[i]->cmd[j]; j++)
+				printf("%s\t", tok[i]->cmd[j]);
+			printf("\n");
+		}
+		if (tok[i]->in)
+		{
+			printf("%sIn Redirections:\n%s", purp, white);
+			for (int k = 0; tok[i]->in && tok[i]->in[k]; k++)
+				printf("%s\t", tok[i]->in[k]);
+			printf("\n");
+		}
+		if (tok[i]->out)
+		{
+			printf("%sOut Redirections:\n%s", purp, white);
+			for (int l = 0; tok[i]->out && tok[i]->out[l]; l++)
+				printf("%s\t", tok[i]->out[l]);
+			printf("\n");
+		}
 		printf("\n");
 	}
-	printf("\n");
 }
 
 int	parser(char *lexer_tokens[])
 {
-	t_parser_tok	*tokens;
+	t_par_tok	**tokens;
+	int			exit_code;
 
-	for (int i = 0; lexer_tokens[i]; i++)
+	set_lex_toks(lexer_tokens);
+	for (size_t i = 0; lexer_tokens[i]; i++)
+	{
 		printf("%s\n", lexer_tokens[i]);
-	// return printf("\n");
-	tokens = get_tokens(lexer_tokens);
-	if (tokens == NULL)
+	}
+	printf("\n");
+	exit_code = get_tokens(lexer_tokens);
+	if (exit_code == EXIT_FAILURE)
 		return (EXIT_FAILURE);
+	if (exit_code == EXIT_SYNTAX_ERROR)
+	{
+		printf("minishell: Syntax Error at unspecified Token\n");
+		ft_free_str_array(lexer_tokens);
+		return (EXIT_SUCCESS);
+	}
+	tokens = get_par_toks();
 	prnt_token(tokens);
+	return (0);
 	if (expander(tokens) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 22:21:31 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/16 21:01:32 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/11/24 22:19:37 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,36 @@
 typedef enum e_parser_tok_type
 {
 	std = 0,
-	pipe_redir = 1,
-	in_out_redir = 2,
-	subshell = 3,
-	and = 4,
-	or = 5,
-	heredoc = 6,
+	subshell = 1,
+	and = 2,
+	or = 3,
 }	t_par_tok_type;
+
+typedef enum e_parser_redirection_type
+{
+	is_pipe = 0,
+	is_in = 1,
+	is_in_heredoc = 2,
+	is_out = 3,
+	is_out_append = 4,
+}	t_redir_type;
 
 typedef struct s_parser_tok
 {
 	t_par_tok_type	type;
+	t_redir_type	redir_type[5];
 	char			**cmd;
+	size_t			cmd_size;
 	char			**in;
+	size_t			in_size;
 	char			**out;
-}	t_parser_tok;
+	size_t			out_size;
+}	t_par_tok;
 
 // BRAIN
 int		lexer(char *line);
 int		parser(char *lexer_tokens[]);
-int		expander(t_parser_tok *parser_tokens);
+int		expander(t_par_tok *parser_tokens[]);
 int		executor(void);
 
 // BRAIN UTILS

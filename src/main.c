@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:28:36 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/31 00:40:51 by toni             ###   ########.fr       */
+/*   Updated: 2021/11/27 01:46:20 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "brain.h"
 
-/* 
+/*
  * STILL USES clear_history INSTEAD OF rl_clear_history
  * SUBJECT.PDF DOES NOT ALLOW CLEAR_HISTORY
  * GITHUB ACTION ONLY KNOWS clear_history!!!

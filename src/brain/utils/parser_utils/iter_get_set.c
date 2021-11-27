@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   iter_get_set.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/06 14:09:09 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/24 22:26:53 by tschmitt         ###   ########.fr       */
+/*   Created: 2021/11/24 20:12:29 by tschmitt          #+#    #+#             */
+/*   Updated: 2021/11/24 20:36:57 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "libft.h"
+#include "brain.h"
+#include "parser_utils.h"
 
-char	*ft_strdup(const char *str)
+static t_iter	*_get_iter(t_iter *iter)
 {
-	char	*duped;
-	int		duped_len;
+	static t_iter	*static_iter = NULL;
 
-	duped_len = ft_strlen(str);
-	if (str == NULL)
-		return (NULL);
-	duped = malloc((duped_len + 1) * sizeof(*duped));
-	if (duped == NULL)
-		return (NULL);
-	while (str && *str)
-		*duped++ = *str++;
-	*duped = '\0';
-	return (duped - duped_len);
+	if (iter == NULL)
+		return (static_iter);
+	static_iter = iter;
+	return (static_iter);
+}
+
+t_iter	*get_iter(void)
+{
+	return (_get_iter(NULL));
+}
+
+void	set_iter(t_iter *iter)
+{
+	_get_iter(iter);
 }

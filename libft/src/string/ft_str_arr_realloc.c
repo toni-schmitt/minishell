@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_str_arr_realloc.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/06 14:09:09 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/24 22:26:53 by tschmitt         ###   ########.fr       */
+/*   Created: 2021/11/18 16:39:04 by tschmitt          #+#    #+#             */
+/*   Updated: 2021/11/26 23:19:35 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
 
-char	*ft_strdup(const char *str)
+char	**ft_str_arr_realloc(char *array[], size_t size)
 {
-	char	*duped;
-	int		duped_len;
+	char	**reallocated;
+	int		i;
 
-	duped_len = ft_strlen(str);
-	if (str == NULL)
+	reallocated = ft_calloc(size + 1, sizeof(*reallocated));
+	if (reallocated == NULL)
 		return (NULL);
-	duped = malloc((duped_len + 1) * sizeof(*duped));
-	if (duped == NULL)
-		return (NULL);
-	while (str && *str)
-		*duped++ = *str++;
-	*duped = '\0';
-	return (duped - duped_len);
+	i = 0;
+	while (size-- && array && array[i])
+	{
+		reallocated[i] = ft_strdup(array[i]);
+		i++;
+	}
+	ft_free_str_array(array);
+	return (reallocated);
 }

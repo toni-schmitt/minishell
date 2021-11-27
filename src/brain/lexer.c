@@ -6,11 +6,12 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:34:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/27 00:24:10 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/27 01:46:33 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "brain.h"
 #include "lexer_utils.h"
 
 static void	*free_tokens(char **tokens, char **adjusted)
@@ -57,6 +58,8 @@ static char	*get_subshell_token(char *tokens[], int *i)
 	subshell_count = get_subshell_count(tokens, *i);
 	while (tokens[*i] && subshell_count)
 	{
+		if (ft_strchr(tokens[*i], ')') && subshell_count == 1)
+			return (get_end_of_subshell(tokens, i, subshell_token));
 		subshell_token = ft_append(&subshell_token, tokens[*i]);
 		if (subshell_token == NULL)
 			return (NULL);
