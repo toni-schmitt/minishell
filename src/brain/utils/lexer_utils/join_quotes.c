@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 15:39:23 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/27 01:31:52 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/28 23:12:39 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ static int	token_join(char ***tokens, int i)
 	j = i;
 	start = (*tokens)[i];
 	len = get_quotes_pos(start);
-	printf("len: %d\n", len);
-	start = start + len;
+	//printf("len: %d\n", len);
+	start = ft_strdup(start + len);
 	if (*start == '\'')
 		is_single = true;
 	else
 		is_single = false;
-	printf("start:@%s@, is_single=%d\n", start, is_single);
+	//printf("start:@%s@, is_single=%d\n", start, is_single);
 	if (*(*tokens)[j] != '\'' && *(*tokens)[j] != '\"')
 	{
 		(*tokens)[j++] = ft_realloc_str((*tokens)[i++], len);
@@ -64,7 +64,7 @@ static int	token_join(char ***tokens, int i)
 		while ((*tokens)[i] != NULL && ft_strhas((*tokens)[i], "\'") == false)
 		{
 			(*tokens)[j] = ft_strstrjoin((*tokens)[j], (*tokens)[i], " ");
-			printf("appended:@%s@\n", (*tokens)[j]);
+			//printf("appended:@%s@\n", (*tokens)[j]);
 			ft_free_single_str(tokens, i);
 		}
 	}
@@ -73,7 +73,7 @@ static int	token_join(char ***tokens, int i)
 		while ((*tokens)[i] != NULL && ft_strhas((*tokens)[i], "\"") == false)
 		{
 			(*tokens)[j] = ft_strstrjoin((*tokens)[j], (*tokens)[i], " ");
-			printf("appended:@%s@\n", (*tokens)[j]);
+			//printf("appended:@%s@\n", (*tokens)[j]);
 			ft_free_single_str(tokens, i);
 		}
 	}
@@ -85,17 +85,17 @@ static int	token_join(char ***tokens, int i)
 	else
 		len = ft_strclen(end, '\"');
 	(*tokens)[j] = ft_append_len_div(&(*tokens)[j], end, len + 1, " ");
-	printf("end:@%s@\n", (*tokens)[j]);
+	//printf("end:@%s@\n", (*tokens)[j]);
 	if (is_single)
-		end = ft_strchr((*tokens)[i], '\'');
+		end = ft_strdup(ft_strchr((*tokens)[i], '\''));
 	else
-		end = ft_strchr((*tokens)[i], '\"');
+		end = ft_strdup(ft_strchr((*tokens)[i], '\"'));
 	if (ft_strlen(end) == 1)
 		ft_free_single_str(tokens, i);
 	else
 	{
 		ft_free_str(&(*tokens)[i]);
-		(*tokens)[i] = ft_strdup(end + 1);
+		(*tokens)[i] = end;
 	}
 	return (EXIT_SUCCESS);
 }
@@ -114,7 +114,12 @@ int	join_quotes(char ***tokens)
 		{
 			if (token_join(tokens, i) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
-			i++;
+			{
+				if (ft_strhas((*tokens)[i], "\'") == false && ft_strhas((*tokens)[i], "\"") == false)
+					i+=2;
+				else
+					i++;
+			}
 		}
 		else
 			i++;

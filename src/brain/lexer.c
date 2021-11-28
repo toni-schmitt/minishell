@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:34:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/27 01:46:33 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/28 23:08:54 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,19 +115,18 @@ int	lexer(char *line)
 	tokens = adjust_tokens(tokens);
 	if (tokens == NULL)
 		return (EXIT_FAILURE);
-	// if (parser(tokens) == EXIT_FAILURE)
-	// {
-	// 	ft_free_str_array(&tokens);
-	// 	return (EXIT_FAILURE);
-	// }
 	int i = 0;
 	//this prints all tokens
 	while (tokens[i])
 	{
-		printf("token%d: %s\n", i, tokens[i]);
+		printf("token%d:##%s##\n", i, tokens[i]);
 		i++;
 	}
-	//
-	ft_free_str_array(&tokens);
+	if (parser(tokens) == EXIT_FAILURE)
+	{
+		ft_free_str_array(&tokens);
+		return (EXIT_FAILURE);
+	}
+	// ft_free_str_array(&tokens);
 	return (EXIT_SUCCESS);
 }
