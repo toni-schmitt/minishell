@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:35:35 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/27 02:00:40 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/29 18:43:17 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ static int	get_tok_cmd(
 	|| ft_strchr(lex_tok, '<') || ft_strchr(lex_tok, '|'))) \
 	|| (ft_strchr(lex_tok, '(')) || ft_strchr(lex_tok, ')'))
 		return (EXIT_SUCCESS);
-	init_token(&get_par_toks()[get_iter()[par]]);
+	if (init_curr_par_tok() == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	par_tok->cmd_size++;
 	par_tok->cmd = ft_str_arr_realloc(par_tok->cmd, par_tok->cmd_size);
 	if (par_tok->cmd == NULL)
@@ -47,7 +48,8 @@ static int	get_tok_redir(char *lex_toks[], t_iter *iter)
 
 	if (!try_get_tok_redir_buf(&buf, &buf_size, &buf_iter))
 		return (EXIT_SUCCESS);
-	init_token(&get_par_toks()[get_iter()[par]]);
+	if (init_curr_par_tok() == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	get_curr_par_tok()->redir_type \
 	[get_tok_redir_type(lex_toks[iter[lex]])] = true;
 	(*buf_size) += 2;
@@ -77,12 +79,9 @@ static int	get_special_tok(
 	subshell_ptr = ft_strchr(lex_toks[iter[lex]], '(');
 	if ((ft_strlen(lex_toks[iter[lex]]) == 2) && (and_ptr || or_ptr))
 	{
-		// ft_free_split(tokens[i].cmd);
-		// ft_free_split(tokens[i].in);
-		// ft_free_split(tokens[i].out);
-		// i++;
 		iter[par]++;
-		init_token(&par_toks[iter[par]]);
+		if (init_curr_par_tok() == EXIT_FAILURE)
+			return (EXIT_FAILURE);
 		if (and_ptr)
 			par_toks[iter[par]]->type = and;
 		else if (or_ptr)
@@ -98,23 +97,28 @@ static int	get_special_tok(
 
 #define NO_OF_ITERATORS 5
 
+int	set_tok_type_pipe(t_par_tok *par_tok, t_iter *iter)
+{
+	par_tok->redir_type[is_pipe] = true;
+	iter[lex]++;
+	iter[par]++;
+	if (init_curr_par_tok() == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	get_curr_par_tok()->redir_type[is_pipe] = true;
+	return (EXIT_BREAK);
+}
+
 static int	get_tok_type(char *lex_tok, t_iter *iter)
 {
 	t_par_tok	*par_tok;
 
-	init_token(&get_par_toks()[get_iter()[par]]);
+	if (init_curr_par_tok() == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	par_tok = get_curr_par_tok();
 	if (ft_strlen(lex_tok) == 1)
 	{
 		if (ft_strchr(lex_tok, '|'))
-		{
-			par_tok->redir_type[is_pipe] = true;
-			iter[lex]++;
-			iter[par]++;
-			init_token(&get_par_toks()[iter[par]]);
-			get_curr_par_tok()->redir_type[is_pipe] = true;
-			return (EXIT_BREAK);
-		}
+			return (set_tok_type_pipe(par_tok, iter));
 		if (ft_strchr(lex_tok, '<'))
 			par_tok->redir_type[is_in] = true;
 		if (ft_strchr(lex_tok, '>'))
@@ -142,23 +146,6 @@ static int	get_tokens(char *lex_toks[])
 	set_par_toks(par_toks);
 	while (lex_toks[iter[lex]])
 	{
-		// if (init_token(&tokens[iter[par]], iter) == EXIT_FAILURE)
-		// 	return (NULL);
-		// while (lex_toks[iter[lex]])
-		// {
-		// 	tokens[iter[par]].type = try_get_token_type(lex_toks[iter[lex]]);
-		// 	if (try_get_redir_token(lex_toks, tokens, iter) == EXIT_FAILURE)
-		// 		return (exit_get_tokens(tokens, iter));
-		// 	tokens[iter[par]].cmd[iter[cmd]++] = try_get_token_cmd(lex_toks[iter[lex]]);
-		// 	iter[lex]++;
-		// 	if (try_get_special_token(lex_toks, tokens, iter) == TOKEN_FOUND)
-		// 		break ;
-		// 	if (is_end_of_token(lex_toks[iter[lex] - 1]))
-		// 		break ;
-		// }
-		// if (!is_valid_syntax(tokens[iter[par]]))
-		// 	return ((void *)2);
-		// iter[par]++;
 		get_tok_type(lex_toks[iter[lex]], iter);
 		if (lex_toks[iter[lex]] && get_tok_redir(lex_toks, iter) == 1)
 			return (free_parser(par_toks, iter, EXIT_FAILURE));
