@@ -6,7 +6,7 @@
 #    By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
-#    Updated: 2021/11/29 18:42:00 by tschmitt         ###   ########.fr        #
+#    Updated: 2021/11/29 19:56:19 by tschmitt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,13 +25,17 @@ LIBFT_NAME = $(LIBFT_PATH)lib/libft.a
 SRC_PATH = ./src/
 OBJ_PATH = ./obj/
 LIBFT_PATH = ./libft/
+BRAIN_PATH = $(SRC_PATH)brain/
+LEXER_UTILS_PATH = $(BRAIN_PATH)utils/lexer_utils/
+BRAIN_GETTER_SETTER_PATH = $(BRAIN_PATH)utils/getter_setter/
+PARSER_UTILS_PATH = $(BRAIN_PATH)utils/parser_utils/
 
 # FILES
 SRC = 	$(SRC_PATH)main.c \
-		$(SRC_PATH)brain/lexer.c $(SRC_PATH)brain/parser.c $(SRC_PATH)brain/expander.c $(SRC_PATH)brain/executor.c \
-		$(SRC_PATH)brain/utils/lexer_utils/subshell_token_utils.c $(SRC_PATH)brain/utils/lexer_utils/token_utils.c $(SRC_PATH)brain/utils/lexer_utils/join_quotes.c \
-		$(SRC_PATH)brain/utils/getter_setter/envp_get_set.c $(SRC_PATH)brain/utils/getter_setter/iter_get_set.c $(SRC_PATH)brain/utils/getter_setter/lexer_get_set.c $(SRC_PATH)brain/utils/getter_setter/par_tok_get_set.c \
-		$(SRC_PATH)brain/utils/parser_utils/parser_utils.c $(SRC_PATH)brain/utils/parser_utils/tok_redir_utils.c $(SRC_PATH)brain/utils/parser_utils/check_syntax.c $(SRC_PATH)brain/utils/parser_utils/interprete_vars.c
+		$(BRAIN_PATH)lexer.c $(BRAIN_PATH)parser.c $(BRAIN_PATH)expander.c $(BRAIN_PATH)executor.c \
+		$(LEXER_UTILS_PATH)subshell_token_utils.c $(LEXER_UTILS_PATH)token_utils.c $(LEXER_UTILS_PATH)join_quotes.c \
+		$(BRAIN_GETTER_SETTER_PATH)envp_get_set.c $(BRAIN_GETTER_SETTER_PATH)iter_get_set.c $(BRAIN_GETTER_SETTER_PATH)lexer_get_set.c $(BRAIN_GETTER_SETTER_PATH)par_tok_get_set.c \
+		$(PARSER_UTILS_PATH)check_syntax.c $(PARSER_UTILS_PATH)get_tokens_utils.c $(PARSER_UTILS_PATH)get_tokens.c $(PARSER_UTILS_PATH)interprete_vars.c $(PARSER_UTILS_PATH)parser_utils.c $(PARSER_UTILS_PATH)tok_redir_utils.c
 OBJ = $(patsubst $(SRC_PATH)%.c, $(OBJ_PATH)%.o, $(SRC))
 
 # COLORS
