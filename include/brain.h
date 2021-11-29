@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 22:21:31 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/24 22:19:37 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/11/29 18:43:03 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,35 @@ typedef struct s_parser_tok
 	size_t			out_size;
 }	t_par_tok;
 
+typedef enum e_iterator
+{
+	lex = 0,
+	par = 1,
+	cmd = 2,
+	in = 3,
+	out = 4,
+}	t_iter;
+
 // BRAIN
-int		lexer(char *line);
-int		parser(char *lexer_tokens[]);
-int		expander(t_par_tok *parser_tokens[]);
-int		executor(void);
+int			lexer(char *line);
+int			parser(char *lexer_tokens[]);
+int			expander(t_par_tok *parser_tokens[]);
+int			executor(void);
 
 // BRAIN UTILS
 
+// GETTER / SETTER
+t_par_tok	**get_par_toks(void);
+t_par_tok	*get_curr_par_tok(void);
+void		set_par_toks(t_par_tok **par_toks);
+t_iter		*get_iter(void);
+void		set_iter(t_iter *iter);
+char		**get_lex_toks(void);
+char		*get_curr_lex_tok(void);
+void		set_lex_toks(char **lex_toks);
+
 // ENVP UTILS
-void	set_envp(char *envp[]);
-char	**get_envp(void);
+void		set_envp(char *envp[]);
+char		**get_envp(void);
 
 #endif
