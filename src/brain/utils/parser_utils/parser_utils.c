@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 20:05:39 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/29 18:42:22 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/11/29 19:42:49 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 #include "minishell.h"
 #include "parser_utils.h"
 
+/**
+ * @brief  Allocates current parser token and resets cmd- in- and out-iterator
+ * @note   
+ * @retval int to indicate success or failure
+ */
 int	init_curr_par_tok(void)
 {
 	t_par_tok	**par_toks;
@@ -32,6 +37,15 @@ int	init_curr_par_tok(void)
 	return (EXIT_SUCCESS);
 }
 
+/**
+ * @brief  Correctly frees allocated memory for parser tokens and iterator
+ * @note   
+ * @param  *par_tok[]: Parser Tokens
+ * @param  *iter: Iterator of Parser Tokens, Lexer Tokens, Command-, In- and 
+ * * Out-Array
+ * @param  exit_status: Exit status to return
+ * @retval Returns exit_status
+ */
 int	free_parser(t_par_tok *par_tok[], t_iter *iter, int exit_status)
 {
 	int	i;
@@ -50,6 +64,12 @@ int	free_parser(t_par_tok *par_tok[], t_iter *iter, int exit_status)
 	return (exit_status);
 }
 
+/**
+ * @brief  Returns correct size for allocation of Parser-Tokens-Array
+ * @note   
+ * @param  *lex_toks[]: 
+ * @retval Correct Size for allocation
+ */
 size_t	get_tokens_size(char *lex_toks[])
 {
 	size_t	size;
@@ -77,27 +97,4 @@ size_t	get_tokens_size(char *lex_toks[])
 	}
 	size++;
 	return (size);
-}
-
-int	get_subshell_tok(t_iter *iter)
-{
-	char		*lex_tok;
-	t_par_tok	*par_tok;
-
-	if (init_curr_par_tok() == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	lex_tok = get_curr_lex_tok();
-	par_tok = get_curr_par_tok();
-	par_tok->cmd_size++;
-	par_tok->cmd = ft_str_arr_realloc(par_tok->cmd, par_tok->cmd_size);
-	if (par_tok->cmd == NULL)
-		return (EXIT_FAILURE);
-	par_tok->cmd[iter[cmd]] = ft_strdup(lex_tok);
-	if (par_tok->cmd[iter[cmd]] == NULL)
-		return (EXIT_FAILURE);
-	iter[cmd]++;
-	par_tok->type = subshell;
-	iter[lex]++;
-	// iter[par]++;
-	return (EXIT_BREAK);
 }

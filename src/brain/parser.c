@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:35:35 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/29 18:43:17 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/11/29 19:51:18 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,123 +14,14 @@
 #include "brain.h"
 #include "parser_utils.h"
 
-static int	get_tok_cmd(
-	char *lex_tok, t_par_tok *par_tok, t_iter *iter
-	)
-{
-	if (((ft_strlen(lex_tok) == 2) && (ft_strstr(lex_tok, "&&") \
-	|| ft_strstr(lex_tok, "||") || ft_strstr(lex_tok, "<<") \
-	|| ft_strstr(lex_tok, ">>"))) \
-	|| ((ft_strlen(lex_tok) == 1) && (ft_strchr(lex_tok, '>') \
-	|| ft_strchr(lex_tok, '<') || ft_strchr(lex_tok, '|'))) \
-	|| (ft_strchr(lex_tok, '(')) || ft_strchr(lex_tok, ')'))
-		return (EXIT_SUCCESS);
-	if (init_curr_par_tok() == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	par_tok->cmd_size++;
-	par_tok->cmd = ft_str_arr_realloc(par_tok->cmd, par_tok->cmd_size);
-	if (par_tok->cmd == NULL)
-		return (EXIT_FAILURE);
-	par_tok->cmd[iter[cmd]] = ft_strdup(lex_tok);
-	if (par_tok->cmd[iter[cmd]] == NULL)
-		return (EXIT_FAILURE);
-	iter[lex]++;
-	iter[cmd]++;
-	return (EXIT_SUCCESS);
-}
-
-static int	get_tok_redir(char *lex_toks[], t_iter *iter)
-{
-	int		i;
-	t_iter	*buf_iter;
-	char	***buf;
-	size_t	*buf_size;
-
-	if (!try_get_tok_redir_buf(&buf, &buf_size, &buf_iter))
-		return (EXIT_SUCCESS);
-	if (init_curr_par_tok() == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	get_curr_par_tok()->redir_type \
-	[get_tok_redir_type(lex_toks[iter[lex]])] = true;
-	(*buf_size) += 2;
-	*buf = ft_str_arr_realloc(*buf, *buf_size);
-	if (*buf == NULL)
-		return (EXIT_FAILURE);
-	i = 2;
-	while (i--)
-	{
-		(*buf)[*buf_iter] = ft_strdup(lex_toks[iter[lex]++]);
-		if ((*buf)[(*buf_iter)++] == NULL)
-			return (EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
-}
-
-static int	get_special_tok(
-	char *lex_toks[], t_par_tok *par_toks[], t_iter *iter
-	)
-{
-	char	*and_ptr;
-	char	*or_ptr;
-	char	*subshell_ptr;
-
-	and_ptr = ft_strstr(lex_toks[iter[lex]], "&&");
-	or_ptr = ft_strstr(lex_toks[iter[lex]], "||");
-	subshell_ptr = ft_strchr(lex_toks[iter[lex]], '(');
-	if ((ft_strlen(lex_toks[iter[lex]]) == 2) && (and_ptr || or_ptr))
-	{
-		iter[par]++;
-		if (init_curr_par_tok() == EXIT_FAILURE)
-			return (EXIT_FAILURE);
-		if (and_ptr)
-			par_toks[iter[par]]->type = and;
-		else if (or_ptr)
-			par_toks[iter[par]]->type = or;
-		iter[par]++;
-		iter[lex]++;
-		return (EXIT_BREAK);
-	}
-	if (subshell_ptr)
-		return (get_subshell_tok(iter));
-	return (EXIT_SUCCESS);
-}
-
 #define NO_OF_ITERATORS 5
 
-int	set_tok_type_pipe(t_par_tok *par_tok, t_iter *iter)
-{
-	par_tok->redir_type[is_pipe] = true;
-	iter[lex]++;
-	iter[par]++;
-	if (init_curr_par_tok() == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	get_curr_par_tok()->redir_type[is_pipe] = true;
-	return (EXIT_BREAK);
-}
-
-static int	get_tok_type(char *lex_tok, t_iter *iter)
-{
-	t_par_tok	*par_tok;
-
-	if (init_curr_par_tok() == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	par_tok = get_curr_par_tok();
-	if (ft_strlen(lex_tok) == 1)
-	{
-		if (ft_strchr(lex_tok, '|'))
-			return (set_tok_type_pipe(par_tok, iter));
-		if (ft_strchr(lex_tok, '<'))
-			par_tok->redir_type[is_in] = true;
-		if (ft_strchr(lex_tok, '>'))
-			par_tok->redir_type[is_out] = true;
-	}
-	if (ft_strlen(lex_tok) == 2 && ft_strstr(lex_tok, "<<"))
-		par_tok->redir_type[is_in_heredoc] = true;
-	if (ft_strlen(lex_tok) == 2 && ft_strstr(lex_tok, ">>"))
-		par_tok->redir_type[is_out_append] = true;
-	return (EXIT_SUCCESS);
-}
-
+/**
+ * @brief  Trys to create correct tokens for expander
+ * @note   
+ * @param  *lex_toks[]: Tokens from lexer to create parser tokens from
+ * @retval int to indicate exit status
+ */
 static int	get_tokens(char *lex_toks[])
 {
 	t_par_tok	**par_toks;
@@ -156,8 +47,22 @@ static int	get_tokens(char *lex_toks[])
 		get_special_tok(lex_toks, par_toks, iter) == EXIT_FAILURE)
 			return (free_parser(par_toks, iter, EXIT_FAILURE));
 	}
-	interprete_vars(par_toks);
-	return (check_syntax(par_toks));
+	return (EXIT_FAILURE);
+}
+
+static char	**interprete_env_vars(char *lex_toks[])
+{
+	int	i;
+
+	i = 0;
+	while (lex_toks[i])
+	{
+		lex_toks[i] = interprete_vars(lex_toks[i]);
+		if (lex_toks[i] == NULL)
+			return (NULL);
+		i++;
+	}
+	return (lex_toks);
 }
 
 void prnt_token(t_par_tok *tok[])
@@ -252,6 +157,9 @@ int	parser(char *lexer_tokens[])
 	t_par_tok	**tokens;
 	int			exit_code;
 
+	lexer_tokens = interprete_env_vars(lexer_tokens);
+	if (lexer_tokens == NULL)
+		return (EXIT_FAILURE);
 	set_lex_toks(lexer_tokens);
 	for (size_t i = 0; lexer_tokens[i]; i++)
 	{
