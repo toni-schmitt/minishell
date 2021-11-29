@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:34:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/28 23:08:54 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/29 15:57:59 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static char	**adjust_tokens(char **tokens)
 
 int	lexer(char *line)
 {
-	char	**tokens;
+	char	**tokens = NULL;
 
 	tokens = ft_split_set(line, " \t\r\v\f\n");
 	if (join_quotes(&tokens) == EXIT_FAILURE)
@@ -122,11 +122,11 @@ int	lexer(char *line)
 		printf("token%d:##%s##\n", i, tokens[i]);
 		i++;
 	}
-	if (parser(tokens) == EXIT_FAILURE)
-	{
-		ft_free_str_array(&tokens);
-		return (EXIT_FAILURE);
-	}
-	// ft_free_str_array(&tokens);
+	//if (parser(tokens) == EXIT_FAILURE)
+	//{
+	//	ft_free_str_array(&tokens);
+	//	return (EXIT_FAILURE);
+	//}
+	ft_free_str_array(&tokens);
 	return (EXIT_SUCCESS);
 }

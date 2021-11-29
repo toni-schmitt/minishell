@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 15:39:23 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/28 23:12:39 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/29 15:56:39 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static int	get_quotes_pos(char *tok)
 
 static int	token_join(char ***tokens, int i)
 {
-	char	*start;
-	char	*end;
+	char	*start = NULL;
+	char	*end = NULL;
 	int		len;
 	int		j;
 	bool	is_single;
@@ -79,24 +79,26 @@ static int	token_join(char ***tokens, int i)
 	}
 	if ((*tokens)[i] == NULL)
 		return (EXIT_SUCCESS);
-	end = (*tokens)[i];
+	end = ft_strdup((*tokens)[i]);
 	if (is_single)
-		len = ft_strclen(end, '\'');
+		len = ft_strclen(end, '\'') + 1;
 	else
-		len = ft_strclen(end, '\"');
-	(*tokens)[j] = ft_append_len_div(&(*tokens)[j], end, len + 1, " ");
+		len = ft_strclen(end, '\"') + 1;
+	(*tokens)[j] = ft_append_len_div(&(*tokens)[j], end, len, " ");
 	//printf("end:@%s@\n", (*tokens)[j]);
-	if (is_single)
-		end = ft_strdup(ft_strchr((*tokens)[i], '\''));
-	else
-		end = ft_strdup(ft_strchr((*tokens)[i], '\"'));
+	//if (is_single)
+	//	end = ft_strdup(ft_strchr((*tokens)[i], '\''));
+	//else
+	//	end = ft_strdup(ft_strchr((*tokens)[i], '\"'));
 	if (ft_strlen(end) == 1)
 		ft_free_single_str(tokens, i);
 	else
 	{
 		ft_free_str(&(*tokens)[i]);
-		(*tokens)[i] = end;
+		(*tokens)[i] = ft_strdup(end + len);
 	}
+	ft_free_str(&start);
+	ft_free_str(&end);
 	return (EXIT_SUCCESS);
 }
 
@@ -104,6 +106,7 @@ int	join_quotes(char ***tokens)
 {
 	int		i;
 
+	//return (EXIT_SUCCESS);
 	i = 0;
 	if (*tokens == NULL)
 		return (EXIT_FAILURE);
