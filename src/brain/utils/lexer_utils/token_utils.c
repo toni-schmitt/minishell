@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 22:35:27 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/26 20:23:33 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/11/29 20:52:02 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,21 @@ size_t	get_next_token_size(char *token, char next_special)
 	size_t	size;
 
 	size = 0;
-	if (*token == next_special && *(token + 1) && *(token + 1) == next_special)
-		return (2);
-	else if (*token == next_special)
-		return (1);
-	while (*token && *token != next_special)
+	if (*token == next_special)
 	{
-		size++;
-		token++;
+		while (*token && *token == next_special)
+		{
+			token++;
+			size++;
+		}
+	}
+	else
+	{
+		while (*token && *token != next_special)
+		{
+			size++;
+			token++;
+		}
 	}
 	return (size);
 }
