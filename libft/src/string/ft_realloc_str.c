@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 19:55:37 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/22 19:04:03 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/30 22:07:23 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*ft_realloc_str(char *str, size_t size)
 		return (NULL);
 	}
 	i = 0;
-	while (str && size--)
+	while (str && str[i] && size--)
 	{
 		new[i] = str[i];
 		i++;
