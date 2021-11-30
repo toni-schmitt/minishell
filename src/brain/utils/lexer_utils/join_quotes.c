@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 15:39:23 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/29 15:56:39 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/30 22:55:32 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static int	token_join(char ***tokens, int i)
 	else
 		is_single = false;
 	//printf("start:@%s@, is_single=%d\n", start, is_single);
+	//*tokens = ft_add_single_str(tokens, ++j, start); // try to implement the new function!!!!!!!!!!!!!!!!!!!!!
 	if (*(*tokens)[j] != '\'' && *(*tokens)[j] != '\"')
 	{
 		(*tokens)[j++] = ft_realloc_str((*tokens)[i++], len);
@@ -78,7 +79,10 @@ static int	token_join(char ***tokens, int i)
 		}
 	}
 	if ((*tokens)[i] == NULL)
+	{
+		ft_free_str(&start);
 		return (EXIT_SUCCESS);
+	}
 	end = ft_strdup((*tokens)[i]);
 	if (is_single)
 		len = ft_strclen(end, '\'') + 1;
