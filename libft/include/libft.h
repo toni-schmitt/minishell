@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 17:23:59 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/27 01:45:38 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/30 22:51:02 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ int		ft_strclen(char *str, char c);
 char	*ft_append_len_div(char **dst, char *src, int len, char *div);
 char	*ft_in_front_div(char **dst, char *src, char *div);
 char	**ft_str_arr_realloc(char *array[], size_t size);
+char	**ft_add_single_str(char ***arr, int pos, char *new);
 
 /* UTILS */
 int		ft_hexnbrlen(unsigned long long nbr);
