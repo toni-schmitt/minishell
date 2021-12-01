@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   brain.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 22:21:31 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/24 22:19:37 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/01 18:37:28 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,14 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 
+typedef struct s_lexer
+{
+	int		i;
+	int		j;
+	int		len;
+	char	*start;
+	char	*end;
+}	t_lexer;
 typedef enum e_parser_tok_type
 {
 	std = 0,
