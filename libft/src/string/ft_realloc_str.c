@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 19:55:37 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/30 22:07:23 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/01 11:41:29 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ str: adress of the string you want to realloc
 size: number of elements you want to realloc
 new: adress of the reallocated string
 */
-char	*ft_realloc_str(char *str, size_t size)
+char	*ft_realloc_str(char *str, int size)
 {
 	char	*new;
 	int		i;
