@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 22:21:31 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/02 16:27:20 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/02 18:39:09 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_quotes
 	int		len;
 	char	*start;
 	char	*end;
-	bool	is_single;
+	char	*quote;
 }	t_quotes;
 typedef enum e_parser_tok_type
 {
