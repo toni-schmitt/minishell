@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 22:35:27 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/29 20:52:02 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/02 16:49:01 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ char	get_next_special(char *token)
 
 bool	token_is_unadjusted(char *token)
 {
+	if (ft_strchr(token, '\'') || ft_strchr(token, '\"'))
+		return (false);
 	if ((ft_strchr(token, '|') && !ft_strstr(token, "||")) \
 	|| (ft_strchr(token, '<') && !ft_strstr(token, "<<")) \
 	|| (ft_strchr(token, '>') && !ft_strstr(token, ">>")))
