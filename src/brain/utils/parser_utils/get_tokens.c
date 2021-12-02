@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 19:02:18 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/29 19:37:55 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/02 14:52:00 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
  */
 int	get_tok_cmd(char *lex_tok, t_par_tok *par_tok, t_iter *iter)
 {
+	if (lex_tok == NULL)
+		return (EXIT_SUCCESS);
 	if (((ft_strlen(lex_tok) == 2) && (ft_strstr(lex_tok, "&&") \
 	|| ft_strstr(lex_tok, "||") || ft_strstr(lex_tok, "<<") \
 	|| ft_strstr(lex_tok, ">>"))) \
@@ -59,6 +61,8 @@ int	get_tok_redir(char *lex_toks[], t_iter *iter)
 	char	***buf;
 	size_t	*buf_size;
 
+	if (lex_toks[iter[lex]] == NULL)
+		return (EXIT_SUCCESS);
 	if (!try_get_tok_redir_buf(&buf, &buf_size, &buf_iter))
 		return (EXIT_SUCCESS);
 	if (init_curr_par_tok() == EXIT_FAILURE)
@@ -94,6 +98,8 @@ int	get_special_tok(char *lex_toks[], t_par_tok *par_toks[], t_iter *iter)
 	char	*or_ptr;
 	char	*subshell_ptr;
 
+	if (lex_toks[iter[lex]] == NULL)
+		return (EXIT_SUCCESS);
 	and_ptr = ft_strstr(lex_toks[iter[lex]], "&&");
 	or_ptr = ft_strstr(lex_toks[iter[lex]], "||");
 	subshell_ptr = ft_strchr(lex_toks[iter[lex]], '(');
@@ -127,6 +133,8 @@ int	get_tok_type(char *lex_tok, t_iter *iter)
 {
 	t_par_tok	*par_tok;
 
+	if (lex_tok == NULL)
+		return (EXIT_SUCCESS);
 	if (init_curr_par_tok() == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	par_tok = get_curr_par_tok();
