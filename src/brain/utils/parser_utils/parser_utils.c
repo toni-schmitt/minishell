@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 20:05:39 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/29 19:42:49 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/02 17:33:38 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,22 @@ int	init_curr_par_tok(void)
 	return (EXIT_SUCCESS);
 }
 
+void	free_par_toks(t_par_tok *par_toks[])
+{
+	int	i;
+
+	i = 0;
+	while (par_toks[i])
+	{
+		ft_free_str_array(&par_toks[i]->cmd);
+		ft_free_str_array(&par_toks[i]->in);
+		ft_free_str_array(&par_toks[i]->out);
+		free(par_toks[i]);
+		i++;
+	}
+	free(par_toks);
+}
+
 /**
  * @brief  Correctly frees allocated memory for parser tokens and iterator
  * @note   
@@ -48,18 +64,7 @@ int	init_curr_par_tok(void)
  */
 int	free_parser(t_par_tok *par_tok[], t_iter *iter, int exit_status)
 {
-	int	i;
-
-	i = 0;
-	while (par_tok[i])
-	{
-		ft_free_str_array(&par_tok[i]->cmd);
-		ft_free_str_array(&par_tok[i]->in);
-		ft_free_str_array(&par_tok[i]->out);
-		free(par_tok[i]);
-		i++;
-	}
-	free(par_tok);
+	free_par_toks(par_tok);
 	free(iter);
 	return (exit_status);
 }
