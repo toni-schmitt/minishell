@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:35:35 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/02 14:51:33 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/02 17:35:14 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ static int	get_tokens(char *lex_toks[])
 		else if (get_par_tok_exit_status == EXIT_SYNTAX_ERROR)
 			return (free_parser(par_toks, iter, EXIT_SYNTAX_ERROR));
 	}
+	free(iter);
 	return (EXIT_SUCCESS);
 }
 
@@ -198,8 +199,11 @@ int	parser(char *lexer_tokens[])
 		return (EXIT_SUCCESS);
 	tokens = get_par_toks();
 	prnt_token(tokens);
-	return (0);
 	if (expander(tokens) == EXIT_FAILURE)
+	{
+		free_par_toks(tokens);
 		return (EXIT_FAILURE);
+	}
+	free_par_toks(tokens);
 	return (EXIT_SUCCESS);
 }
