@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:34:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/29 20:48:51 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/02 15:06:51 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,12 @@ int	lexer(char *line)
 	tokens = adjust_tokens(tokens);
 	if (tokens == NULL)
 		return (EXIT_FAILURE);
+	if (!is_valid_syntax(tokens))
+	{
+		printf("minishell: Invalid Syntax at unspecified token\n");
+		ft_free_str_array(&tokens);
+		return (EXIT_SUCCESS);
+	}
 	if (parser(tokens) == EXIT_FAILURE)
 	{
 		ft_free_str_array(&tokens);

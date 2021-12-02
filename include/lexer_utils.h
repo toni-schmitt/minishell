@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 01:18:48 by toni              #+#    #+#             */
-/*   Updated: 2021/11/27 01:43:58 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/02 15:07:53 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ int		get_subshell_count(char *tokens[], int i);
 bool	token_is_subshell(char *token);
 int		join_quotes(char ***tokens);
 char	*get_end_of_subshell(char *tokens[], int *i, char *sub_tok);
+bool	is_valid_syntax(char *lex_toks[]);
 
 #endif
