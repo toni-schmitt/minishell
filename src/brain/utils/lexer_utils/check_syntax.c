@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 15:00:19 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/02 15:39:50 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/02 21:03:06 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,13 @@ static bool	is_correct_special(char *lex_tok)
 		if (ft_strstr(lex_tok, "&&") || ft_strstr(lex_tok, "||") \
 		|| ft_strstr(lex_tok, "<<") || ft_strstr(lex_tok, ">>"))
 			return (false);
+		if (ft_strchr(lex_tok, '&'))
+			return (false);
 	}
 	if (ft_strlen(lex_tok) != 1)
 	{
-		if (ft_strchr(lex_tok, '<') || ft_strchr(lex_tok, '>') \
+		if ((ft_strchr(lex_tok, '<') && !ft_strstr(lex_tok, "<<")) \
+		|| (ft_strchr(lex_tok, '>') && !ft_strstr(lex_tok, ">>")) \
 		|| (ft_strchr(lex_tok, '|') && ft_strstr(lex_tok, "||")))
 			return (false);
 	}
@@ -74,7 +77,8 @@ bool	is_valid_syntax(char *lex_toks[])
 	i = 0;
 	while (lex_toks[i])
 	{
-		if (!is_quote_token(lex_toks[i]))
+		if (!is_quote_token(lex_toks[i]) \
+		&& (!ft_strchr(lex_toks[i], '(') || !ft_strchr(lex_toks[i], ')')))
 		{
 			if (i == 0 || get_lex_toks()[i + 1] == NULL)
 				if (!first_token_not_special(lex_toks[i]))
