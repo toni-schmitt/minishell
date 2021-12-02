@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:34:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/02 15:06:51 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/02 16:33:40 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,12 @@ int	lexer(char *line)
 	{
 		ft_free((void *)&tokens);
 		return (EXIT_FAILURE);
+	}
+	int i = 0;
+	while (tokens[i])
+	{
+		printf("token%d:%s\n", i, tokens[i]);
+		i++;
 	}
 	if (tokens == NULL)
 		return (EXIT_FAILURE);
