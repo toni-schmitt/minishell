@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:34:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/29 15:57:59 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/11/29 20:48:51 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static char	**adjust_tokens(char **tokens)
 
 int	lexer(char *line)
 {
-	char	**tokens = NULL;
+	char	**tokens;
 
 	tokens = ft_split_set(line, " \t\r\v\f\n");
 	if (join_quotes(&tokens) == EXIT_FAILURE)
@@ -115,18 +115,11 @@ int	lexer(char *line)
 	tokens = adjust_tokens(tokens);
 	if (tokens == NULL)
 		return (EXIT_FAILURE);
-	int i = 0;
-	//this prints all tokens
-	while (tokens[i])
+	if (parser(tokens) == EXIT_FAILURE)
 	{
-		printf("token%d:##%s##\n", i, tokens[i]);
-		i++;
+		ft_free_str_array(&tokens);
+		return (EXIT_FAILURE);
 	}
-	//if (parser(tokens) == EXIT_FAILURE)
-	//{
-	//	ft_free_str_array(&tokens);
-	//	return (EXIT_FAILURE);
-	//}
 	ft_free_str_array(&tokens);
 	return (EXIT_SUCCESS);
 }
