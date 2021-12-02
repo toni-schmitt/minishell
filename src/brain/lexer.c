@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:34:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/02 15:28:56 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/02 16:44:35 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,12 @@ int	lexer(char *line)
 	{
 		ft_free((void *)&tokens);
 		return (EXIT_FAILURE);
+	}
+	int i = 0;
+	while (tokens[i])
+	{
+		printf("token%d:%s\n", i, tokens[i]);
+		i++;
 	}
 	if (tokens == NULL)
 		return (EXIT_FAILURE);
