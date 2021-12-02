@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 15:39:23 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/29 15:56:39 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/01 19:45:43 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,56 @@ static int	get_quotes_pos(char *tok)
 	return (pos_double);
 }
 
+static int combine_loop(char ***tokens, int i, int j, bool is_single)
+{
+	while (is_single && *tokens && (*tokens)[i] && ft_strhas((*tokens)[i], "\'") == false)
+	{
+		(*tokens)[j] = ft_strstrjoin((*tokens)[j], (*tokens)[i], " ");
+		if ((*tokens)[j] == NULL)
+			return (EXIT_FAILURE);
+		ft_free_single_str(tokens, i);
+	}
+	while (is_single == false && *tokens && (*tokens)[i] && ft_strhas((*tokens)[i], "\"") == false)
+	{
+		(*tokens)[j] = ft_strstrjoin((*tokens)[j], (*tokens)[i], " ");
+		if ((*tokens)[j] == NULL)
+			return (EXIT_FAILURE);
+		ft_free_single_str(tokens, i);
+	}
+	return (EXIT_SUCCESS);
+}
+
+static int	single_start_one(char ***tokens, int *i, int *j, char *start)
+{
+	// implement the lexer struct
+	/**tokens = ft_add_single_str(tokens, i, start);
+	if (*tokens == NULL)
+	{
+		ft_free_str(&start);
+		return (EXIT_FAILURE);
+	}
+	(*tokens)[i] = ft_realloc_str((*tokens)[i], len);
+	i++;
+	if (ft_strlen(start) > 1 && ft_strhas(start + 1, "\'"))
+	{
+		end = ft_strdup(ft_strchr(start + 1, '\'') + 1);
+		(*tokens)[i] = ft_realloc_str((*tokens)[i], ft_strclen(start + 1, '\'') + 2);
+		if (ft_strlen(end) >= 1)
+			*tokens = ft_add_single_str(tokens, i, end);
+		ft_free_str(&end);
+		ft_free_str(&start);
+		return (EXIT_SUCCESS);
+	}
+	ft_free_str(&start);
+	j = i;
+	i++;*/
+	return (EXIT_SUCCESS);
+	(void)tokens,
+	(void)i;
+	(void)j,
+	(void)start;
+}
+
 static int	token_join(char ***tokens, int i)
 {
 	char	*start = NULL;
@@ -35,69 +85,114 @@ static int	token_join(char ***tokens, int i)
 	j = i;
 	start = (*tokens)[i];
 	len = get_quotes_pos(start);
-	//printf("len: %d\n", len);
 	start = ft_strdup(start + len);
+	if (start == NULL)
+		return (EXIT_FAILURE);
 	if (*start == '\'')
 		is_single = true;
 	else
 		is_single = false;
-	//printf("start:@%s@, is_single=%d\n", start, is_single);
-	if (*(*tokens)[j] != '\'' && *(*tokens)[j] != '\"')
+	if (is_single == true && len > 0)
 	{
-		(*tokens)[j++] = ft_realloc_str((*tokens)[i++], len);
-		if ((*tokens)[j - 1] == NULL)
-			return (EXIT_FAILURE);
-		(*tokens)[j] = ft_in_front_div(&(*tokens)[i++], start, " ");
-		if ((*tokens)[j] == NULL)
+		if (single_start_one(tokens, &i, &j, start) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
-	else
+	else if (is_single == false && len > 0)
+	{
+		*tokens = ft_add_single_str(tokens, i, start);
+		if (*tokens == NULL)
+			return (EXIT_FAILURE);
+		(*tokens)[i] = ft_realloc_str((*tokens)[i], len);
+		i++;
+		if (ft_strlen(start) > 1 && ft_strhas(start + 1, "\""))
+		{
+			end = ft_strdup(ft_strchr(start + 1, '\"') + 1);
+			(*tokens)[i] = ft_realloc_str((*tokens)[i], ft_strclen(start + 1, '\"') + 2);
+			if (ft_strlen(end) >= 1)
+				*tokens = ft_add_single_str(tokens, i, end);
+			ft_free_str(&end);
+			ft_free_str(&start);
+			return (EXIT_SUCCESS);
+		}
+		ft_free_str(&start);
+		j = i;
+		i++;
+	}
+	else if (is_single == true)
 	{
 		i++;
-		(*tokens)[j] = ft_strstrjoin((*tokens)[j], (*tokens)[i], " ");
-		if ((*tokens)[j] == NULL)
-			return (EXIT_FAILURE);
-		ft_free_single_str(tokens, i);
-	}
-	if (is_single)
-	{
-		while ((*tokens)[i] != NULL && ft_strhas((*tokens)[i], "\'") == false)
+		if (ft_strhas((*tokens)[i], "\'") == true)
 		{
 			(*tokens)[j] = ft_strstrjoin((*tokens)[j], (*tokens)[i], " ");
-			//printf("appended:@%s@\n", (*tokens)[j]);
-			ft_free_single_str(tokens, i);
+			end = ft_strchr((*tokens)[j] + 1, '\'');
+			if (ft_strlen(end) >= 2)
+			{
+				end = ft_strdup(end + 1);
+				(*tokens)[j] = ft_realloc_str((*tokens)[j], ft_strclen((*tokens)[j] + 1, '\'') + 2);
+			}
+			else
+				end = NULL;
+			if (ft_strlen(end) >= 1)
+			{
+				ft_free_str(&(*tokens)[i]);
+				(*tokens)[i] = ft_strdup(end);
+			}
+			else
+				ft_free_single_str(tokens, i);
+			ft_free_str(&start);
+			ft_free_str(&end);
+			return (EXIT_SUCCESS);
 		}
 	}
-	else
+	else if (is_single == false)
 	{
-		while ((*tokens)[i] != NULL && ft_strhas((*tokens)[i], "\"") == false)
+		i++;
+		if (ft_strhas((*tokens)[i], "\"") == true)
 		{
 			(*tokens)[j] = ft_strstrjoin((*tokens)[j], (*tokens)[i], " ");
-			//printf("appended:@%s@\n", (*tokens)[j]);
-			ft_free_single_str(tokens, i);
+			end = ft_strchr((*tokens)[j] + 1, '\"');
+			if (ft_strlen(end) >= 2)
+			{
+				end = ft_strdup(end + 1);
+				(*tokens)[j] = ft_realloc_str((*tokens)[j], ft_strclen((*tokens)[j] + 1, '\"') + 2);
+			}
+			else
+				end = NULL;
+			if (ft_strlen(end) >= 1)
+			{
+				ft_free_str(&(*tokens)[i]);
+				(*tokens)[i] = ft_strdup(end);
+			}
+			else
+				ft_free_single_str(tokens, i);
+			ft_free_str(&start);
+			ft_free_str(&end);
+			return (EXIT_SUCCESS);
 		}
+	}
+	if (combine_loop(tokens, i, j, is_single) == EXIT_FAILURE)
+	{
+		ft_free_str(&start);
+		return (EXIT_FAILURE);
 	}
 	if ((*tokens)[i] == NULL)
+	{
+		ft_free_str(&start);
 		return (EXIT_SUCCESS);
+	}
 	end = ft_strdup((*tokens)[i]);
 	if (is_single)
 		len = ft_strclen(end, '\'') + 1;
 	else
 		len = ft_strclen(end, '\"') + 1;
 	(*tokens)[j] = ft_append_len_div(&(*tokens)[j], end, len, " ");
-	//printf("end:@%s@\n", (*tokens)[j]);
-	//if (is_single)
-	//	end = ft_strdup(ft_strchr((*tokens)[i], '\''));
-	//else
-	//	end = ft_strdup(ft_strchr((*tokens)[i], '\"'));
-	if (ft_strlen(end) == 1)
+	if (end[len] == '\0')
 		ft_free_single_str(tokens, i);
 	else
 	{
 		ft_free_str(&(*tokens)[i]);
 		(*tokens)[i] = ft_strdup(end + len);
 	}
-	ft_free_str(&start);
 	ft_free_str(&end);
 	return (EXIT_SUCCESS);
 }
@@ -106,7 +201,6 @@ int	join_quotes(char ***tokens)
 {
 	int		i;
 
-	//return (EXIT_SUCCESS);
 	i = 0;
 	if (*tokens == NULL)
 		return (EXIT_FAILURE);
@@ -117,6 +211,7 @@ int	join_quotes(char ***tokens)
 		{
 			if (token_join(tokens, i) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
+			else
 			{
 				if (ft_strhas((*tokens)[i], "\'") == false && ft_strhas((*tokens)[i], "\"") == false)
 					i+=2;
@@ -127,6 +222,5 @@ int	join_quotes(char ***tokens)
 		else
 			i++;
 	}
-
 	return (EXIT_SUCCESS);
 }
