@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 20:11:15 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/26 19:43:57 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/02 21:21:09 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,12 @@ static t_par_tok	**_get_par_toks(t_par_tok **par_toks)
 
 t_par_tok	*get_curr_par_tok(void)
 {
-	return (get_par_toks()[get_iter()[par]]);
+	t_iter	*iter;
+
+	iter = get_iter();
+	if (iter == NULL)
+		return (NULL);
+	return (get_par_toks()[iter[par]]);
 }
 
 t_par_tok	**get_par_toks(void)
