@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 22:06:41 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/27 00:32:21 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/02 17:41:08 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 /*
 will free a single string out of a given array
 will move the following strings to fill the gap
+will reallocate the array to the correct size
 */
 void	ft_free_single_str(char ***arr, int i)
 {
