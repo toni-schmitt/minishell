@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:34:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/03 13:59:35 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/03 14:42:09 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@
 
 static void	*free_tokens(char **tokens, char **adjusted)
 {
-	ft_free_split(tokens),
-	ft_free_split(adjusted);
+	// ft_free_split(tokens);
+	// ft_free_split(adjusted);
+	ft_free_str_array(&tokens);
+	ft_free_str_array(&adjusted);
 	return (NULL);
 }
 
@@ -60,12 +62,12 @@ static char	*get_subshell_token(char *tokens[], int *i)
 	{
 		if (ft_strchr(tokens[*i], ')') && subshell_count == 1)
 			return (get_end_of_subshell(tokens, i, subshell_token));
-		subshell_token = ft_append(&subshell_token, tokens[*i]);
+		subshell_token = ft_append(&subshell_token, tokens[*i]); // you could use ft_strstrjoin(&subshell_token, tokens[*i], " ") here
 		if (subshell_token == NULL)
 			return (NULL);
 		subshell_token = ft_append(&subshell_token, " ");
 		if (subshell_token == NULL)
-			return (NULL);
+			return (NULL); // this would save lines up to here :)
 		if (token_is_subshell(tokens[*i]))
 			subshell_count--;
 		(*i)++;
@@ -96,7 +98,8 @@ static char	**adjust_tokens(char **tokens)
 			return (free_tokens(tokens, adjusted));
 		j++;
 	}
-	ft_free_split(tokens);
+	// ft_free_split(tokens);
+	ft_free_str_array(&tokens);
 	return (adjusted);
 }
 
@@ -108,7 +111,7 @@ int	lexer(char *line)
 	tokens = ft_split_set(line, " \t\r\v\f\n");
 	if (join_quotes(&tokens) == EXIT_FAILURE)
 	{
-		ft_free((void *)&tokens);
+		ft_free_str_array(&tokens);
 		return (EXIT_FAILURE);
 	}
 	// remove after testing ↓
@@ -119,9 +122,16 @@ int	lexer(char *line)
 		printf("token%d:#%s#\n", i, tokens[i]);
 		i++;
 	}
+	// ft_free_str_array(&tokens);
+	// return (EXIT_SUCCESS);
 	//remove after testing ↑
 	if (tokens == NULL)
 		return (EXIT_FAILURE);
+	// remove after testing ↓
+	ft_free_str_array(&tokens);
+	printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
+	return (EXIT_SUCCESS);
+	//remove after testing ↑
 	tokens = adjust_tokens(tokens);
 	if (tokens == NULL)
 		return (EXIT_FAILURE);
@@ -130,9 +140,9 @@ int	lexer(char *line)
 	{
 		printf("minishell: Invalid Syntax at unspecified token\n");
 		ft_free_str_array(&tokens);
-		return (EXIT_SUCCESS);
+		return (EXIT_SUCCESS); //why success??
 	}
 	exit_status = parser(tokens);
-	ft_free_str_array(&tokens);
+	ft_free_str_array(&tokens); //still 33 bytes in 8 blocks after that? where from?
 	return (exit_status);
 }
