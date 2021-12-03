@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:28:36 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/03 11:05:43 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/03 13:29:32 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	routine(void)
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	return (lexer("echo hi | wc -l >>file1 && echo \"hi\" \"how are you doing\" \'$HI\' && ( echo \"this is such bullshit $PWD\" && false || ( echo \"pls stop\" | wc -l >file2 && cat file1 | wc >>file3 ) && cat file3 ) && false && echo stop << end cat"));
+	return (lexer("echo hi\" test string' abc'>file_troll.txt \" \"hi\"\"yolo\"\"lul\"'and this is the end' | wc -l >>file1 && echo \"hi $USER\" \"how are you doing\" '$HI' && ( echo \"this is such bullshit $PWD\" && false || ( echo \"pls stop\" | wc -l >file2 && cat file1 | wc >>file3 ) && cat file3 ) && false && echo stop << end cat"));
 	if (argc != 1)
 		return (EXIT_FAILURE);
 	(void)argv;
