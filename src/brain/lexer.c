@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:34:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/03 14:42:09 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/03 15:11:48 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 
 static void	*free_tokens(char **tokens, char **adjusted)
 {
-	// ft_free_split(tokens);
-	// ft_free_split(adjusted);
-	ft_free_str_array(&tokens);
-	ft_free_str_array(&adjusted);
+	ft_free_split(tokens);
+	ft_free_split(adjusted);
+	// ft_free_str_array(&tokens);
+	// ft_free_str_array(&adjusted);
 	return (NULL);
 }
 
@@ -98,8 +98,8 @@ static char	**adjust_tokens(char **tokens)
 			return (free_tokens(tokens, adjusted));
 		j++;
 	}
-	// ft_free_split(tokens);
-	ft_free_str_array(&tokens);
+	ft_free_split(tokens);
+	// ft_free_str_array(&tokens);
 	return (adjusted);
 }
 
@@ -109,11 +109,13 @@ int	lexer(char *line)
 	int		exit_status;
 
 	tokens = ft_split_set(line, " \t\r\v\f\n");
+	printf("SIZE:%d\n", ft_str_arr_len(tokens));
 	if (join_quotes(&tokens) == EXIT_FAILURE)
 	{
 		ft_free_str_array(&tokens);
 		return (EXIT_FAILURE);
 	}
+	printf("SIZE:%d\n", ft_str_arr_len(tokens));
 	// remove after testing ↓
 	printf("###%s###\n", line);
 	int	i = 0;
@@ -122,17 +124,28 @@ int	lexer(char *line)
 		printf("token%d:#%s#\n", i, tokens[i]);
 		i++;
 	}
+	printf("-------------------------------------------\n");
 	// ft_free_str_array(&tokens);
 	// return (EXIT_SUCCESS);
 	//remove after testing ↑
 	if (tokens == NULL)
 		return (EXIT_FAILURE);
-	// remove after testing ↓
-	ft_free_str_array(&tokens);
-	printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
-	return (EXIT_SUCCESS);
-	//remove after testing ↑
+	// // remove after testing ↓
+	// ft_free_str_array(&tokens);
+	// printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
+	// return (EXIT_SUCCESS);
+	// //remove after testing ↑
 	tokens = adjust_tokens(tokens);
+	// remove after testing ↓
+	i = 0;
+	while (tokens[i])
+	{
+		printf("token%d:#%s#\n", i, tokens[i]);
+		i++;
+	}
+	// ft_free_str_array(&tokens);
+	// return (EXIT_SUCCESS);
+	//remove after testing ↑
 	if (tokens == NULL)
 		return (EXIT_FAILURE);
 	set_lex_toks(tokens);
