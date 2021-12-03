@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:35:35 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/02 17:35:14 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/03 18:51:22 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	get_par_tok(char *lex_toks[], t_par_tok *par_toks[], t_iter *iter)
 	tmp = get_tok_cmd(lex_toks[iter[lex]], par_toks[iter[par]], iter);
 	if (tmp != EXIT_SUCCESS)
 		return (tmp);
-	tmp = get_special_tok(lex_toks, par_toks, iter);
+	tmp = get_special_tok(lex_toks[iter[lex]], par_toks, iter);
 	if (tmp != EXIT_SUCCESS)
 		return (tmp);
 	return (EXIT_SUCCESS);
@@ -187,11 +187,6 @@ int	parser(char *lexer_tokens[])
 	if (lexer_tokens == NULL)
 		return (EXIT_FAILURE);
 	set_lex_toks(lexer_tokens);
-	for (size_t i = 0; lexer_tokens[i]; i++)
-	{
-		printf("%s\n", lexer_tokens[i]);
-	}
-	printf("\n");
 	exit_code = get_tokens(lexer_tokens);
 	if (exit_code == EXIT_FAILURE)
 		return (EXIT_FAILURE);
