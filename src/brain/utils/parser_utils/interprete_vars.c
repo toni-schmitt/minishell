@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 23:13:27 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/02 21:24:09 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/03 18:50:39 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ char	*interprete_vars(char *lex_tok)
 		var = ft_substr(lex_tok, 1, ft_strlen(lex_tok));
 		if (var == NULL)
 			return (NULL);
-		interpreted_token = NULL; /* get_env_var_value(NULL, var); */
+		// interpreted_token = get_env_var_value(get_envp(), var);
+		interpreted_token = ft_strdup(getenv(var));
 		free(var);
 		free(lex_tok);
 		if (interpreted_token == NULL)
