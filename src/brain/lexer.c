@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:34:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/02 16:44:35 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/02 17:42:56 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,18 +103,13 @@ static char	**adjust_tokens(char **tokens)
 int	lexer(char *line)
 {
 	char	**tokens;
+	int		exit_status;
 
 	tokens = ft_split_set(line, " \t\r\v\f\n");
 	if (join_quotes(&tokens) == EXIT_FAILURE)
 	{
 		ft_free((void *)&tokens);
 		return (EXIT_FAILURE);
-	}
-	int i = 0;
-	while (tokens[i])
-	{
-		printf("token%d:%s\n", i, tokens[i]);
-		i++;
 	}
 	if (tokens == NULL)
 		return (EXIT_FAILURE);
@@ -128,11 +123,7 @@ int	lexer(char *line)
 		ft_free_str_array(&tokens);
 		return (EXIT_SUCCESS);
 	}
-	if (parser(tokens) == EXIT_FAILURE)
-	{
-		ft_free_str_array(&tokens);
-		return (EXIT_FAILURE);
-	}
+	exit_status = parser(tokens);
 	ft_free_str_array(&tokens);
-	return (EXIT_SUCCESS);
+	return (exit_status);
 }
