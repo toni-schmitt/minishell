@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 15:00:19 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/02 21:03:06 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/03 18:54:54 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,6 @@ static bool	is_redir(char *lex_tok)
 		if (ft_strchr(lex_tok, '<') || ft_strchr(lex_tok, '>'))
 			return (true);
 	}
-	return (false);
-}
-
-static bool	is_quote_token(char *lex_tok)
-{
-	if (ft_strchr(lex_tok, '\'') || ft_strchr(lex_tok, '\"'))
-		return (true);
 	return (false);
 }
 
