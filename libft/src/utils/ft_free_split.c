@@ -23,10 +23,10 @@ void	*ft_free_split(char **split)
 	int	i;
 
 	i = 0;
-	while (*arr && (*arr)[i])
+	while (*split && (*split)[i])
 	{
-		ft_free_str(&(*arr)[i]);
-		(*arr)[i] = NULL;
+		ft_free_str(&(*split)[i]);
+		(*split)[i] = NULL;
 		i++;
 	}
 	free(split);
