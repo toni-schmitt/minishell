@@ -6,18 +6,20 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 17:05:35 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/26 18:18:52 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/03 11:05:24 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /*
- * Frees allocated null-terminated string array
+ * Frees allocated array returned by ft_split function.
+ * Assumes that ft_split successfully split the string.
+ * Returns NULL
 */
-void	ft_free_str_array(char ***arr)
+void	*ft_free_split(char **split)
 {
-	//Tim's version!!!!!!
+	//Toni's version!!!!!
 	int	i;
 
 	i = 0;
@@ -27,6 +29,6 @@ void	ft_free_str_array(char ***arr)
 		(*arr)[i] = NULL;
 		i++;
 	}
-	free(*arr);
-	*arr = NULL;
+	free(split);
+	return (NULL);
 }

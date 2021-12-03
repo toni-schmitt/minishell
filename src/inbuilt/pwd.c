@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strhas.c                                        :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/25 18:08:11 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/03 11:01:06 by tblaase          ###   ########.fr       */
+/*   Created: 2021/10/22 16:22:09 by tblaase           #+#    #+#             */
+/*   Updated: 2021/11/10 16:22:31 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-/* Returns true if set is included in str, if not returns false */
-int	ft_strhas(char *str, char *set)
+int	pwd(void)
 {
-	int	i;
+	char	*cwd;
 
-	while (str && *str)
+	cwd = NULL;
+	cwd = getcwd(cwd, 0);
+	if (cwd == NULL)
 	{
-		i = 0;
-		while (set && set[i])
-		{
-			if (*str == set[i])
-				return (true);
-			i++;
-		}
-		str++;
+		perror("Error");
+		return (EXIT_FAILURE);
 	}
-	return (false);
+	else if (ft_printf("%s\n", cwd) != ft_strlen(cwd) + 1)
+	{
+		ft_free_str(&cwd);
+		perror("\nError: printf failed");
+		return (EXIT_FAILURE);
+	}
+	ft_free_str(&cwd);
+	return (EXIT_SUCCESS);
 }

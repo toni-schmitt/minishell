@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 17:23:59 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/01 11:41:44 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/03 10:57:07 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int		ft_isspace(int c);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_strjoin(const char *s1, const char *s2);
+char	*ft_strjoin(char *s1, const char *s2);
 char	*ft_strtrim(char const *s1, char const *set);
 char	**ft_split(const char *s, char c);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
@@ -123,7 +123,7 @@ int		ft_nbrlen(long nbr);
 void	*ft_free_split(char **split);
 void	*ft_free(void **p);
 void	ft_free_str(char **str);
-void	ft_free_str_array(char ***str);
+void	ft_free_str_array(char ***arr);
 void	ft_free_single_str(char ***arr, int i);
 
 #endif
