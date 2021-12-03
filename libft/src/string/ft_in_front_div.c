@@ -1,32 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strhas.c                                        :+:      :+:    :+:   */
+/*   ft_in_front.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/25 18:08:11 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/03 11:01:06 by tblaase          ###   ########.fr       */
+/*   Created: 2021/11/26 23:42:05 by tblaase           #+#    #+#             */
+/*   Updated: 2021/11/26 23:53:45 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/* Returns true if set is included in str, if not returns false */
-int	ft_strhas(char *str, char *set)
+/*
+this will add src infront of dst divided by div
+dst will be free'd
+returns NULL if dst == NULL or src == NULL or if error
+*/
+char	*ft_in_front_div(char **dst, char *src, char *div)
 {
-	int	i;
+	char	*out;
 
-	while (str && *str)
-	{
-		i = 0;
-		while (set && set[i])
-		{
-			if (*str == set[i])
-				return (true);
-			i++;
-		}
-		str++;
-	}
-	return (false);
+	out = ft_strdup(src);
+	if (out == NULL)
+		return (NULL);
+	out = ft_append(&out, div);
+	if (out == NULL)
+		return (NULL);
+	out = ft_append(&out, *dst);
+	if (out == NULL)
+		return (NULL);
+	ft_free_str(dst);
+	return (out);
 }

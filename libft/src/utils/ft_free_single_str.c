@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strhas.c                                        :+:      :+:    :+:   */
+/*   ft_free_single_str.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/25 18:08:11 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/03 11:01:06 by tblaase          ###   ########.fr       */
+/*   Created: 2021/11/26 22:06:41 by tblaase           #+#    #+#             */
+/*   Updated: 2021/12/02 17:41:08 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/* Returns true if set is included in str, if not returns false */
-int	ft_strhas(char *str, char *set)
+/*
+will free a single string out of a given array
+will move the following strings to fill the gap
+will reallocate the array to the correct size
+*/
+void	ft_free_single_str(char ***arr, int i)
 {
-	int	i;
-
-	while (str && *str)
+	if (*arr != NULL)
+		ft_free_str(&(*arr)[i++]);
+	while (*arr != NULL && (*arr)[i] != NULL)
 	{
-		i = 0;
-		while (set && set[i])
-		{
-			if (*str == set[i])
-				return (true);
-			i++;
-		}
-		str++;
+		(*arr)[i - 1] = (*arr)[i];
+		i++;
 	}
-	return (false);
+	(*arr)[--i] = NULL;
+	if (*arr != NULL && (*arr)[i] == NULL)
+		*arr = ft_realloc_str_arr(*arr, i + 1);
 }

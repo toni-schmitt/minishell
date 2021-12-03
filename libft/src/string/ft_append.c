@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 17:39:22 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/09/03 19:19:51 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/11/09 20:13:26 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ char	*ft_append(char **dst, char *src)
 	char	*appendet;
 	int		appendet_len;
 
-	dst_buf = *dst;
+	if (dst == NULL)
+		dst_buf = NULL;
+	else
+		dst_buf = *dst;
 	appendet_len = ft_strlen(dst_buf) + ft_strlen(src);
 	if (appendet_len == 0)
 		return (NULL);

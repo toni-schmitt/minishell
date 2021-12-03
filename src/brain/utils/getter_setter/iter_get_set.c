@@ -1,35 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strstr.c                                        :+:      :+:    :+:   */
+/*   iter_get_set.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/06 13:00:58 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/16 21:13:36 by tschmitt         ###   ########.fr       */
+/*   Created: 2021/11/24 20:12:29 by tschmitt          #+#    #+#             */
+/*   Updated: 2021/11/24 20:36:57 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "brain.h"
+#include "parser_utils.h"
 
-char	*ft_strstr(const char *s, const char *to_find)
+static t_iter	*_get_iter(t_iter *iter)
 {
-	int	i;
+	static t_iter	*static_iter = NULL;
 
-	if (ft_strlen(to_find) == 0)
-		return ((char *)s);
-	i = 0;
-	while (s && *s)
-	{
-		if (*s == *to_find)
-		{
-			i = 0;
-			while (s[i] == to_find[i] && s[i])
-				i++;
-			if (i == ft_strlen(to_find))
-				return ((char *)s);
-		}
-		s++;
-	}
-	return (0);
+	if (iter == NULL)
+		return (static_iter);
+	static_iter = iter;
+	return (static_iter);
+}
+
+t_iter	*get_iter(void)
+{
+	return (_get_iter(NULL));
+}
+
+void	set_iter(t_iter *iter)
+{
+	_get_iter(iter);
 }

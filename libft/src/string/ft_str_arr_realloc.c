@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strhas.c                                        :+:      :+:    :+:   */
+/*   ft_str_arr_realloc.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/25 18:08:11 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/03 11:01:06 by tblaase          ###   ########.fr       */
+/*   Created: 2021/11/18 16:39:04 by tschmitt          #+#    #+#             */
+/*   Updated: 2021/11/27 02:01:49 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/* Returns true if set is included in str, if not returns false */
-int	ft_strhas(char *str, char *set)
+char	**ft_str_arr_realloc(char *array[], size_t size)
 {
-	int	i;
+	char	**reallocated;
+	int		i;
 
-	while (str && *str)
+	reallocated = ft_calloc(size + 1, sizeof(*reallocated));
+	if (reallocated == NULL)
+		return (NULL);
+	i = 0;
+	while (size-- && array && array[i])
 	{
-		i = 0;
-		while (set && set[i])
-		{
-			if (*str == set[i])
-				return (true);
-			i++;
-		}
-		str++;
+		reallocated[i] = ft_strdup(array[i]);
+		i++;
 	}
-	return (false);
+	ft_free_str_array(&array);
+	return (reallocated);
 }

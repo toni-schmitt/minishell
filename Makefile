@@ -6,14 +6,15 @@
 #    By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
-#    Updated: 2021/11/24 12:42:41 by tblaase          ###   ########.fr        #
+#    Updated: 2021/12/03 10:52:04 by tblaase          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # COMMANDS & FLAGS
 CC = gcc
-CC_FLAGS = -Wall -Werror -Wextra
+CC_FLAGS = -Wall -Werror -Wextra -g
 INCLUDE_FLAGS = -I ./include/ -I $(LIBFT_PATH)include/
+L_FLAGS = -lreadline
 RM = rm -f
 
 # EXECUTABLE
@@ -24,11 +25,19 @@ LIBFT_NAME = $(LIBFT_PATH)lib/libft.a
 SRC_PATH = ./src/
 OBJ_PATH = ./obj/
 LIBFT_PATH = ./libft/
+BRAIN_PATH = $(SRC_PATH)brain/
+LEXER_UTILS_PATH = $(BRAIN_PATH)utils/lexer_utils/
+BRAIN_GETTER_SETTER_PATH = $(BRAIN_PATH)utils/getter_setter/
+PARSER_UTILS_PATH = $(BRAIN_PATH)utils/parser_utils/
 
 # FILES
 SRC = $(SRC_PATH)main.c \
 		$(SRC_PATH)inbuilt/export.c $(SRC_PATH)inbuilt/echo.c $(SRC_PATH)inbuilt/env.c $(SRC_PATH)inbuilt/cd.c $(SRC_PATH)inbuilt/pwd.c $(SRC_PATH)inbuilt/unset.c \
 		$(SRC_PATH)inbuilt/utils/export_special.c $(SRC_PATH)inbuilt/utils/env_utils.c $(SRC_PATH)inbuilt/utils/export_input_error.c $(SRC_PATH)inbuilt/utils/export_only.c
+		$(BRAIN_PATH)lexer.c $(BRAIN_PATH)parser.c $(BRAIN_PATH)expander.c $(BRAIN_PATH)executor.c \
+		$(LEXER_UTILS_PATH)subshell_token_utils.c $(LEXER_UTILS_PATH)token_utils.c $(LEXER_UTILS_PATH)join_quotes.c $(LEXER_UTILS_PATH)check_syntax.c \
+		$(BRAIN_GETTER_SETTER_PATH)envp_get_set.c $(BRAIN_GETTER_SETTER_PATH)iter_get_set.c $(BRAIN_GETTER_SETTER_PATH)lexer_get_set.c $(BRAIN_GETTER_SETTER_PATH)par_tok_get_set.c \
+		$(PARSER_UTILS_PATH)get_tokens_utils.c $(PARSER_UTILS_PATH)get_tokens.c $(PARSER_UTILS_PATH)interprete_vars.c $(PARSER_UTILS_PATH)parser_utils.c $(PARSER_UTILS_PATH)tok_redir_utils.c
 OBJ = $(patsubst $(SRC_PATH)%.c, $(OBJ_PATH)%.o, $(SRC))
 
 # COLORS
@@ -50,7 +59,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT_NAME)
 	@echo $(Y)Compiling [$(NAME)]...$(X)
-	@$(CC) $(OBJ) $(CC_FLAGS) $(INCLUDE_FLAGS) $(LIBFT_NAME) -o $(NAME)
+	@$(CC) $(OBJ) ./libft/obj/*.o $(CC_FLAGS) $(INCLUDE_FLAGS) $(L_FLAGS)  -o $(NAME)
 	@echo $(G)Finished [$(NAME)]$(X)
 
 $(LIBFT_NAME):
@@ -86,6 +95,9 @@ norm:
 	@echo $(G)Checking Norminette...$(X)
 	norminette
 	@echo $(G)Done$(X)
+
+run: all
+	$(NAME)
 
 
 .PHONY: all, clean, fclean, re, norm

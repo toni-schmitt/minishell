@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strstr.c                                        :+:      :+:    :+:   */
+/*   ft_strset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/06 13:00:58 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/16 21:13:36 by tschmitt         ###   ########.fr       */
+/*   Created: 2021/10/30 16:39:26 by toni              #+#    #+#             */
+/*   Updated: 2021/10/30 16:42:29 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strstr(const char *s, const char *to_find)
+/* 
+ * Returns the first found character of set in str 
+ * or NULL if no character of set is found in str 
+ */
+char	*ft_strset(char *str, char *set)
 {
 	int	i;
 
-	if (ft_strlen(to_find) == 0)
-		return ((char *)s);
 	i = 0;
-	while (s && *s)
+	while (str && *str)
 	{
-		if (*s == *to_find)
+		i = 0;
+		while (set && set[i])
 		{
-			i = 0;
-			while (s[i] == to_find[i] && s[i])
-				i++;
-			if (i == ft_strlen(to_find))
-				return ((char *)s);
+			if (*str == set[i])
+				return (str);
+			i++;
 		}
-		s++;
+		str++;
 	}
-	return (0);
+	return (NULL);
 }

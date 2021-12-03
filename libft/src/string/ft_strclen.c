@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strhas.c                                        :+:      :+:    :+:   */
+/*   ft_strclen.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/25 18:08:11 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/03 11:01:06 by tblaase          ###   ########.fr       */
+/*   Created: 2021/11/26 19:57:20 by tblaase           #+#    #+#             */
+/*   Updated: 2021/11/26 20:01:03 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/* Returns true if set is included in str, if not returns false */
-int	ft_strhas(char *str, char *set)
+/*
+will measure the length of str until first occurance of c or end of string
+*/
+int	ft_strclen(char *str, char c)
 {
-	int	i;
+	int	len;
 
-	while (str && *str)
-	{
-		i = 0;
-		while (set && set[i])
-		{
-			if (*str == set[i])
-				return (true);
-			i++;
-		}
-		str++;
-	}
-	return (false);
+	len = 0;
+	while (str && str[len] && str[len] != c)
+		len++;
+	return (len);
 }

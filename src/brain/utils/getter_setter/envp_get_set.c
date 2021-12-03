@@ -1,35 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strstr.c                                        :+:      :+:    :+:   */
+/*   envp_get_set.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/06 13:00:58 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/16 21:13:36 by tschmitt         ###   ########.fr       */
+/*   Created: 2021/10/29 16:12:12 by tschmitt          #+#    #+#             */
+/*   Updated: 2021/12/02 21:20:35 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-char	*ft_strstr(const char *s, const char *to_find)
+static char	**_get_envp(char *envp[])
 {
-	int	i;
+	static char	**static_envp = NULL;
 
-	if (ft_strlen(to_find) == 0)
-		return ((char *)s);
-	i = 0;
-	while (s && *s)
-	{
-		if (*s == *to_find)
-		{
-			i = 0;
-			while (s[i] == to_find[i] && s[i])
-				i++;
-			if (i == ft_strlen(to_find))
-				return ((char *)s);
-		}
-		s++;
-	}
-	return (0);
+	if (envp == NULL)
+		return (static_envp);
+	static_envp = envp;
+	return (static_envp);
+}
+
+void	set_envp(char *envp[])
+{
+	_get_envp(envp);
+}
+
+char	**get_envp(void)
+{
+	return (_get_envp(NULL));
 }

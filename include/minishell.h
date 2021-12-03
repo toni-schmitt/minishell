@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:29:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/26 13:42:51 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/03 10:49:30 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 # include <errno.h>
 # include <dirent.h>
 # include <stdbool.h>
+# include "brain.h"
+# include "parser_utils.h"
+# include "lexer_utils.h"
 
 /* TRANSPORT OF ENV_VARIABLES */
 typedef struct s_env
