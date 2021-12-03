@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 19:08:20 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/29 19:42:47 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/03 18:15:52 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,38 @@ int	get_subshell_tok(t_iter *iter)
 	iter[lex]++;
 	// iter[par]++;
 	return (EXIT_BREAK);
+}
+
+bool	is_quote_token(char *lex_tok)
+{
+	if (ft_strchr(lex_tok, '\'') || ft_strchr(lex_tok, '\"'))
+		return (true);
+	return (false);
+}
+
+bool	is_redir_token(char *lex_tok)
+{
+	if (ft_strlen(lex_tok) == 2)
+	{
+		if (ft_strstr(lex_tok, "<<") || ft_strstr(lex_tok, ">>"))
+			return (true);
+	}
+	if (ft_strlen(lex_tok) == 1)
+	{
+		if (ft_strchr(lex_tok, '<') || ft_strchr(lex_tok, '>'))
+			return (true);
+		if (ft_strchr(lex_tok, '|'))
+			return (true);
+	}
+	return (false);
+}
+
+bool	is_special_token(char *lex_tok)
+{
+	if (ft_strlen(lex_tok) == 2)
+	{
+		if (ft_strstr(lex_tok, "&&") || ft_strstr(lex_tok, "||"))
+			return (true);
+	}
+	return (false);
 }
