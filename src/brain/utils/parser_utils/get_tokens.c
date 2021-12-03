@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 19:02:18 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/02 14:52:00 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/03 18:50:06 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,9 @@ int	get_tok_cmd(char *lex_tok, t_par_tok *par_tok, t_iter *iter)
 {
 	if (lex_tok == NULL)
 		return (EXIT_SUCCESS);
-	if (((ft_strlen(lex_tok) == 2) && (ft_strstr(lex_tok, "&&") \
-	|| ft_strstr(lex_tok, "||") || ft_strstr(lex_tok, "<<") \
-	|| ft_strstr(lex_tok, ">>"))) \
-	|| ((ft_strlen(lex_tok) == 1) && (ft_strchr(lex_tok, '>') \
-	|| ft_strchr(lex_tok, '<') || ft_strchr(lex_tok, '|'))) \
-	|| (ft_strchr(lex_tok, '(')) || ft_strchr(lex_tok, ')'))
+	if (!is_quote_token(lex_tok) && (is_special_token(lex_tok) \
+	|| is_redir_token(lex_tok) || (ft_strchr(lex_tok, '(') \
+	|| ft_strchr(lex_tok, ')'))))
 		return (EXIT_SUCCESS);
 	if (init_curr_par_tok() == EXIT_FAILURE)
 		return (EXIT_FAILURE);
@@ -92,31 +89,26 @@ int	get_tok_redir(char *lex_toks[], t_iter *iter)
  * @param  *iter: Iterator of parser, lexer, cmd, in, out
  * @retval int to indicate success, failure or break
  */
-int	get_special_tok(char *lex_toks[], t_par_tok *par_toks[], t_iter *iter)
+int	get_special_tok(char *lex_tok, t_par_tok *par_toks[], t_iter *iter)
 {
-	char	*and_ptr;
-	char	*or_ptr;
-	char	*subshell_ptr;
-
-	if (lex_toks[iter[lex]] == NULL)
+	if (lex_tok == NULL)
 		return (EXIT_SUCCESS);
-	and_ptr = ft_strstr(lex_toks[iter[lex]], "&&");
-	or_ptr = ft_strstr(lex_toks[iter[lex]], "||");
-	subshell_ptr = ft_strchr(lex_toks[iter[lex]], '(');
-	if ((ft_strlen(lex_toks[iter[lex]]) == 2) && (and_ptr || or_ptr))
+	if (ft_strchr(lex_tok, '\'') || ft_strchr(lex_tok, '\"'))
+		return (EXIT_SUCCESS);
+	if ((ft_strstr(lex_tok, "&&") || ft_strstr(lex_tok, "||")) \
+	&& ft_strlen(lex_tok) == 2)
 	{
 		iter[par]++;
 		if (init_curr_par_tok() == EXIT_FAILURE)
 			return (EXIT_FAILURE);
-		if (and_ptr)
-			par_toks[iter[par]]->type = and;
-		else if (or_ptr)
-			par_toks[iter[par]]->type = or;
-		iter[par]++;
+		if (ft_strstr(lex_tok, "&&"))
+			par_toks[iter[par]++]->type = and;
+		else if (ft_strstr(lex_tok, "||"))
+			par_toks[iter[par]++]->type = or;
 		iter[lex]++;
 		return (EXIT_BREAK);
 	}
-	if (subshell_ptr)
+	if (ft_strchr(lex_tok, '('))
 		return (get_subshell_tok(iter));
 	return (EXIT_SUCCESS);
 }
