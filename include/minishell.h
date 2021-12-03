@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:29:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/03 10:49:30 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/03 16:20:36 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include "brain.h"
 # include "parser_utils.h"
 # include "lexer_utils.h"
+
+# define EXIT_SYNTAX_ERROR 258
 
 /* TRANSPORT OF ENV_VARIABLES */
 typedef struct s_env
