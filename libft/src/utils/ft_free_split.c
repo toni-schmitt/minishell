@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_str_array.c                                :+:      :+:    :+:   */
+/*   ft_free_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/24 17:05:35 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/03 11:05:24 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/03 11:30:48 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ void	*ft_free_split(char **split)
 	i = 0;
 	while (*split && (*split)[i])
 	{
-		ft_free_str(&(*split)[i]);
-		(*split)[i] = NULL;
+		ft_free_str(&split[i]);
 		i++;
 	}
 	free(split);
