@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   join_quotes_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 13:44:26 by tblaase           #+#    #+#             */
-/*   Updated: 2021/12/03 13:57:27 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/04 23:24:40 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "lexer_utils.h"
+
 
 static int	start_one(char ***tokens, t_quotes *quo)
 {
