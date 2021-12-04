@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:29:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/03 16:20:36 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/04 23:14:41 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@
 # include <errno.h>
 # include <dirent.h>
 # include <stdbool.h>
-# include "brain.h"
-# include "parser_utils.h"
-# include "lexer_utils.h"
 
 # define EXIT_SYNTAX_ERROR 258
 
