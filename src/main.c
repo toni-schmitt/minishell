@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:28:36 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/04 19:34:37 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/04 22:05:37 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	handle_flags(int argc, char *argv[])
 		return (EXIT_FAILURE);
 	if (ft_strcmp(argv[1], "-c") != 0)
 		return (EXIT_FAILURE);
-	return (lexer(argv[2]));
+	return (exit_routine(NULL, lexer(argv[2])));
 }
 
 int	main(int argc, char *argv[], char *envp[])
