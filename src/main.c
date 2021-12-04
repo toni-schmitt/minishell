@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:28:36 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/03 15:21:58 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/04 19:34:37 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,19 @@ static int	routine(void)
 	return (exit_routine((void *)buf, EXIT_FAILURE));
 }
 
+static int	handle_flags(int argc, char *argv[])
+{
+	if (argc != 3)
+		return (EXIT_FAILURE);
+	if (ft_strcmp(argv[1], "-c") != 0)
+		return (EXIT_FAILURE);
+	return (lexer(argv[2]));
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
-	system("leaks minishell");
-	return (lexer("echo 'hi'\" test string' abc'>file_troll.txt \" \"hi\"\"yolo\"\"lul\"'and this is the end' | wc -l >>file1 && echo \"hi $USER\" \"how are you doing\" '$HI' && ( echo \"this is such bullshit $PWD\" && false || ( echo \"pls stop\" | wc -l >file2 && cat file1 | wc >>file3 ) && cat file3 ) && false && echo stop << end cat"));
 	if (argc != 1)
-		return (EXIT_FAILURE);
-	(void)argv;
+		return (handle_flags(argc, argv));
 	set_envp(envp);
 	if (routine() == EXIT_FAILURE)
 		return (EXIT_FAILURE);
