@@ -3,15 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 01:18:48 by toni              #+#    #+#             */
-/*   Updated: 2021/12/03 13:53:18 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/04 23:24:15 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_UTILS_H
 # define LEXER_UTILS_H
+
+typedef struct s_quotes
+{
+	int		i;
+	int		j;
+	int		len;
+	char	*start;
+	char	*end;
+	char	*quote;
+}	t_quotes;
 
 // LEXER UTILS
 char	get_next_special(char *token);
