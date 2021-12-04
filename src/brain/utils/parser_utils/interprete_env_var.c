@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 23:13:27 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/04 23:01:42 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/04 23:03:59 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  * @param  *lex_tok: Current lexer token
  * @retval Returns interpreted lexer token
  */
-char	*interprete_vars(char *lex_tok)
+char	*interprete_env_var(char *lex_tok)
 {
 	char	*interpreted_token;
 	char	*var;

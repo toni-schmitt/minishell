@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:35:35 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/03 18:51:22 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/04 23:03:58 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static char	**interprete_env_vars(char *lex_toks[])
 	i = 0;
 	while (lex_toks[i])
 	{
-		lex_toks[i] = interprete_vars(lex_toks[i]);
+		lex_toks[i] = interprete_env_var(lex_toks[i]);
 		if (lex_toks[i] == NULL)
 			return (NULL);
 		i++;
