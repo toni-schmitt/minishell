@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interprete_vars.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 23:13:27 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/03 18:50:39 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/04 23:01:42 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*interprete_vars(char *lex_tok)
 		free(var);
 		free(lex_tok);
 		if (interpreted_token == NULL)
-			return (NULL);
+			return (ft_strdup(" "));
 	}
 	return (interpreted_token);
 }
