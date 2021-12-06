@@ -1,6 +1,18 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/11/02 15:48:40 by tblaase           #+#    #+#              #
+#    Updated: 2021/12/03 10:55:17 by tblaase          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 # Commands & Flags
 CC = gcc
-CCFLAGS = -Wall -Werror -Wextra
+CCFLAGS = -Wall -Werror -Wextra -g
 
 RM = rm
 
@@ -24,9 +36,11 @@ SRC_STRING = \
 	ft_itoa.c ft_split.c ft_strchr.c ft_strdup.c ft_striteri.c ft_strjoin.c ft_strlcat.c \
 	ft_strlcpy.c ft_strlen.c ft_strmapi.c ft_strnstr.c ft_strncmp.c ft_strrchr.c ft_strstr.c ft_strtrim.c \
 	ft_substr.c ft_tolower.c ft_toupper.c ft_strhas.c ft_strndup.c ft_htoa.c ft_getlongeststr.c \
-	ft_atol.c ft_isspace.c ft_chrcount.c ft_issign.c ft_strcmp.c
+	ft_atol.c ft_isspace.c ft_chrcount.c ft_issign.c ft_strcmp.c ft_split_set.c ft_strset.c \
+	ft_str_arr_dup.c ft_str_arr_len.c ft_realloc_str.c ft_realloc_str_arr.c ft_strstrjoin.c ft_strclen.c \
+	ft_append_len_div.c ft_in_front_div.c ft_str_arr_realloc.c ft_add_single_str.c
 SRC_UTILS = \
-	ft_free.c ft_hexnbrlen.c ft_nbrlen.c ft_free_split.c
+	ft_free.c ft_hexnbrlen.c ft_nbrlen.c ft_free_str_array.c ft_free_str.c ft_free_split.c ft_free_single_str.c
 
 OBJ_DIR = ./obj
 

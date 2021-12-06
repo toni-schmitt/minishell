@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 17:23:59 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/10/28 18:28:19 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/03 10:57:07 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int		ft_isspace(int c);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_strjoin(const char *s1, const char *s2);
+char	*ft_strjoin(char *s1, const char *s2);
 char	*ft_strtrim(char const *s1, char const *set);
 char	**ft_split(const char *s, char c);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
@@ -104,11 +104,26 @@ char	*ft_htoa(unsigned long long dec, int uppercase);
 char	*ft_itoa(int nbr);
 char	*ft_getlongeststr(char **array);
 int		ft_chrcount(const char *str, char ch);
+char	**ft_split_set(char *str, char *set);
+char	*ft_strset(char *str, char *set);
+char	**ft_str_arr_dup(char **arr);
+int		ft_str_arr_len(char **arr);
+char	*ft_realloc_str(char *str, int size);
+char	**ft_realloc_str_arr(char **arr, int size);
+char	*ft_strstrjoin(char *s1, char *s2, char *divider);
+int		ft_strclen(char *str, char c);
+char	*ft_append_len_div(char **dst, char *src, int len, char *div);
+char	*ft_in_front_div(char **dst, char *src, char *div);
+char	**ft_str_arr_realloc(char *array[], size_t size);
+char	**ft_add_single_str(char ***arr, int pos, char *new);
 
 /* UTILS */
 int		ft_hexnbrlen(unsigned long long nbr);
 int		ft_nbrlen(long nbr);
-void	ft_free_split(char **split);
+void	*ft_free_split(char **split);
 void	*ft_free(void **p);
+void	ft_free_str(char **str);
+void	ft_free_str_array(char ***arr);
+void	ft_free_single_str(char ***arr, int i);
 
 #endif

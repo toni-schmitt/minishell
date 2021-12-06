@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/06 13:00:58 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/07/07 14:10:39 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/11/16 21:13:36 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strstr(const char *s, const char *to_find)
 	if (ft_strlen(to_find) == 0)
 		return ((char *)s);
 	i = 0;
-	while (*s)
+	while (s && *s)
 	{
 		if (*s == *to_find)
 		{
