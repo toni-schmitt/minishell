@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   interprete_vars.c                                  :+:      :+:    :+:   */
+/*   interprete_env_var.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 23:13:27 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/04 23:03:59 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/06 20:09:01 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "brain.h"
 #include "minishell.h"
 #include "parser_utils.h"
+#include "env_var_utils.h"
 
 // char	*get_env_var_value(char **env_var, char *var);
 
@@ -34,12 +35,11 @@ char	*interprete_env_var(char *lex_tok)
 		var = ft_substr(lex_tok, 1, ft_strlen(lex_tok));
 		if (var == NULL)
 			return (NULL);
-		// interpreted_token = get_env_var_value(get_envp(), var);
-		interpreted_token = ft_strdup(getenv(var));
+		interpreted_token = get_env_var_value(get_envv(), var);
 		free(var);
 		free(lex_tok);
 		if (interpreted_token == NULL)
-			return (ft_strdup(" "));
+			return (NULL);
 	}
 	return (interpreted_token);
 }
