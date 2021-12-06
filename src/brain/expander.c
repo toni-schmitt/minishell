@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/04 23:23:39 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/07 00:54:25 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,35 @@
 static int	get_tokens(t_par_tok *par_toks[])
 {
 	t_exp_tok	**exp_toks;
+	int			i;
 
-	exp_toks = NULL;
+	exp_toks = ft_calloc(get_tok_size(par_toks) + 1, sizeof(*exp_toks));
+	if (exp_toks == NULL)
+		return (EXIT_FAILURE);
 	set_exec_toks(exp_toks);
-	(void)par_toks;
-	return (EXIT_FAILURE);
+	i = 0;
+	while (par_toks[i])
+	{
+		exp_toks[i] = ft_calloc(1, sizeof(*exp_toks[i]));
+		if (exp_toks[i] == NULL)
+			return (free_exp_toks(exp_toks, EXIT_FAILURE));
+		if (par_toks[i]->cmd)
+		{
+			exp_toks[i]->cmd = ft_str_arr_dup(par_toks[i]->cmd);
+			if (exp_toks[i]->cmd == NULL)
+				return (free_exp_toks(exp_toks, EXIT_FAILURE));
+		}
+		if (par_toks[i]->redir_type[is_in_heredoc])
+		{
+			if (wait_for_heredoc(par_toks[i], exp_toks[i]) == EXIT_FAILURE)
+				return (free_exp_toks(exp_toks, EXIT_FAILURE));
+		}
+		i++;
+	}
+	return (EXIT_SUCCESS);
 }
 
-static void	free_exp_toks(t_exp_tok *exp_toks[])
+static int	free_exp_toks(t_exp_tok *exp_toks[], int exit_status)
 {
 	int	i;
 
@@ -38,15 +59,17 @@ static void	free_exp_toks(t_exp_tok *exp_toks[])
 		i++;
 	}
 	free(exp_toks);
+	return (exit_status);
 }
 
 int	expander(t_par_tok *parser_tokens[])
 {
 	t_exp_tok	**exp_toks;
 
-	if (check_for_heredoc(parser_tokens) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
 	if (get_tokens(parser_tokens) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+
+	if (check_for_heredoc(parser_tokens) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	exp_toks = get_exec_toks();
 	if (executor(exp_toks) == EXIT_FAILURE)

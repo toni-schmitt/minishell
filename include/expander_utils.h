@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 22:00:00 by toni              #+#    #+#             */
-/*   Updated: 2021/12/04 22:01:07 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/07 00:53:52 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@
  * @retval int to indicate success or failure
  */
 int		check_for_heredoc(t_par_tok *par_toks[]);
+int		wait_for_heredoc(t_par_tok *par_tok, t_exp_tok *exp_tok);
 
 #endif

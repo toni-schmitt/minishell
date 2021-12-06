@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 21:59:04 by toni              #+#    #+#             */
-/*   Updated: 2021/12/06 23:40:24 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/07 00:53:44 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,12 @@ static char	*get_heredoc(t_par_tok *par_tok)
  * @param  *par_tok:
  * @retval int to indicate success or failure
  */
-static int	wait_for_heredoc(t_par_tok *par_tok)
+int	wait_for_heredoc(t_par_tok *par_tok, t_exp_tok *exp_tok)
 {
 	char	*buf;
 	char	*heredoc;
 
+	(void)exp_tok;
 	heredoc = get_heredoc(par_tok);
 	if (heredoc == NULL)
 		return (EXIT_FAILURE);
