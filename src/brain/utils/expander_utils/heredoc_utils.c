@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 21:59:04 by toni              #+#    #+#             */
-/*   Updated: 2021/12/06 21:14:16 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/06 23:30:58 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 
 /**
  * @brief  Gets heredoc to wait for
- * @note   
- * @param  *par_tok: 
+ * @note
+ * @param  *par_tok:
  * @retval char pointer to (by parser) allocated heredoc
  */
 static char	*get_heredoc(t_par_tok *par_tok)
@@ -36,8 +36,8 @@ static char	*get_heredoc(t_par_tok *par_tok)
 
 /**
  * @brief  Waits in readline-prompt as long as heredoc is not typed
- * @note   
- * @param  *par_tok: 
+ * @note
+ * @param  *par_tok:
  * @retval int to indicate success or failure
  */
 static int	wait_for_heredoc(t_par_tok *par_tok)
@@ -52,19 +52,20 @@ static int	wait_for_heredoc(t_par_tok *par_tok)
 	{
 		buf = readline("> ");
 		if (buf == NULL)
-			return (EXIT_FAILURE);
+			return (EXIT_SUCCESS); // close pipe here as well
 		if (ft_strcmp(buf, heredoc) == 0)
 			break ;
-		free(buf);
+		free(buf); // put buff into the pipe before
 	}
-	free(buf);
+	free(buf); // put buff into the pipe before
+	// close pipe here
 	return (EXIT_SUCCESS);
 }
 
 /**
  * @brief  Searches for heredoc in par_toks and waits if found
- * @note   
- * @param  *par_toks[]: 
+ * @note
+ * @param  *par_toks[]:
  * @retval int to indicate success or failure
  */
 int	check_for_heredoc(t_par_tok *par_toks[])
