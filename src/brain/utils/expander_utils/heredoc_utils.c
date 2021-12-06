@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 21:59:04 by toni              #+#    #+#             */
-/*   Updated: 2021/12/07 00:53:44 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/07 00:56:44 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	check_for_heredoc(t_par_tok *par_toks[])
 	while (par_toks[i])
 	{
 		if (par_toks[i]->redir_type[is_in_heredoc])
-			return (wait_for_heredoc(par_toks[i]));
+			return (wait_for_heredoc(par_toks[i], NULL));
 		i++;
 	}
 	return (EXIT_SUCCESS);
