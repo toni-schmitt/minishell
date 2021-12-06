@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:29:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/06 17:54:43 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/06 19:29:44 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,39 +20,12 @@
 
 # define EXIT_SYNTAX_ERROR 258
 
-/* TRANSPORT OF ENV_VARIABLES */
-typedef struct s_env
-{
-	char	**envp;
-	char	**env_var;
-	char	*pwd;
-	char	*oldpwd;
-}			t_env;
-
-/* TRANSPORT OF VARIABLES OF EXPORT */
-typedef struct s_export
-{
-	int		i;
-	int		j;
-	char	*var;
-}			t_export;
-
 /* INBUILD */
 int		echo(char **args);
-int		export(char **argv, t_env *envv);
-int		unset(char **argv, t_env *envv);
-int		env(t_env *envv, char **argv);
+int		export(char **argv);
+int		unset(char **argv);
+int		env(char **argv);
 int		pwd(void);
-int		cd(char **argv, t_env *envv);
-
-/* INBUILD_UTILS */
-int		export_only(t_env *envv);
-int		export_input_error(char **argv);
-int		export_special(t_env *envv, t_export *exp);
-int		export_wd(t_env *envv, t_export *exp, char **argv);
-t_env	*init_envv(char **envp);
-int		reinit_env_var(t_env *envv, char **argv);
-char	*get_env_var_value(t_env *envv, char *var);
-void	free_envv(t_env **envv);
+int		cd(char **argv);
 
 #endif
