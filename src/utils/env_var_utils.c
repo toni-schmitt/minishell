@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_utils.c                                        :+:      :+:    :+:   */
+/*   env_var_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 11:29:18 by tblaase           #+#    #+#             */
-/*   Updated: 2021/12/06 18:32:39 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/06 19:36:06 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "env_var_utils.h"
 
 static void	get_env_var_value_utils(t_env *envv, char *var, char **value)
 {
