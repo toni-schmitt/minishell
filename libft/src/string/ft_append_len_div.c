@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_append_len_div.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 20:16:18 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/29 16:42:52 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/06 20:06:25 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_append_len_div(char **dst, char *src, int len, char *div)
 {
 	int		i;
 	int		j;
-	char	*out = NULL;
+	char	*out;
 
 	j = 0;
 	if (*dst == NULL || src == NULL || ft_strlen(src) < len)

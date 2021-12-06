@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_add_single_str.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/30 22:17:58 by tblaase           #+#    #+#             */
-/*   Updated: 2021/12/01 16:18:43 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/06 20:06:50 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	**ft_add_single_str(char ***arr, int pos, char *new)
 	(*arr)[i] = ft_strdup(new);
 	if ((*arr)[i] == NULL)
 	{
-		ft_free_str_array(arr); // might cause leaks....
+		ft_free_str_array(arr);
 		return (NULL);
 	}
 	return (*arr);

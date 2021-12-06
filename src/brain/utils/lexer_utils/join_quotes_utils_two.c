@@ -6,13 +6,12 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 13:45:39 by tblaase           #+#    #+#             */
-/*   Updated: 2021/12/04 23:24:41 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/06 20:05:42 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "lexer_utils.h"
-
 
 int	combine_loop(char ***tokens, t_quotes *quo)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_tokens_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 19:08:20 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/03 18:15:52 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/06 20:07:23 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	get_subshell_tok(t_iter *iter)
 	iter[cmd]++;
 	par_tok->type = subshell;
 	iter[lex]++;
-	// iter[par]++;
 	return (EXIT_BREAK);
 }
 
