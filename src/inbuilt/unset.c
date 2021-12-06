@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 15:50:27 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/22 18:41:59 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/06 19:33:23 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "env_var_utils.h"
 
 static char	*ft_get_var(t_env *envv, int i)
 {
@@ -64,13 +65,15 @@ static int	ft_inner_loop(char **argv, t_env *envv, int i, int k)
 	return (EXIT_SUCCESS);
 }
 
-int	unset(char **argv, t_env *envv)
+int	unset(char **argv)
 {
 	int		i;
 	int		k;
 	int		inner_out;
+	t_env	*envv;
 
 	k = 1;
+	envv = get_envv();
 	if (argv[k] == NULL)
 		return (EXIT_SUCCESS);
 	while (argv[k])

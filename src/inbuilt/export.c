@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 17:49:07 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/26 13:42:09 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/06 19:33:19 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "env_var_utils.h"
+#include "inbuilt_utils.h"
 
 /*
 will reallocate env_var for one additional element
@@ -108,10 +110,12 @@ static int	ft_export_loop(t_env *envv, t_export *exp, char **argv)
 /*
 mimics the behavior of the export function in bash
 */
-int	export(char **argv, t_env *envv)
+int	export(char **argv)
 {
 	t_export	*exp;
+	t_env		*envv;
 
+	envv = get_envv();
 	if (envv == NULL || envv->env_var == NULL)
 		return (EXIT_FAILURE);
 	if (argv[1] == NULL)
@@ -127,12 +131,10 @@ int	export(char **argv, t_env *envv)
 			return (EXIT_FAILURE);
 		if (ft_export_loop(envv, exp, argv) == EXIT_FAILURE)
 		{
-			free(exp);
-			exp = NULL;
+			ft_free((void *)&exp);
 			return (EXIT_FAILURE);
 		}
-		free(exp);
-		exp = NULL;
+		ft_free((void *)&exp);
 	}
 	return (EXIT_SUCCESS);
 }

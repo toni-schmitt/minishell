@@ -3,19 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 13:48:30 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/20 13:26:04 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/06 19:33:15 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "env_var_utils.h"
 
-int	env(t_env *envv, char **argv)
+int	env(char **argv)
 {
-	int	i;
+	int		i;
+	t_env	*envv;
 
+	envv = get_envv();
 	if (envv == NULL || envv->env_var == NULL)
 		return (EXIT_FAILURE);
 	if (argv != NULL && argv[1] != NULL)

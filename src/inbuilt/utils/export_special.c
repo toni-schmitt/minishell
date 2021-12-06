@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export_special.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 12:42:50 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/26 13:35:40 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/06 19:36:39 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "env_var_utils.h"
+#include "inbuilt_utils.h"
 
 /*
 will update envv->pwd/oldpwd if exported

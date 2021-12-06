@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 14:12:17 by tblaase           #+#    #+#             */
-/*   Updated: 2021/12/06 19:02:08 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/06 19:48:29 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "env_var_utils.h"
 
 static char	*find_home(t_env *envv)
 {
@@ -90,11 +91,13 @@ static int	ft_cd_home(t_env *envv)
 	return (ft_exit_cd(&cwd, EXIT_SUCCESS));
 }
 
-int	cd(char **argv, t_env *envv)
+int	cd(char **argv)
 {
 	char	*cwd;
 	DIR		*directory;
+	t_env	*envv;
 
+	envv = get_envv();
 	if (argv == NULL || envv == NULL)
 		return (EXIT_FAILURE);
 	if (argv[1] == NULL)
