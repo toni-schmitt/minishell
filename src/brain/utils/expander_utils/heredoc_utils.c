@@ -6,14 +6,13 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 21:59:04 by toni              #+#    #+#             */
-/*   Updated: 2021/12/04 22:02:05 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/06 19:40:01 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "brain.h"
 #include "expander_utils.h"
-
 
 /**
  * @brief  Gets heredoc to wait for
