@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 21:59:04 by toni              #+#    #+#             */
-/*   Updated: 2021/12/06 23:30:58 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/06 23:40:24 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	wait_for_heredoc(t_par_tok *par_tok)
 			break ;
 		free(buf); // put buff into the pipe before
 	}
-	free(buf); // put buff into the pipe before
+	free(buf);
 	// close pipe here
 	return (EXIT_SUCCESS);
 }
