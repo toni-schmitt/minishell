@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:29:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/04 23:14:41 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/06 17:54:43 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		export_special(t_env *envv, t_export *exp);
 int		export_wd(t_env *envv, t_export *exp, char **argv);
 t_env	*init_envv(char **envp);
 int		reinit_env_var(t_env *envv, char **argv);
-char	*get_env_var_value(char **env_var, char *var);
+char	*get_env_var_value(t_env *envv, char *var);
 void	free_envv(t_env **envv);
 
 #endif

@@ -6,35 +6,58 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 11:29:18 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/26 13:40:44 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/06 18:32:39 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	get_env_var_value_utils(t_env *envv, char *var, char **value)
+{
+	if (ft_strlen(*value) == 0 && ft_strcmp(var, "PWD") == 0)
+		*value = ft_strdup(envv->pwd);
+	else if (ft_strlen(*value) == 0 && ft_strcmp(var, "OLDPWD") == 0)
+	{
+		if (ft_strlen(envv->oldpwd) == 0)
+			*value = ft_calloc(1, sizeof (char));
+		else
+			*value = ft_strdup(envv->oldpwd);
+	}
+}
+
 /*
-searches for var inside of env_var, allocates its value after the '='
-value: allocated value or NULL
+ * @brief  get value of a specific variable from env_var
+ * @note  similar to getenv but uses our env_var instead of envp
+ * @param  *envv: the t_env struct
+ * @param  *var: the variable you are searching for without the '='
+ * @retval the maloced value that was found, empty string if not found
+ * * , NULL if error occured
 */
-char	*get_env_var_value(char **env_var, char *var)
+char	*get_env_var_value(t_env *envv, char *var)
 {
 	int		i;
 	char	*value;
 
 	value = NULL;
 	i = 0;
-	while (env_var && env_var[i] != NULL)
+	while (envv && envv->env_var && envv->env_var[i] != NULL)
 	{
-		if (ft_strcmp(var, env_var[i]) == -61)
+		if (ft_strcmp(var, envv->env_var[i]) == -61)
 		{
-			value = ft_strdup(ft_strchr(env_var[i], '=') + 1);
+			value = ft_strchr(envv->env_var[i++], '=') + 1;
+			if (ft_strlen(value) == 0)
+				value = ft_calloc(1, sizeof (char));
+			else
+				value = ft_strdup(value);
 			break ;
 		}
-		i++;
+		else if (ft_strcmp(var, envv->env_var[i++]) == 0)
+		{
+			value = ft_calloc(1, sizeof (char));
+			break ;
+		}
 	}
-	if (value == NULL && (ft_strcmp(var, "PWD") == 0
-			|| ft_strcmp(var, "OLDPWD") == 0))
-		value = ft_calloc(1, sizeof(char));
+	get_env_var_value_utils(envv, var, &value);
 	return (value);
 }
 
@@ -51,8 +74,8 @@ t_env	*init_envv(char **envp)
 	{
 		envv->envp = envp;
 		envv->env_var = ft_str_arr_dup(envp);
-		envv->pwd = get_env_var_value(envv->env_var, "PWD");
-		envv->oldpwd = get_env_var_value(envv->env_var, "OLDPWD");
+		envv->pwd = get_env_var_value(envv, "PWD");
+		envv->oldpwd = get_env_var_value(envv, "OLDPWD");
 		if (envv->env_var != NULL && envv->pwd != NULL && envv->oldpwd != NULL)
 			return (envv);
 	}
@@ -72,6 +95,13 @@ void	free_envv(t_env **envv)
 	*envv = NULL;
 }
 
+/**
+ * @brief  will reinitiate env_var if all values got unset
+ * @note
+ * @param  *envv: the t_env struct
+ * @param  **argv: the first variable that gets exported into the empty env_var
+ * @retval either EXIT_SUCCESS or EXIT_FAILURE
+ */
 int	reinit_env_var(t_env *envv, char **argv)
 {
 	if (*envv->env_var == NULL)

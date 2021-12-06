@@ -6,23 +6,24 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 14:12:17 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/26 12:17:12 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/06 19:02:08 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*find_home(char **env_var)
+static char	*find_home(t_env *envv)
 {
 	char	*path;
 
-	if (env_var == NULL)
+	if (envv->env_var == NULL)
 		return (NULL);
-	path = get_env_var_value(env_var, "HOME");
-	if (path == NULL || ft_strlen(path) == 0)
-		ft_printf("cd: HOME not set\n");
+	path = get_env_var_value(envv, "HOME");
 	if (ft_strlen(path) == 0)
+	{
+		ft_printf("cd: HOME not set\n");
 		ft_free_str(&path);
+	}
 	return (path);
 }
 
@@ -72,7 +73,7 @@ static int	ft_cd_home(t_env *envv)
 	char	*cwd;
 
 	cwd = NULL;
-	home_path = find_home(envv->env_var);
+	home_path = find_home(envv);
 	if (home_path == NULL)
 		return (EXIT_FAILURE);
 	if (chdir(home_path) != 0)
