@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 22:21:31 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/04 23:24:09 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/06 19:29:53 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void		set_par_toks(t_par_tok **par_toks);
 t_par_tok	**get_par_toks(void);
 t_par_tok	*get_curr_par_tok(void);
 
-void	set_exec_toks(t_exp_tok *exec_toks[]);
+void		set_exec_toks(t_exp_tok *exec_toks[]);
 t_exp_tok	**get_exec_toks(void);
 
 #endif
