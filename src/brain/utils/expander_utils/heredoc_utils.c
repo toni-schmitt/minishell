@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 21:59:04 by toni              #+#    #+#             */
-/*   Updated: 2021/12/06 19:40:01 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/06 21:14:16 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,14 @@ static int	wait_for_heredoc(t_par_tok *par_tok)
 	heredoc = get_heredoc(par_tok);
 	if (heredoc == NULL)
 		return (EXIT_FAILURE);
-	buf = readline("> ");
-	if (buf == NULL)
-		return (EXIT_FAILURE);
-	while (ft_strcmp(buf, heredoc) != 0)
+	while (true)
 	{
-		free(buf);
 		buf = readline("> ");
 		if (buf == NULL)
 			return (EXIT_FAILURE);
+		if (ft_strcmp(buf, heredoc) == 0)
+			break ;
+		free(buf);
 	}
 	free(buf);
 	return (EXIT_SUCCESS);
