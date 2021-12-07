@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   par_tok_get_set.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 20:11:15 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/02 21:21:09 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/07 19:29:45 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,17 @@
 #include "parser_utils.h"
 #include "minishell.h"
 
-static t_par_tok	**_get_par_toks(t_par_tok **par_toks)
+static t_par_tok	**_get_par_toks(t_par_tok **par_toks, bool reset)
 {
 	static t_par_tok	**static_par_toks = NULL;
 
-	if (par_toks == NULL)
+	if (par_toks == NULL && !reset)
 		return (static_par_toks);
+	if (reset)
+	{
+		static_par_toks = NULL;
+		return (NULL);
+	}
 	static_par_toks = par_toks;
 	return (static_par_toks);
 }
@@ -36,10 +41,15 @@ t_par_tok	*get_curr_par_tok(void)
 
 t_par_tok	**get_par_toks(void)
 {
-	return (_get_par_toks(NULL));
+	return (_get_par_toks(NULL, false));
 }
 
 void	set_par_toks(t_par_tok **par_toks)
 {
-	_get_par_toks(par_toks);
+	_get_par_toks(par_toks, false);
+}
+
+void	reset_par_toks(void)
+{
+	_get_par_toks(NULL, true);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   brain.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 22:21:31 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/07 15:17:01 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/07 19:29:33 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int			executor(t_exp_tok *executor_tokens[]);
 // GETTER / SETTER
 void		set_envp(char *envp[]);
 char		**get_envp(void);
+void		reset_envp(void);
 
 void		set_lex_toks(char **lex_toks);
 char		**get_lex_toks(void);
@@ -80,11 +81,15 @@ char		*get_curr_lex_tok(void);
 
 void		set_iter(t_iter *iter);
 t_iter		*get_iter(void);
+void		reset_iter(void);
+
 void		set_par_toks(t_par_tok **par_toks);
 t_par_tok	**get_par_toks(void);
 t_par_tok	*get_curr_par_tok(void);
+void 		reset_par_toks(void);
 
 void		set_exec_toks(t_exp_tok *exec_toks[]);
 t_exp_tok	**get_exec_toks(void);
+void 		reset_exec_toks(void);
 
 #endif
