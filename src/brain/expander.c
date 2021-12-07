@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/07 00:56:35 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/07 16:19:06 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,6 @@ int	expander(t_par_tok *parser_tokens[])
 	t_exp_tok	**exp_toks;
 
 	if (get_tokens(parser_tokens) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-
-	if (check_for_heredoc(parser_tokens) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	exp_toks = get_exec_toks();
 	if (executor(exp_toks) == EXIT_FAILURE)
