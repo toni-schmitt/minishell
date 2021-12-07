@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/07 16:30:30 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/07 17:24:32 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ static bool	is_valid_cmd(char *cmd[], char **abs_cmd_path)
 /**
  * @brief  Executes command in child process
  * @note   Waits for child process to finish
- * @param  *exp_tok: 
- * @param  *abs_cmd_path: 
+ * @param  *exp_tok:
+ * @param  *abs_cmd_path:
  * @retval exit status of child process
  */
 static int	execute_cmd(t_exp_tok *exp_tok, char *abs_cmd_path)
@@ -70,8 +70,18 @@ static int	execute_cmd(t_exp_tok *exp_tok, char *abs_cmd_path)
 		return (EXIT_FAILURE);
 	if (pid == 0)
 	{
-		if (execve(abs_cmd_path, exp_tok->cmd, get_envv()->env_var) == -1)
-			return (EXIT_SUCCESS);
+		if (exp_tok->in != STDIN_FILENO)
+		{
+			printf("changed stdin to %d\n", exp_tok->in);
+			dup2(exp_tok->in, STDIN_FILENO);
+		}
+		if (exp_tok->out != 0) // the standard of the out should be 1, not 0
+		{
+			printf("changed stdout to %d\n", exp_tok->out);
+			dup2(exp_tok->out, STDOUT_FILENO);
+		}
+		if (execve(abs_cmd_path, exp_tok->cmd, get_envv()->env_var) == -1) // no need to check for return of execve
+			return (EXIT_SUCCESS); // needs to be EXIT_FAILURE because if it reaches this execve failed
 	}
 	waitpid(pid, &status, 0);
 	return (status);
