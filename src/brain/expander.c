@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/07 00:56:35 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/07 16:14:11 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ static int	free_exp_toks(t_exp_tok *exp_toks[], int exit_status)
 	while (exp_toks[i])
 	{
 		ft_free_str_array(&exp_toks[i]->cmd);
-		free(exp_toks[i]->in);
-		free(exp_toks[i]->out);
+		// free(exp_toks[i]->in);
+		// free(exp_toks[i]->out);
 		free(exp_toks[i]);
 		i++;
 	}
@@ -79,8 +79,8 @@ int	expander(t_par_tok *parser_tokens[])
 	if (get_tokens(parser_tokens) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 
-	if (check_for_heredoc(parser_tokens) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+	// if (check_for_heredoc(parser_tokens) == EXIT_FAILURE)
+	// 	return (EXIT_FAILURE);
 	exp_toks = get_exec_toks();
 	if (executor(exp_toks) == EXIT_FAILURE)
 	{
@@ -90,3 +90,11 @@ int	expander(t_par_tok *parser_tokens[])
 	free_exp_toks(exp_toks, EXIT_SUCCESS);
 	return (EXIT_SUCCESS);
 }
+
+/* for checking if a command is valid
+	if (access(argv[1], F_OK) != 0)
+	{
+		perror("Error");
+		return (EXIT_FAILURE);
+	}
+*/

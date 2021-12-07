@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 21:59:04 by toni              #+#    #+#             */
-/*   Updated: 2021/12/07 00:56:44 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/07 16:30:56 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,44 @@ int	wait_for_heredoc(t_par_tok *par_tok, t_exp_tok *exp_tok)
 {
 	char	*buf;
 	char	*heredoc;
+	int		end[2];
 
-	(void)exp_tok;
+	if (pipe(end) == -1)
+	{
+		perror("Error");
+		return (EXIT_FAILURE);
+	}
+	printf("%d\n%d\n", end[0], end[1]);
+	exp_tok->in = end[0];
 	heredoc = get_heredoc(par_tok);
 	if (heredoc == NULL)
 		return (EXIT_FAILURE);
 	while (true)
 	{
 		buf = readline("> ");
+		// buf = ft_strdup("eof");
 		if (buf == NULL)
-			return (EXIT_SUCCESS); // close pipe here as well
+		{
+			if (close(end[1]) != 0)
+				return (EXIT_FAILURE);
+			return (EXIT_SUCCESS);
+		}
 		if (ft_strcmp(buf, heredoc) == 0)
 			break ;
-		free(buf); // put buff into the pipe before
+		// dup2(end[0], STDIN_FILENO);
+		write(end[1], buf, ft_strlen(buf));
+		write(end[1], "\n", 1);
+		// ft_putstr_fd(buf, end[1]);
+		// ft_putstr_fd("\n", end[1]);
+		// printf("BUFFER:'%s'\n", buf);
+		free(buf);
 	}
 	free(buf);
-	// close pipe here
+	char *tst = NULL;
+	dprintf(2, "output of read: %zd\n", read(end[0], tst, 1));
+	dprintf(2, "EXIT_SUCCESS\n");
+	if (close(end[1]) != 0)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 

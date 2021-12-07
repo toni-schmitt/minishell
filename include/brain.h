@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   brain.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 22:21:31 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/06 19:29:53 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/07 15:17:01 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ typedef enum e_iterator
 typedef struct s_expander_tokens
 {
 	char	**cmd;
-	int		*in;
-	int		*out;
+	int		in;
+	int		out;
 }	t_exp_tok;
 
 // BRAIN
