@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:29:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/06 19:29:44 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/07 15:25:45 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdbool.h>
 
 # define EXIT_SYNTAX_ERROR 258
+# define EXIT_CMD_NOT_FOUND 127
 
 /* INBUILD */
 int		echo(char **args);
