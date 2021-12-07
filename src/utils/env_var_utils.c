@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   env_var_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 11:29:18 by tblaase           #+#    #+#             */
-/*   Updated: 2021/12/06 19:36:06 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/07 16:39:17 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "env_var_utils.h"
 
-static void	get_env_var_value_utils(t_env *envv, char *var, char **value)
+static void	get_env_var_value_utils(t_env *envv, char *var, char **value, int i)
 {
 	if (ft_strlen(*value) == 0 && ft_strcmp(var, "PWD") == 0)
 		*value = ft_strdup(envv->pwd);
@@ -24,6 +24,8 @@ static void	get_env_var_value_utils(t_env *envv, char *var, char **value)
 		else
 			*value = ft_strdup(envv->oldpwd);
 	}
+	else if (envv->env_var[i] == NULL && *value == NULL)
+		*value = ft_calloc(1, sizeof(char));
 }
 
 /*
@@ -58,7 +60,7 @@ char	*get_env_var_value(t_env *envv, char *var)
 			break ;
 		}
 	}
-	get_env_var_value_utils(envv, var, &value);
+	get_env_var_value_utils(envv, var, &value, i);
 	return (value);
 }
 
