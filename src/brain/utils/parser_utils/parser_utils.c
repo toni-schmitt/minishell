@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 20:05:39 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/02 17:33:38 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/07 19:30:49 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	free_parser(t_par_tok *par_tok[], t_iter *iter, int exit_status)
 {
 	free_par_toks(par_tok);
 	free(iter);
+	reset_iter();
+	reset_par_toks();
 	return (exit_status);
 }
 

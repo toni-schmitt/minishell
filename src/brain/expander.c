@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/07 19:03:22 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/07 19:32:27 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static int	free_exp_toks(t_exp_tok *exp_toks[], int exit_status)
 		i++;
 	}
 	free(exp_toks);
+	reset_exp_toks();
 	return (exit_status);
 }
 
@@ -58,7 +59,7 @@ static int	get_tokens(t_par_tok *par_toks[])
 	exp_toks = ft_calloc(get_tok_size(par_toks) + 1, sizeof(*exp_toks));
 	if (exp_toks == NULL)
 		return (EXIT_FAILURE);
-	set_exec_toks(exp_toks);
+	set_exp_toks(exp_toks);
 	i = 0;
 	while (par_toks[i])
 	{
@@ -135,7 +136,7 @@ int	expander(t_par_tok *par_toks[])
 
 	if (get_tokens(par_toks) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	exp_toks = get_exec_toks();
+	exp_toks = get_exp_toks();
 	if (handle_redir(par_toks, exp_toks) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (executor(exp_toks) == EXIT_FAILURE)

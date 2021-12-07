@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 22:21:31 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/07 19:29:33 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/07 19:32:40 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void		reset_envp(void);
 void		set_lex_toks(char **lex_toks);
 char		**get_lex_toks(void);
 char		*get_curr_lex_tok(void);
+void		reset_lex_toks(void);
 
 void		set_iter(t_iter *iter);
 t_iter		*get_iter(void);
@@ -88,8 +89,8 @@ t_par_tok	**get_par_toks(void);
 t_par_tok	*get_curr_par_tok(void);
 void 		reset_par_toks(void);
 
-void		set_exec_toks(t_exp_tok *exec_toks[]);
-t_exp_tok	**get_exec_toks(void);
-void 		reset_exec_toks(void);
+void		set_exp_toks(t_exp_tok *exp_toks[]);
+t_exp_tok	**get_exp_toks(void);
+void 		reset_exp_toks(void);
 
 #endif
