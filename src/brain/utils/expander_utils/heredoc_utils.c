@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 21:59:04 by toni              #+#    #+#             */
-/*   Updated: 2021/12/07 16:30:56 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/07 17:21:46 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,37 +51,40 @@ int	wait_for_heredoc(t_par_tok *par_tok, t_exp_tok *exp_tok)
 		perror("Error");
 		return (EXIT_FAILURE);
 	}
-	printf("%d\n%d\n", end[0], end[1]);
+	printf("read end of the pipe: %d\n", end[0]);
+	printf("write end of the pipe: %d\n", end[1]);
 	exp_tok->in = end[0];
 	heredoc = get_heredoc(par_tok);
 	if (heredoc == NULL)
+	{
+		close(end[0]);
+		close(end[1]);
 		return (EXIT_FAILURE);
+	}
 	while (true)
 	{
 		buf = readline("> ");
-		// buf = ft_strdup("eof");
 		if (buf == NULL)
 		{
 			if (close(end[1]) != 0)
+			{
+				close(end[0]);
 				return (EXIT_FAILURE);
+			}
 			return (EXIT_SUCCESS);
 		}
 		if (ft_strcmp(buf, heredoc) == 0)
 			break ;
-		// dup2(end[0], STDIN_FILENO);
 		write(end[1], buf, ft_strlen(buf));
 		write(end[1], "\n", 1);
-		// ft_putstr_fd(buf, end[1]);
-		// ft_putstr_fd("\n", end[1]);
-		// printf("BUFFER:'%s'\n", buf);
 		free(buf);
 	}
 	free(buf);
-	char *tst = NULL;
-	dprintf(2, "output of read: %zd\n", read(end[0], tst, 1));
-	dprintf(2, "EXIT_SUCCESS\n");
 	if (close(end[1]) != 0)
+	{
+		close(end[0]);
 		return (EXIT_FAILURE);
+	}
 	return (EXIT_SUCCESS);
 }
 
