@@ -6,12 +6,13 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:28:36 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/06 23:27:32 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/07 15:45:42 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "brain.h"
+#include "env_var_utils.h"
 
 /*
  * STILL USES clear_history INSTEAD OF rl_clear_history
@@ -22,6 +23,7 @@ static int	exit_routine(void *to_free, int exit_status)
 {
 	clear_history(); // CHANGE TO rl_clear_history();
 	free(to_free);
+	free_envv(get_envv());
 	return (exit_status);
 }
 
@@ -59,9 +61,15 @@ static int	handle_flags(int argc, char *argv[])
 
 int	main(int argc, char *argv[], char *envp[])
 {
+	t_env	*envv;
+
+	envv = init_envv(envp);
+	if (envv == NULL)
+		return (EXIT_FAILURE);
+	set_envp(envp);
+	set_envv(envv);
 	if (argc != 1)
 		return (handle_flags(argc, argv));
-	set_envp(envp);
 	if (routine() == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 11:29:18 by tblaase           #+#    #+#             */
-/*   Updated: 2021/12/07 16:39:17 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/07 16:42:41 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,13 @@ t_env	*init_envv(char **envp)
 /*
 will free all allocated values of t_env and set them to NULL
 */
-void	free_envv(t_env **envv)
+void	free_envv(t_env *envv)
 {
-	(*envv)->envp = NULL;
-	ft_free_str_array(&(*envv)->env_var);
-	ft_free_str(&(*envv)->pwd);
-	ft_free_str(&(*envv)->oldpwd);
-	free(*envv);
-	*envv = NULL;
+	envv->envp = NULL;
+	ft_free_str_array(&envv->env_var);
+	ft_free_str(&envv->pwd);
+	ft_free_str(&envv->oldpwd);
+	free(envv);
 }
 
 /**
