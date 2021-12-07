@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/07 16:42:23 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/07 18:35:23 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ static int	free_exp_toks(t_exp_tok *exp_toks[], int exit_status)
 	while (exp_toks[i])
 	{
 		ft_free_str_array(&exp_toks[i]->cmd);
-		// free(exp_toks[i]->in);
-		// free(exp_toks[i]->out);
 		free(exp_toks[i]);
 		i++;
 	}
@@ -41,6 +39,17 @@ static size_t	get_tok_size(t_par_tok *par_toks[])
 	return (size);
 }
 
+static int	init(t_exp_tok **exp_tok)
+{
+	*exp_tok = malloc(sizeof(**exp_tok));
+	if (*exp_tok == NULL)
+		return (EXIT_FAILURE);
+	(*exp_tok)->cmd = NULL;
+	(*exp_tok)->in = 0;
+	(*exp_tok)->out = 1;
+	return (EXIT_SUCCESS);
+}
+
 static int	get_tokens(t_par_tok *par_toks[])
 {
 	t_exp_tok	**exp_toks;
@@ -53,8 +62,7 @@ static int	get_tokens(t_par_tok *par_toks[])
 	i = 0;
 	while (par_toks[i])
 	{
-		exp_toks[i] = ft_calloc(1, sizeof(*exp_toks[i]));
-		if (exp_toks[i] == NULL)
+		if (init(&exp_toks[i]) == EXIT_FAILURE)
 			return (free_exp_toks(exp_toks, EXIT_FAILURE));
 		if (par_toks[i]->cmd)
 		{
@@ -63,10 +71,8 @@ static int	get_tokens(t_par_tok *par_toks[])
 				return (free_exp_toks(exp_toks, EXIT_FAILURE));
 		}
 		if (par_toks[i]->redir_type[is_in_heredoc])
-		{
 			if (wait_for_heredoc(par_toks[i], exp_toks[i]) == EXIT_FAILURE)
 				return (free_exp_toks(exp_toks, EXIT_FAILURE));
-		}
 		i++;
 	}
 	return (EXIT_SUCCESS);
