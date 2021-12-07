@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:52:36 by toni              #+#    #+#             */
-/*   Updated: 2021/12/06 19:32:59 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/07 15:47:05 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_env
 
 // ENV VAR UTILS
 t_env	*init_envv(char **envp);
-void	free_envv(t_env **envv);
+void	free_envv(t_env *envv);
 int		reinit_env_var(t_env *envv, char **argv);
 char	*get_env_var_value(t_env *envv, char *var);
 
