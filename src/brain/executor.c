@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/07 18:32:35 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/07 18:38:34 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,20 +87,20 @@ static int	execute_cmd(t_exp_tok *exp_tok, char *abs_cmd_path)
 		return (EXIT_FAILURE);
 	if (pid == 0)
 	{
-		if (exp_tok->in != STDIN_FILENO)
+		if (exp_tok->in != STDIN_FILENO) // this check is not needed in theory
 		{
-			printf("changed stdin to %d\n", exp_tok->in);
+			printf("changed stdin to %d\n", exp_tok->in);// remove after testing
 			dup2(exp_tok->in, STDIN_FILENO);
 		}
 		if (exp_tok->out != 0) // the standard of the out should be 1, not 0
 		{
-			printf("changed stdout to %d\n", exp_tok->out);
+			printf("changed stdout to %d\n", exp_tok->out);//remove after testing
 			dup2(exp_tok->out, STDOUT_FILENO);
 		}
 		if (execve(abs_cmd_path, exp_tok->cmd, get_envv()->env_var) == -1)
 			return (EXIT_FAILURE);
 	}
-	waitpid(pid, &status, 0);
+	waitpid(pid, &status, 0); // this status will need to be changed with WEXITSTATUS
 	return (status);
 }
 

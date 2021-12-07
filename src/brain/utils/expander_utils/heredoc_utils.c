@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 21:59:04 by toni              #+#    #+#             */
-/*   Updated: 2021/12/07 17:21:46 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/07 17:29:44 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,10 @@ int	wait_for_heredoc(t_par_tok *par_tok, t_exp_tok *exp_tok)
 		perror("Error");
 		return (EXIT_FAILURE);
 	}
+	// remove after testing until next //
 	printf("read end of the pipe: %d\n", end[0]);
 	printf("write end of the pipe: %d\n", end[1]);
+	//
 	exp_tok->in = end[0];
 	heredoc = get_heredoc(par_tok);
 	if (heredoc == NULL)
