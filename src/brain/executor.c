@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/07 18:38:34 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/07 18:55:12 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static int	init(char **path_splitted[])
 	free(path);
 	if (*path_splitted == NULL)
 		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 static bool	is_valid_cmd(char *cmd, char **abs_cmd_path)
