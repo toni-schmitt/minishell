@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/08 12:53:35 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/08 13:56:49 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,7 @@ int	expander(t_par_tok *par_toks[])
 	if (get_tokens(par_toks) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	exp_toks = get_exp_toks();
-	if (handle_redir(par_toks, exp_toks) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+	handle_redir(par_toks, exp_toks); // here we need to set the exit_status to 1 if something went wrong and somehow quit the executor
 	if (executor(exp_toks) == EXIT_FAILURE)
 	{
 		free_exp_toks(exp_toks, EXIT_FAILURE);

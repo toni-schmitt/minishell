@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 12:51:20 by tblaase           #+#    #+#             */
-/*   Updated: 2021/12/08 13:05:58 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/08 14:01:42 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "brain.h"
 #include "expander_utils.h"
 
-static int	open_in(t_par_tok *par_tok, t_exp_tok *exp_tok)
+static void	open_in(t_par_tok *par_tok, t_exp_tok *exp_tok)
 {
 	int		i;
 	int		fd;
@@ -27,18 +27,19 @@ static int	open_in(t_par_tok *par_tok, t_exp_tok *exp_tok)
 			fd = open(par_tok->in[i], O_RDONLY);
 		if (fd == -1)
 		{
-			perror("ERROR");
-			return (errno);
+			printf("something with %s is wrong\n", par_tok->in[i]);
+			perror("ERROR_in");
+			return ; // here we need to set the exit_status to 1 and somehow quit the executor
 		}
 		if (par_tok->in[i + 1] == NULL)
 			break ;
 		i++;
 	}
 	exp_tok->in = fd;
-	return (EXIT_SUCCESS);
+	printf("the new fd for input is now %d\n", exp_tok->in);
 }
 
-static int	open_out(t_par_tok *par_tok, t_exp_tok *exp_tok)
+static void	open_out(t_par_tok *par_tok, t_exp_tok *exp_tok)
 {
 	int		i;
 	int		fd;
@@ -55,48 +56,28 @@ static int	open_out(t_par_tok *par_tok, t_exp_tok *exp_tok)
 			fd = open(par_tok->out[i], O_RDWR | O_CREAT | O_APPEND, 0644);
 		if (fd == -1)
 		{
-			perror("ERROR");
-			return (errno);
+			perror("ERROR_out");
+			return ; // here we need to set the exit_status to 1 and somehow quit the executor
 		}
 		if (par_tok->out[i + 1] == NULL)
 			break ;
 		i++;
 	}
 	exp_tok->out = fd;
-	return (EXIT_SUCCESS);
+	printf("the new fd for output is now %d\n", exp_tok->out);
 }
 
-static int	open_all_redirs(t_par_tok *par_tok, t_exp_tok *exp_tok)
-{
-	int	check;
-
-	if (par_tok->in[0] != NULL)
-	{
-		check = open_in(par_tok, exp_tok);
-		if (check != EXIT_SUCCESS)
-			return (check);
-	}
-	if (par_tok->out[0] != NULL)
-	{
-		check = open_out(par_tok, exp_tok);
-		if (check != EXIT_SUCCESS)
-			return (check);
-	}
-	return (EXIT_SUCCESS);
-}
-
-int	handle_redir(t_par_tok **par_toks, t_exp_tok **exp_toks)
+void	handle_redir(t_par_tok **par_toks, t_exp_tok **exp_toks)
 {
 	int	i;
-	int	check;
 
 	i = 0;
 	while (par_toks && par_toks[i] && exp_toks && exp_toks[i])
 	{
-		check = open_all_redirs(par_toks[i], exp_toks[i]);
-		if (check != EXIT_SUCCESS)
-			return (check);
+		if (par_toks[i]->in && par_toks[i]->in[0])
+			open_in(par_toks[i], exp_toks[i]);
+		if (par_toks[i]->out && par_toks[i]->out[0])
+			open_out(par_toks[i], exp_toks[i]);
 		i++;
 	}
-	return (EXIT_SUCCESS);
 }

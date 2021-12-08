@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/07 18:55:12 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/08 13:59:56 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static int	execute_cmd(t_exp_tok *exp_tok, char *abs_cmd_path)
 			printf("changed stdin to %d\n", exp_tok->in);// remove after testing
 			dup2(exp_tok->in, STDIN_FILENO);
 		}
-		if (exp_tok->out != 0) // the standard of the out should be 1, not 0
+		if (exp_tok->out != STDOUT_FILENO) // the standard of the out should be 1, not 0
 		{
 			printf("changed stdout to %d\n", exp_tok->out);//remove after testing
 			dup2(exp_tok->out, STDOUT_FILENO);

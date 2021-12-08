@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 22:00:00 by toni              #+#    #+#             */
-/*   Updated: 2021/12/08 12:53:24 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/08 13:27:37 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@
  */
 int		check_for_heredoc(t_par_tok *par_toks[]);
 int		wait_for_heredoc(t_par_tok *par_tok, t_exp_tok *exp_tok);
-int		handle_redir(t_par_tok **par_toks, t_exp_tok **exp_toks);
+void	handle_redir(t_par_tok **par_toks, t_exp_tok **exp_toks);
 
 #endif
