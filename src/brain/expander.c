@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/07 19:32:27 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/08 12:53:35 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,57 +74,6 @@ static int	get_tokens(t_par_tok *par_toks[])
 		if (par_toks[i]->redir_type[is_in_heredoc])
 			if (wait_for_heredoc(par_toks[i], exp_toks[i]) == EXIT_FAILURE)
 				return (free_exp_toks(exp_toks, EXIT_FAILURE));
-		i++;
-	}
-	return (EXIT_SUCCESS);
-}
-
-int	open_all_redirs(char **redir, t_redir_type *redir_type)
-{
-	int		i;
-	int		fd;
-
-	i = 0;
-	if (redir == NULL)
-		return (-1);
-	if (redir[i] == NULL)
-	{
-		if (redir_type[is_pipe] == is_pipe)
-			return (0);
-	}
-	while (true)
-	{
-		if (redir_type[is_in] || redir_type[is_pipe])
-			fd = open(redir[i], O_RDONLY);
-		else if (redir_type[is_out] || redir_type[is_pipe])
-			fd = open(redir[i], O_RDWR | O_CREAT | O_TRUNC, 0644);
-		else if (redir_type[is_out_append])
-			fd = open(redir[i], O_RDWR | O_CREAT | O_APPEND, 0644);
-		else if (redir_type[is_in_heredoc])
-			fd = 3;
-		if (fd == -1)
-		{
-			perror("ERROR");
-			return (errno);
-		}
-		if (redir[i + 1] == NULL)
-			break ;
-		i++;
-	}
-	return (fd);
-}
-
-static int	handle_redir(t_par_tok **par_toks, t_exp_tok **exp_toks)
-{
-	int	i;
-
-	i = 0;
-	while (par_toks && par_toks[i] && exp_toks && exp_toks[i])
-	{
-		exp_toks[i]->in = open_all_redirs(par_toks[i]->in, par_toks[i]->redir_type); //ask toni if this typecasting i the correct way to get the redir_type
-		exp_toks[i]->out = open_all_redirs(par_toks[i]->out, par_toks[i]->redir_type);
-		if (exp_toks[i]->in == -1 || exp_toks[i]->out == -1)
-			return (EXIT_FAILURE);
 		i++;
 	}
 	return (EXIT_SUCCESS);
