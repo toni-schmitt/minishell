@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/08 17:56:21 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/08 18:19:40 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,8 @@ int	expander(t_par_tok *par_toks[])
 	if (get_tokens(par_toks) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	exp_toks = get_exp_toks();
-	// if (handle_redir(par_toks, exp_toks) == EXIT_FAILURE) // here we need to set the exit_status to 1 if something went wrong and somehow quit the executor
-	// {
-	// 	handle_wrong_path();
-	// }
-	if (handle_redir(par_toks, exp_toks) == EXIT_SUCCESS && executor(exp_toks) == EXIT_FAILURE)
+	if (handle_redir(par_toks, exp_toks) == EXIT_SUCCESS
+		&& executor(exp_toks) == EXIT_FAILURE)
 	{
 		free_exp_toks(exp_toks, EXIT_FAILURE);
 		return (EXIT_FAILURE);
@@ -98,11 +95,3 @@ int	expander(t_par_tok *par_toks[])
 	free_exp_toks(exp_toks, EXIT_SUCCESS);
 	return (EXIT_SUCCESS);
 }
-
-/* for checking if a command is valid
-	if (access(argv[1], F_OK) != 0)
-	{
-		perror("Error");
-		return (EXIT_FAILURE);
-	}
-*/

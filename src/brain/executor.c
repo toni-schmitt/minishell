@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/08 13:59:56 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/08 18:22:02 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,15 +91,15 @@ static int	execute_cmd(t_exp_tok *exp_tok, char *abs_cmd_path)
 		if (exp_tok->in != STDIN_FILENO) // this check is not needed in theory
 		{
 			printf("changed stdin to %d\n", exp_tok->in);// remove after testing
-			dup2(exp_tok->in, STDIN_FILENO);
+			dup2(exp_tok->in, STDIN_FILENO); // add protection
 		}
-		if (exp_tok->out != STDOUT_FILENO) // the standard of the out should be 1, not 0
+		if (exp_tok->out != STDOUT_FILENO)
 		{
 			printf("changed stdout to %d\n", exp_tok->out);//remove after testing
-			dup2(exp_tok->out, STDOUT_FILENO);
+			dup2(exp_tok->out, STDOUT_FILENO); // add protection
 		}
-		if (execve(abs_cmd_path, exp_tok->cmd, get_envv()->env_var) == -1)
-			return (EXIT_FAILURE);
+		status = execve(abs_cmd_path, exp_tok->cmd, get_envv()->env_var);
+		return (status);
 	}
 	waitpid(pid, &status, 0); // this status will need to be changed with WEXITSTATUS
 	return (status);
@@ -115,7 +115,7 @@ int	executor(t_exp_tok *expander_tokens[])
 	while (expander_tokens[i])
 	{
 		abs_cmd_path = NULL;
-		if (!is_valid_cmd(expander_tokens[i]->cmd[0], &abs_cmd_path))
+		if (!is_valid_cmd(expander_tokens[i]->cmd[0], &abs_cmd_path)) //handle inbuilt differently
 		{
 			printf("%s: command not found\n", expander_tokens[i]->cmd[0]);
 			return (EXIT_CMD_NOT_FOUND);
