@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 22:21:31 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/09 18:50:22 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/09 22:16:54 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ typedef enum e_iterator
 
 typedef struct s_expander_tokens
 {
-	// t_par_tok_type	type;
-	// t_redir_type	redir_type[5];
 	char			**cmd;
 	int				in;
 	int				out;
@@ -72,7 +70,6 @@ int			lexer(char *line);
 int			parser(char *lexer_tokens[]);
 int			expander(t_par_tok *parser_tokens[]);
 int			executor(t_exp_tok *exp_tok);
-int			execute_pipe_cmds(t_exp_tok *exp_toks[]);
 
 // BRAIN UTILS
 
