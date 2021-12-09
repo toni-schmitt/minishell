@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+         #
+#    By: toni <toni@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
-#    Updated: 2021/12/08 12:54:57 by tblaase          ###   ########.fr        #
+#    Updated: 2021/12/09 20:24:52 by toni             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ EXPANDER_UTILS_PATH = $(BRAIN_PATH)utils/expander_utils/
 
 # FILES
 SRC = $(SRC_PATH)main.c \
-		$(SRC_PATH)utils/env_var_utils.c $(SRC_PATH)utils/envv_get_set.c \
+		$(SRC_PATH)utils/env_var_utils.c $(SRC_PATH)utils/envv_get_set.c $(SRC_PATH)utils/error_utils.c \
 		$(SRC_PATH)inbuilt/export.c $(SRC_PATH)inbuilt/echo.c $(SRC_PATH)inbuilt/env.c $(SRC_PATH)inbuilt/cd.c $(SRC_PATH)inbuilt/pwd.c $(SRC_PATH)inbuilt/unset.c \
 		$(SRC_PATH)inbuilt/utils/export_special.c $(SRC_PATH)inbuilt/utils/export_input_error.c $(SRC_PATH)inbuilt/utils/export_only.c \
 		$(BRAIN_PATH)lexer.c $(BRAIN_PATH)parser.c $(BRAIN_PATH)expander.c $(BRAIN_PATH)executor.c \
