@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/09 21:41:44 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/10 00:05:41 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,16 +155,33 @@ static int	execute_inbuilt(char *cmd[])
 	return (EXIT_FAILURE);
 }
 
+static int	handle_inbuilt_redir(t_exp_tok *exp_tok)
+{
+	int	exit_status;
+	int	s;
+
+	if (exp_tok->in != 0)
+		dup2(exp_tok->in, 0);
+	s = dup(STDOUT_FILENO);
+	dup2(exp_tok->out, STDOUT_FILENO);
+	exit_status = execute_inbuilt(exp_tok->cmd);
+	if (exp_tok->in != 0)
+	{
+		close(exp_tok->in);
+		dup2(0, exp_tok->in);
+	}
+	dup2(s, STDOUT_FILENO);
+	close(s);
+	return (exit_status);
+}
+
 int	executor(t_exp_tok *exp_tok)
 {
 	int		exit_status;
 	char	*abs_cmd_path;
 
 	if (is_inbuilt(exp_tok->cmd[0]))
-	{
-		exit_status = execute_inbuilt(exp_tok->cmd);
-		return (exit_status);
-	}
+		return (handle_inbuilt_redir(exp_tok));
 	abs_cmd_path = NULL;
 	if (!is_valid_cmd(exp_tok->cmd[0], &abs_cmd_path))
 	{
