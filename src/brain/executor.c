@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/09 20:05:38 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/09 21:41:44 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,8 @@ int	executor(t_exp_tok *exp_tok)
 
 	if (is_inbuilt(exp_tok->cmd[0]))
 	{
-		return (execute_inbuilt(exp_tok->cmd));
+		exit_status = execute_inbuilt(exp_tok->cmd);
+		return (exit_status);
 	}
 	abs_cmd_path = NULL;
 	if (!is_valid_cmd(exp_tok->cmd[0], &abs_cmd_path))
