@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 22:21:31 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/07 19:32:40 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/09 16:55:53 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ typedef struct s_expander_tokens
 int			lexer(char *line);
 int			parser(char *lexer_tokens[]);
 int			expander(t_par_tok *parser_tokens[]);
-int			executor(t_exp_tok *executor_tokens[]);
+int			executor(t_exp_tok *exp_tok, bool is_pipe);
+int			execute_pipe_cmds(t_exp_tok *exp_toks[]);
 
 // BRAIN UTILS
 

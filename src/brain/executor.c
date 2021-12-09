@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/08 18:22:02 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/09 16:59:01 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,31 +98,31 @@ static int	execute_cmd(t_exp_tok *exp_tok, char *abs_cmd_path)
 			printf("changed stdout to %d\n", exp_tok->out);//remove after testing
 			dup2(exp_tok->out, STDOUT_FILENO); // add protection
 		}
-		status = execve(abs_cmd_path, exp_tok->cmd, get_envv()->env_var);
-		return (status);
+		return (execve(abs_cmd_path, exp_tok->cmd, get_envv()->env_var));
 	}
-	waitpid(pid, &status, 0); // this status will need to be changed with WEXITSTATUS
-	return (status);
+	waitpid(pid, &status, 0);
+	return (WEXITSTATUS(status));
 }
 
-int	executor(t_exp_tok *expander_tokens[])
+int	execute_pipe_cmds(t_exp_tok *exp_toks[])
 {
-	int		i;
+	(void)exp_toks;
+	return (EXIT_FAILURE);
+}
+
+int	executor(t_exp_tok *exp_tok, bool is_pipe)
+{
 	int		exit_status;
 	char	*abs_cmd_path;
 
-	i = 0;
-	while (expander_tokens[i])
+	(void)is_pipe;
+	abs_cmd_path = NULL;
+	if (!is_valid_cmd(exp_tok->cmd[0], &abs_cmd_path))
 	{
-		abs_cmd_path = NULL;
-		if (!is_valid_cmd(expander_tokens[i]->cmd[0], &abs_cmd_path)) //handle inbuilt differently
-		{
-			printf("%s: command not found\n", expander_tokens[i]->cmd[0]);
-			return (EXIT_CMD_NOT_FOUND);
-		}
-		exit_status = execute_cmd(expander_tokens[i], abs_cmd_path);
-		free(abs_cmd_path);
-		i++;
+		printf("%s: command not found\n", exp_tok->cmd[0]);
+		return (EXIT_CMD_NOT_FOUND);
 	}
+	exit_status = execute_cmd(exp_tok, abs_cmd_path);
+	free(abs_cmd_path);
 	return (exit_status);
 }
