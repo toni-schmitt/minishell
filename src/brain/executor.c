@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/09 18:51:35 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/09 19:24:18 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ static int	execute_cmd(t_exp_tok *exp_tok, char *abs_cmd_path)
 		return (EXIT_FAILURE);
 	if (pid == 0)
 	{
-		printf("changed stdin to %d\n", exp_tok->in);// remove after testing
+		dprintf(stderr, "changed stdin to %d\n", exp_tok->in);// remove after testing
 		dup2(exp_tok->in, STDIN_FILENO); // add protection
-		printf("changed stdout to %d\n", exp_tok->out);//remove after testing
+		dprintf(stderr, "changed stdout to %d\n", exp_tok->out);//remove after testing
 		dup2(exp_tok->out, STDOUT_FILENO); // add protection
 		return (execve(abs_cmd_path, exp_tok->cmd, get_envv()->env_var));
 	}
@@ -163,7 +163,7 @@ int	executor(t_exp_tok *exp_tok)
 			printf("%s: command not found\n", exp_tok->cmd[0]);
 			return (EXIT_CMD_NOT_FOUND);
 		}
-		printf("now executing command: %s\n", exp_tok->cmd[0]);
+		dprintf(stderr, "now executing command: %s\n", exp_tok->cmd[0]);
 		exit_status = execute_cmd(exp_tok, abs_cmd_path);
 		free(abs_cmd_path);
 	}

@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 12:51:20 by tblaase           #+#    #+#             */
-/*   Updated: 2021/12/09 18:33:42 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/09 19:20:42 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	open_in(t_par_tok *par_tok, t_exp_tok *exp_tok)
 			fd = open(par_tok->in[i], O_RDONLY);
 		if (fd == -1)
 		{
-			printf("something with %s is wrong\n", par_tok->in[i]);//remove after testing
+			dprintf(stderr, "something with %s is wrong\n", par_tok->in[i]);//remove after testing
 			perror("ERROR_in");//change this after finished debugging to ERROR
 			return (EXIT_FAILURE);
 		}
@@ -37,7 +37,7 @@ static int	open_in(t_par_tok *par_tok, t_exp_tok *exp_tok)
 		i++;
 	}
 	exp_tok->in = fd;
-	printf("the new fd for input is now %d\n", exp_tok->in);//remove after testing
+	dprintf(stderr, "the new fd for input is now %d\n", exp_tok->in);//remove after testing
 	return (EXIT_SUCCESS);
 }
 
@@ -66,31 +66,18 @@ static int	open_out(t_par_tok *par_tok, t_exp_tok *exp_tok)
 		i++;
 	}
 	exp_tok->out = fd;
-	printf("the new fd for output is now %d\n", exp_tok->out);//remove after testing
+	dprintf(stderr, "the new fd for output is now %d\n", exp_tok->out);//remove after testing
 	return (EXIT_SUCCESS);
 }
 
 int	handle_redir(t_par_tok *par_tok, t_exp_tok *exp_tok)//remove comments after testing
 {
-	printf("entering handle_redir\n");
-	// int	i;
-
-	// i = 0;
-	// while (par_toks && par_toks[i] && exp_toks && exp_toks[i])
-	// {
-	// 	if (par_toks[i]->in && par_toks[i]->in[0])
-	// 	{
+	dprintf(stderr, "entering handle_redir\n");
 	if (open_in(par_tok, exp_tok) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	printf("successfully set in redirection\n");
-		// }
-		// if (par_toks[i]->out && par_toks[i]->out[0])
-		// {
+	dprintf(stderr, "successfully set in redirection\n");
 	if (open_out(par_tok, exp_tok) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	printf("successfully set out redirection\n");
-	// 	}
-	// 	i++;
-	// }
+	dprintf(stderr, "successfully set out redirection\n");
 	return (EXIT_SUCCESS);
 }
