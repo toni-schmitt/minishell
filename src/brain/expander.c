@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/09 16:58:47 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/09 18:40:41 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,94 @@ static int	get_tokens(t_par_tok *par_toks[])
 	return (EXIT_SUCCESS);
 }
 
+static char	*get_subshell_cmd(char *cmd)
+{
+	char	*subshell_cmd;
+	int		cmd_len;
+	int		i;
+	int		j;
+
+	cmd_len = ft_strlen(cmd);
+	subshell_cmd = ft_calloc(cmd_len + 1, sizeof(*subshell_cmd));
+	if (subshell_cmd == NULL)
+		return (NULL);
+	i = 1;
+	j = 0;
+	while (i < cmd_len - 2)
+	{
+		subshell_cmd[j] = cmd[i];
+		i++;
+		j++;
+	}
+	return (subshell_cmd);
+}
+
+static int	handle_subshell(char *cmd)
+{
+	pid_t	pid;
+	int		status;
+	char	*cutted_cmd;
+
+	pid = fork();
+	if (pid < 0)
+		return (EXIT_FAILURE);
+	if (pid == 0)
+	{
+		cutted_cmd = get_subshell_cmd(cmd);
+		if (cutted_cmd == NULL)
+			return (EXIT_FAILURE);
+		status = lexer(cutted_cmd);
+		free(cutted_cmd);
+		return (status);
+	}
+	waitpid(pid, &status, 0);
+	return (WEXITSTATUS(status));
+}
+
+static bool	is_redir(t_par_tok *par_tok)
+{
+	if (par_tok->redir_type[is_in] || par_tok->redir_type[is_in_heredoc] \
+	|| par_tok->redir_type[is_out] || par_tok->redir_type[is_out_append] \
+	|| par_tok->redir_type[is_pipe])
+		return (true);
+	return (false);
+}
+
+static int	handle_tokens(t_exp_tok *exp_toks[], t_par_tok *par_toks[])
+{
+	int	i;
+	int	exit_status;
+
+	i = 0;
+	exit_status = EXIT_FAILURE;
+	while (exp_toks[i] && par_toks[i])
+	{
+		if (par_toks[i]->type == and || par_toks[i]->type == or)
+		{
+			if ((par_toks[i]->type == and && exit_status != EXIT_SUCCESS) \
+			|| (par_toks[i]->type == or && exit_status == EXIT_SUCCESS))
+			{
+				errno = EXIT_FAILURE;
+				return (EXIT_SUCCESS);
+			}
+		}
+		else if (par_toks[i]->type == subshell)
+			exit_status = handle_subshell(exp_toks[i]->cmd[0]);
+		else if (is_redir(par_toks[i]))
+		{
+			if (par_toks[i]->redir_type[is_pipe])
+				exit_status = execute_pipe_cmds(&exp_toks[i]);
+			else
+				exit_status = handle_redir(par_toks, exp_toks);
+		}
+		else
+			exit_status = executor(exp_toks[i], false);
+		i++;
+	}
+	errno = exit_status;
+	return (exit_status);
+}
+
 int	expander(t_par_tok *par_toks[])
 {
 	t_exp_tok	**exp_toks;
@@ -86,6 +174,5 @@ int	expander(t_par_tok *par_toks[])
 	if (get_tokens(par_toks) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	exp_toks = get_exp_toks();
-	(void)exp_toks;
-	return (EXIT_FAILURE);
+	return (free_exp_toks(exp_toks, handle_tokens(exp_toks, par_toks)));
 }
