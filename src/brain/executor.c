@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/09 19:33:11 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/09 20:05:38 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,12 @@ static int	execute_cmd(t_exp_tok *exp_tok, char *abs_cmd_path)
 		dup2(exp_tok->in, STDIN_FILENO); // add protection
 		// fprintf(stderr, "changed stdout to %d\n", exp_tok->out);//remove after testing
 		dup2(exp_tok->out, STDOUT_FILENO); // add protection
-		return (execve(abs_cmd_path, exp_tok->cmd, get_envv()->env_var));
+		status = execve(abs_cmd_path, exp_tok->cmd, get_envv()->env_var);
+		if (exp_tok->in != STDIN_FILENO)
+			close(exp_tok->in);
+		if (exp_tok->out != STDOUT_FILENO)
+			close(exp_tok->out);
+		return (status);
 	}
 	waitpid(pid, &status, 0);
 	status = WEXITSTATUS(status); // added for debugging
