@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/09 16:59:01 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/09 17:17:54 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,19 +110,57 @@ int	execute_pipe_cmds(t_exp_tok *exp_toks[])
 	return (EXIT_FAILURE);
 }
 
+static bool	is_inbuilt(char *cmd)
+{
+	if (ft_strcmp(cmd, "echo") == 0)
+		return (true);
+	if (ft_strcmp(cmd, "export") == 0)
+		return (true);
+	if (ft_strcmp(cmd, "env") == 0)
+		return (true);
+	if (ft_strcmp(cmd, "cd") == 0)
+		return (true);
+	if (ft_strcmp(cmd, "unset") == 0)
+		return (true);
+	if (ft_strcmp(cmd, "pwd") == 0)
+		return (true);
+	return (false);
+}
+
+static int	execute_inbuilt(char *cmd[])
+{
+	if (ft_strcmp(cmd[0], "echo") == 0)
+		return (echo(cmd));
+	if (ft_strcmp(cmd[0], "export") == 0)
+		return (export(cmd));
+	if (ft_strcmp(cmd[0], "env") == 0)
+		return (env(cmd));
+	if (ft_strcmp(cmd[0], "cd") == 0)
+		return (cd(cmd));
+	if (ft_strcmp(cmd[0], "unset") == 0)
+		return (unset(cmd));
+	if (ft_strcmp(cmd[0], "pwd") == 0)
+		return (pwd());
+	return (EXIT_FAILURE);
+}
+
 int	executor(t_exp_tok *exp_tok, bool is_pipe)
 {
 	int		exit_status;
 	char	*abs_cmd_path;
 
-	(void)is_pipe;
-	abs_cmd_path = NULL;
-	if (!is_valid_cmd(exp_tok->cmd[0], &abs_cmd_path))
+	if (!is_inbuilt(exp_tok->cmd[0]))
 	{
-		printf("%s: command not found\n", exp_tok->cmd[0]);
-		return (EXIT_CMD_NOT_FOUND);
+		abs_cmd_path = NULL;
+		if (!is_valid_cmd(exp_tok->cmd[0], &abs_cmd_path))
+		{
+			printf("%s: command not found\n", exp_tok->cmd[0]);
+			return (EXIT_CMD_NOT_FOUND);
+		}
+		exit_status = execute_cmd(exp_tok, abs_cmd_path);
+		free(abs_cmd_path);
 	}
-	exit_status = execute_cmd(exp_tok, abs_cmd_path);
-	free(abs_cmd_path);
+	else if (!is_pipe)
+		return (execute_inbuilt(exp_tok->cmd));
 	return (exit_status);
 }
