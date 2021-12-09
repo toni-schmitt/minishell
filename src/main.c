@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:28:36 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/07 15:45:42 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/09 20:07:18 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	routine(void)
 		if (buf == NULL)
 		{
 			// implement STRG + D
-			return (exit_routine((void *)buf, EXIT_SUCCESS));
+			return (exit_routine((void *)buf, EXIT_CTRL_D));
 		}
 		if (lexer(buf) == EXIT_FAILURE)
 			return (exit_routine((void *)buf, EXIT_FAILURE));

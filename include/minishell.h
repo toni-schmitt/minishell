@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:29:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/07 18:02:38 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/09 20:07:11 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 # define EXIT_SYNTAX_ERROR 258
 # define EXIT_CMD_NOT_FOUND 127
+# define EXIT_CTRL_D 130
 
 /* INBUILD */
 int		echo(char **args);
