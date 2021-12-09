@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/09 19:27:16 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/09 19:33:11 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ static int	execute_cmd(t_exp_tok *exp_tok, char *abs_cmd_path)
 		return (EXIT_FAILURE);
 	if (pid == 0)
 	{
-		dprintf(stderr, "changed stdin to %d\n", exp_tok->in);// remove after testing
+		// fprintf(stderr, "changed stdin to %d\n", exp_tok->in);// remove after testing
 		dup2(exp_tok->in, STDIN_FILENO); // add protection
-		dprintf(stderr, "changed stdout to %d\n", exp_tok->out);//remove after testing
+		// fprintf(stderr, "changed stdout to %d\n", exp_tok->out);//remove after testing
 		dup2(exp_tok->out, STDOUT_FILENO); // add protection
 		return (execve(abs_cmd_path, exp_tok->cmd, get_envv()->env_var));
 	}

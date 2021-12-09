@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 21:59:04 by toni              #+#    #+#             */
-/*   Updated: 2021/12/07 17:29:44 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/09 19:33:29 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ int	wait_for_heredoc(t_par_tok *par_tok, t_exp_tok *exp_tok)
 		return (EXIT_FAILURE);
 	}
 	// remove after testing until next //
-	printf("read end of the pipe: %d\n", end[0]);
-	printf("write end of the pipe: %d\n", end[1]);
+	// fprintf(stderr, "read end of the pipe: %d\n", end[0]);
+	// fprintf(stderr, "write end of the pipe: %d\n", end[1]);
 	//
 	exp_tok->in = end[0];
 	heredoc = get_heredoc(par_tok);
