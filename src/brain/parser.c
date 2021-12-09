@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:35:35 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/04 23:03:58 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/09 21:48:33 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ static char	**interprete_env_vars(char *lex_toks[])
 		lex_toks[i] = interprete_env_var(lex_toks[i]);
 		if (lex_toks[i] == NULL)
 			return (NULL);
+		if (ft_strstr(lex_toks[i], "&&") || ft_strstr(lex_toks[i], "||"))
+			break ;
 		i++;
 	}
 	return (lex_toks);
@@ -180,7 +182,7 @@ void prnt_token(t_par_tok *tok[])
 
 int	parser(char *lexer_tokens[])
 {
-	t_par_tok	**tokens;
+	t_par_tok	**tokens = NULL;
 	int			exit_code;
 
 	lexer_tokens = interprete_env_vars(lexer_tokens);
@@ -193,7 +195,7 @@ int	parser(char *lexer_tokens[])
 	if (exit_code == EXIT_SYNTAX_ERROR)
 		return (EXIT_SUCCESS);
 	tokens = get_par_toks();
-	prnt_token(tokens);
+	// prnt_token(tokens);
 	if (expander(tokens) == EXIT_FAILURE)
 	{
 		free_par_toks(tokens);

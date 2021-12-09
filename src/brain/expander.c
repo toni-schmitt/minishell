@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/09 20:35:37 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/09 21:47:19 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,11 @@ static int	handle_subshell(char *cmd)
 			return (EXIT_FAILURE);
 		status = lexer(cutted_cmd);
 		free(cutted_cmd);
-		return (status);
+		exit(get_err_code());
+		return (get_err_code());
 	}
 	waitpid(pid, &status, 0);
+	set_err_code(WEXITSTATUS(status));
 	return (WEXITSTATUS(status));
 }
 
@@ -143,13 +145,14 @@ static int	repinterprete_env_vars(t_par_tok *par_toks[], t_exp_tok *exp_toks[])
 	while (par_toks[i] && exp_toks[i] && par_toks[i]->type == std)
 	{
 		j = 0;
-		while (exp_toks[j])
+		while (exp_toks[i]->cmd[j])
 		{
 			exp_toks[i]->cmd[j] = interprete_env_var(exp_toks[i]->cmd[j]);
 			if (exp_toks[i]->cmd[j] == NULL)
 				return (EXIT_FAILURE);
 			j++;
 		}
+		i++;
 	}
 	return (EXIT_SUCCESS);
 }
@@ -157,32 +160,29 @@ static int	repinterprete_env_vars(t_par_tok *par_toks[], t_exp_tok *exp_toks[])
 static int	handle_tokens(t_exp_tok *exp_toks[], t_par_tok *par_toks[])
 {
 	int	i;
-	int	exit_status;
 
 	i = 0;
-	exit_status = EXIT_SUCCESS;
 	while (exp_toks[i] && par_toks[i])
 	{
 		if (par_toks[i]->type == and || par_toks[i]->type == or)
 		{
-			if ((par_toks[i]->type == and && exit_status != EXIT_SUCCESS) \
-			|| (par_toks[i]->type == or && exit_status == EXIT_SUCCESS))
+			if ((par_toks[i]->type == and && get_err_code() != EXIT_SUCCESS) \
+			|| (par_toks[i]->type == or && get_err_code() == EXIT_SUCCESS))
 			{
-				errno = EXIT_FAILURE;
+				set_err_code(EXIT_FAILURE);
 				return (EXIT_SUCCESS);
 			}
-			if (repinterprete_env_vars(&par_toks[i], &exp_toks[i]) == EXIT_FAILURE)
+			if (repinterprete_env_vars(&par_toks[i + 1], &exp_toks[i + 1]) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
 		}
 		else if (par_toks[i]->type == subshell)
-			exit_status = handle_subshell(exp_toks[i]->cmd[0]);
+			set_err_code(handle_subshell(exp_toks[i]->cmd[0]));
 		else if (is_redir(par_toks[i]))
-			exit_status = handle_redir(par_toks[i], exp_toks[i]);
+			set_err_code(handle_redir(par_toks[i], exp_toks[i]));
 		else
-			exit_status = executor(exp_toks[i]);
+			set_err_code(executor(exp_toks[i]));
 		i++;
 	}
-	set_err_code(exit_status);
 	return (EXIT_SUCCESS);
 }
 
