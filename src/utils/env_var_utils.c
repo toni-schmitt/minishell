@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 11:29:18 by tblaase           #+#    #+#             */
-/*   Updated: 2021/12/07 16:42:41 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/10 00:01:55 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,12 @@
 static void	get_env_var_value_utils(t_env *envv, char *var, char **value, int i)
 {
 	if (ft_strlen(*value) == 0 && ft_strcmp(var, "PWD") == 0)
-		*value = ft_strdup(envv->pwd);
+	{
+		if (ft_strlen(envv->pwd) == 0)
+			*value = ft_calloc(1, sizeof (char));
+		else
+			*value = ft_strdup(envv->pwd);
+	}
 	else if (ft_strlen(*value) == 0 && ft_strcmp(var, "OLDPWD") == 0)
 	{
 		if (ft_strlen(envv->oldpwd) == 0)
@@ -79,6 +84,7 @@ t_env	*init_envv(char **envp)
 		envv->env_var = ft_str_arr_dup(envp);
 		envv->pwd = get_env_var_value(envv, "PWD");
 		envv->oldpwd = get_env_var_value(envv, "OLDPWD");
+		printf("PWD: %p\nOLDPWD %p\n", envv->pwd, envv->oldpwd);
 		if (envv->env_var != NULL && envv->pwd != NULL && envv->oldpwd != NULL)
 			return (envv);
 	}
