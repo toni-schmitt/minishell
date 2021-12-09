@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/10 00:05:41 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/10 00:11:01 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,12 @@ static int	execute_inbuilt(char *cmd[])
 		return (pwd());
 	return (EXIT_FAILURE);
 }
-
+/**
+ * @brief  This is stolen from somewhere, idk from where
+ * @note   i have no clue how or why this is working
+ * @param  *exp_tok:
+ * @retval the exit status of the inbuilt function
+ */
 static int	handle_inbuilt_redir(t_exp_tok *exp_tok)
 {
 	int	exit_status;
