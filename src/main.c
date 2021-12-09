@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:28:36 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/09 20:07:18 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/09 20:08:13 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	routine(void)
 			add_history(buf);
 		if (buf == NULL)
 		{
-			// implement STRG + D
+			printf("exit\n");
 			return (exit_routine((void *)buf, EXIT_CTRL_D));
 		}
 		if (lexer(buf) == EXIT_FAILURE)
