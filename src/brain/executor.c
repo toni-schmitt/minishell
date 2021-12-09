@@ -6,15 +6,13 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/09 18:10:07 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/09 18:20:09 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "brain.h"
 #include "env_var_utils.h"
-#include <sys/wait.h>
-#include <sys/types.h>
 
 static char	*get_abs_cmd_path(char *path_splitted, char *cmd)
 {
