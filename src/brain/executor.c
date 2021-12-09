@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/09 17:17:54 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/09 18:10:07 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,18 +149,17 @@ int	executor(t_exp_tok *exp_tok, bool is_pipe)
 	int		exit_status;
 	char	*abs_cmd_path;
 
-	if (!is_inbuilt(exp_tok->cmd[0]))
+	if (is_inbuilt(exp_tok->cmd[0]) && !is_pipe)
 	{
-		abs_cmd_path = NULL;
-		if (!is_valid_cmd(exp_tok->cmd[0], &abs_cmd_path))
-		{
-			printf("%s: command not found\n", exp_tok->cmd[0]);
-			return (EXIT_CMD_NOT_FOUND);
-		}
-		exit_status = execute_cmd(exp_tok, abs_cmd_path);
-		free(abs_cmd_path);
-	}
-	else if (!is_pipe)
 		return (execute_inbuilt(exp_tok->cmd));
+	}
+	abs_cmd_path = NULL;
+	if (!is_valid_cmd(exp_tok->cmd[0], &abs_cmd_path))
+	{
+		printf("%s: command not found\n", exp_tok->cmd[0]);
+		return (EXIT_CMD_NOT_FOUND);
+	}
+	exit_status = execute_cmd(exp_tok, abs_cmd_path);
+	free(abs_cmd_path);
 	return (exit_status);
 }
