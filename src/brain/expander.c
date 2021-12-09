@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/09 16:58:47 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/09 18:40:41 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,48 @@ static int	get_tokens(t_par_tok *par_toks[])
 int	expander(t_par_tok *par_toks[])
 {
 	t_exp_tok	**exp_toks;
+	int			i;
+	int			exit_status;
 
+	i = 0;
+	exit_status = 0;
 	if (get_tokens(par_toks) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	exp_toks = get_exp_toks();
-	(void)exp_toks;
-	return (EXIT_FAILURE);
+	while (par_toks && par_toks[i] && exp_toks && exp_toks[i])
+	{
+		printf("success, entering while loop in expander\n");
+		if (par_toks[i]->type != and && par_toks[i]->type != or)
+		{
+			printf("found cmd without && and ||: %s\n", exp_toks[i]->cmd[0]);
+			// if (par_toks[i]->in != NULL || par_toks[i]->out != NULL)
+			if (handle_redir(par_toks[i], exp_toks[i]) == EXIT_SUCCESS)
+				exit_status = executor(exp_toks[i]);
+			else
+				exit_status = 1;
+		}
+		else if (exit_status == 0 && par_toks[i]->type == and)
+		{
+			i++;
+			if (handle_redir(par_toks[i], exp_toks[i]) == EXIT_SUCCESS)
+				exit_status = executor(exp_toks[i]);
+			else
+				exit_status = 1;
+		}
+		else if (exit_status != 0 && par_toks[i]->type == or)
+		{
+			i++;
+			if (handle_redir(par_toks[i], exp_toks[i]) == EXIT_SUCCESS)
+				exit_status = executor(exp_toks[i]);
+			else
+				exit_status = 1;
+		}
+		else
+		{
+			printf("sth went wrong, exiting now with %d\n", exit_status);
+			return (exit_status);
+		}
+		i++;
+	}
+	return (EXIT_SUCCESS);
 }

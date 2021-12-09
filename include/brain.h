@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   brain.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 22:21:31 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/09 16:55:53 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/09 18:48:48 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,19 @@ typedef enum e_iterator
 
 typedef struct s_expander_tokens
 {
-	char	**cmd;
-	int		in;
-	int		out;
+	// t_par_tok_type	type;
+	// t_redir_type	redir_type[5];
+	char			**cmd;
+	int				in;
+	int				out;
+	int				end[2];
 }	t_exp_tok;
 
 // BRAIN
 int			lexer(char *line);
 int			parser(char *lexer_tokens[]);
 int			expander(t_par_tok *parser_tokens[]);
-int			executor(t_exp_tok *exp_tok, bool is_pipe);
+int			executor(t_exp_tok *exp_tok);
 int			execute_pipe_cmds(t_exp_tok *exp_toks[]);
 
 // BRAIN UTILS
@@ -88,10 +91,10 @@ void		reset_iter(void);
 void		set_par_toks(t_par_tok **par_toks);
 t_par_tok	**get_par_toks(void);
 t_par_tok	*get_curr_par_tok(void);
-void 		reset_par_toks(void);
+void		reset_par_toks(void);
 
 void		set_exp_toks(t_exp_tok *exp_toks[]);
 t_exp_tok	**get_exp_toks(void);
-void 		reset_exp_toks(void);
+void		reset_exp_toks(void);
 
 #endif

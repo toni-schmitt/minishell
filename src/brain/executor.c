@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/09 17:17:54 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/09 18:38:03 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,27 +88,35 @@ static int	execute_cmd(t_exp_tok *exp_tok, char *abs_cmd_path)
 		return (EXIT_FAILURE);
 	if (pid == 0)
 	{
-		if (exp_tok->in != STDIN_FILENO) // this check is not needed in theory
-		{
-			printf("changed stdin to %d\n", exp_tok->in);// remove after testing
-			dup2(exp_tok->in, STDIN_FILENO); // add protection
-		}
-		if (exp_tok->out != STDOUT_FILENO)
-		{
-			printf("changed stdout to %d\n", exp_tok->out);//remove after testing
-			dup2(exp_tok->out, STDOUT_FILENO); // add protection
-		}
+		printf("changed stdin to %d\n", exp_tok->in);// remove after testing
+		dup2(exp_tok->in, STDIN_FILENO); // add protection
+		printf("changed stdout to %d\n", exp_tok->out);//remove after testing
+		dup2(exp_tok->out, STDOUT_FILENO); // add protection
 		return (execve(abs_cmd_path, exp_tok->cmd, get_envv()->env_var));
 	}
 	waitpid(pid, &status, 0);
-	return (WEXITSTATUS(status));
+	status = WEXITSTATUS(status); // added for debugging
+	return (status);
 }
 
-int	execute_pipe_cmds(t_exp_tok *exp_toks[])
-{
-	(void)exp_toks;
-	return (EXIT_FAILURE);
-}
+// int	prepare_pipe_cmds(t_exp_tok *exp_toks[])
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (exp_toks[i]->type[is_pipe] && exp_toks[i + 1]->type[is_pipe])
+// 	{
+// 		if (pipe(exp_toks[i]->end) != 0)
+// 		{
+// 			perror("ERROR");
+// 			return (EXIT_FAILURE);
+// 		}
+// 		if (i == 0 && exp_toks[i + 1]->type[is_pipe] && exp_toks[i]->out == 1)
+// 			exp_toks->out = end[1];
+// 		i++;
+// 	}
+// 	return (EXIT_FAILURE);
+// }
 
 static bool	is_inbuilt(char *cmd)
 {
@@ -144,12 +152,12 @@ static int	execute_inbuilt(char *cmd[])
 	return (EXIT_FAILURE);
 }
 
-int	executor(t_exp_tok *exp_tok, bool is_pipe)
+int	executor(t_exp_tok *exp_tok)
 {
 	int		exit_status;
 	char	*abs_cmd_path;
 
-	if (!is_inbuilt(exp_tok->cmd[0]))
+	if (is_inbuilt(exp_tok->cmd[0]) == false)
 	{
 		abs_cmd_path = NULL;
 		if (!is_valid_cmd(exp_tok->cmd[0], &abs_cmd_path))
@@ -157,10 +165,15 @@ int	executor(t_exp_tok *exp_tok, bool is_pipe)
 			printf("%s: command not found\n", exp_tok->cmd[0]);
 			return (EXIT_CMD_NOT_FOUND);
 		}
+		printf("now executing command: %s\n", exp_tok->cmd[0]);
 		exit_status = execute_cmd(exp_tok, abs_cmd_path);
 		free(abs_cmd_path);
 	}
-	else if (!is_pipe)
+	else
+	{
+		dup2(exp_tok->in, STDIN_FILENO);
+		dup2(exp_tok->out, STDOUT_FILENO);
 		return (execute_inbuilt(exp_tok->cmd));
+	}
 	return (exit_status);
 }
