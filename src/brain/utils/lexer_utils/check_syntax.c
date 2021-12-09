@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 15:00:19 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/09 18:06:46 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/09 18:35:34 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static bool	is_correct_special(char *lex_tok)
 	{
 		if ((ft_strchr(lex_tok, '<') && !ft_strstr(lex_tok, "<<")) \
 		|| (ft_strchr(lex_tok, '>') && !ft_strstr(lex_tok, ">>")) \
-		|| (ft_strchr(lex_tok, '|') && ft_strstr(lex_tok, "||")))
+		|| (ft_strchr(lex_tok, '|') && !ft_strstr(lex_tok, "||")))
 			return (false);
 	}
 	return (true);
