@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 23:13:27 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/06 20:09:01 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/09 20:24:36 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ char	*interprete_env_var(char *lex_tok)
 	if (!ft_strchr(lex_tok, '\'') && ft_strlen(lex_tok) > 1 \
 	&& lex_tok[0] == '$')
 	{
+		if (ft_strstr(lex_tok, "$?"))
+			return (ft_itoa(get_err_code()));
 		var = ft_substr(lex_tok, 1, ft_strlen(lex_tok));
 		if (var == NULL)
 			return (NULL);
