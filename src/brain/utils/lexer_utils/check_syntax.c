@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 15:00:19 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/04 23:26:15 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/09 18:35:34 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,23 @@ static bool	is_correct_special(char *lex_tok)
 	{
 		if ((ft_strchr(lex_tok, '<') && !ft_strstr(lex_tok, "<<")) \
 		|| (ft_strchr(lex_tok, '>') && !ft_strstr(lex_tok, ">>")) \
-		|| (ft_strchr(lex_tok, '|') && ft_strstr(lex_tok, "||")))
+		|| (ft_strchr(lex_tok, '|') && !ft_strstr(lex_tok, "||")))
 			return (false);
+	}
+	return (true);
+}
+
+static bool	is_correc_pipe(char *curr, char *next)
+{
+	if (ft_strlen(curr) == 1 && ft_strchr(curr, '|'))
+	{
+		if (next == NULL)
+			return (false);
+		if (ft_strlen(next) == 2)
+		{
+			if (ft_strstr(next, "&&") || ft_strstr(next, "||"))
+				return (false);
+		}
 	}
 	return (true);
 }
@@ -82,6 +97,8 @@ bool	is_valid_syntax(char *lex_toks[])
 				if (is_redir(lex_toks[i]))
 					return (false);
 			if (!is_correct_special(lex_toks[i]))
+				return (false);
+			if (!is_correc_pipe(lex_toks[i], lex_toks[i + 1]))
 				return (false);
 		}
 		i++;

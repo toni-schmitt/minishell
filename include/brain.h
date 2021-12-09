@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 22:21:31 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/09 18:48:48 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/09 18:50:22 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <sys/wait.h>
+# include <sys/types.h>
 # include <stdbool.h>
 
 typedef enum e_parser_tok_type

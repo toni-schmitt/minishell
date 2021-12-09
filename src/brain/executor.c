@@ -6,15 +6,13 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/09 18:38:03 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/09 18:51:35 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "brain.h"
 #include "env_var_utils.h"
-#include <sys/wait.h>
-#include <sys/types.h>
 
 static char	*get_abs_cmd_path(char *path_splitted, char *cmd)
 {
@@ -175,5 +173,17 @@ int	executor(t_exp_tok *exp_tok)
 		dup2(exp_tok->out, STDOUT_FILENO);
 		return (execute_inbuilt(exp_tok->cmd));
 	}
+	// if (is_inbuilt(exp_tok->cmd[0]) && !is_pipe)
+	// {
+	// 	return (execute_inbuilt(exp_tok->cmd));
+	// }
+	// abs_cmd_path = NULL;
+	// if (!is_valid_cmd(exp_tok->cmd[0], &abs_cmd_path))
+	// {
+	// 	printf("%s: command not found\n", exp_tok->cmd[0]);
+	// 	return (EXIT_CMD_NOT_FOUND);
+	// }
+	// exit_status = execute_cmd(exp_tok, abs_cmd_path);
+	// free(abs_cmd_path);
 	return (exit_status);
 }
