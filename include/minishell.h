@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:29:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/09 20:07:11 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/09 20:24:13 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <dirent.h>
 # include <stdbool.h>
 # include <fcntl.h>
+# include "error_utils.h"
 
 # define EXIT_SYNTAX_ERROR 258
 # define EXIT_CMD_NOT_FOUND 127
