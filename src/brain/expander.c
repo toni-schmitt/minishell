@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/09 20:24:27 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/09 20:35:37 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,28 @@ static bool	is_redir(t_par_tok *par_tok)
 	return (false);
 }
 
+char		*interprete_env_var(char *lex_tok);
+
+static int	repinterprete_env_vars(t_par_tok *par_toks[], t_exp_tok *exp_toks[])
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (par_toks[i] && exp_toks[i] && par_toks[i]->type == std)
+	{
+		j = 0;
+		while (exp_toks[j])
+		{
+			exp_toks[i]->cmd[j] = interprete_env_var(exp_toks[i]->cmd[j]);
+			if (exp_toks[i]->cmd[j] == NULL)
+				return (EXIT_FAILURE);
+			j++;
+		}
+	}
+	return (EXIT_SUCCESS);
+}
+
 static int	handle_tokens(t_exp_tok *exp_toks[], t_par_tok *par_toks[])
 {
 	int	i;
@@ -149,6 +171,8 @@ static int	handle_tokens(t_exp_tok *exp_toks[], t_par_tok *par_toks[])
 				errno = EXIT_FAILURE;
 				return (EXIT_SUCCESS);
 			}
+			if (repinterprete_env_vars(&par_toks[i], &exp_toks[i]) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
 		}
 		else if (par_toks[i]->type == subshell)
 			exit_status = handle_subshell(exp_toks[i]->cmd[0]);
