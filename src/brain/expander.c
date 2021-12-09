@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/09 19:27:36 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/09 19:48:23 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ static int	handle_tokens(t_exp_tok *exp_toks[], t_par_tok *par_toks[])
 	int	exit_status;
 
 	i = 0;
-	exit_status = EXIT_FAILURE;
+	exit_status = EXIT_SUCCESS;
 	while (exp_toks[i] && par_toks[i])
 	{
 		if (par_toks[i]->type == and || par_toks[i]->type == or)
