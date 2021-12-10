@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 23:13:27 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/10 19:38:38 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/10 19:42:52 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ char	*interprete_env_var(char *lex_tok)
 	char	*var;
 
 	interpreted_token = lex_tok;
-	printf("%s\n", lex_tok);
 	if (!ft_strchr(lex_tok, '\'') && ft_strlen(lex_tok) > 1 \
 	&& lex_tok[0] == '$')
 	{
@@ -108,10 +107,11 @@ char	*interprete_env_var(char *lex_tok)
 		interpreted_token = get_env_var_value(get_envv(), var);
 		free(var);
 		free(lex_tok);
-		if (interpreted_token == NULL)
-			return (NULL);
 	}
 	if (!ft_strchr(lex_tok, '\'') && ft_strchr(lex_tok, '*'))
+	{
+		free(lex_tok);
 		return (get_dir_items());
+	}
 	return (interpreted_token);
 }
