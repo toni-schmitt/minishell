@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 12:51:20 by tblaase           #+#    #+#             */
-/*   Updated: 2021/12/10 11:28:13 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/10 13:03:30 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,20 @@ static int	open_in(t_par_tok *par_tok, t_exp_tok *exp_tok)
 {
 	int		i;
 	int		fd;
+	int		heredeoc_fd;
 
 	// save the fd of the heredoc if there was one, if (exp_tok->in != 0)
 	i = 0;
 	fd = 0;
+	if (exp_tok->in != 0)
+		heredeoc_fd = exp_tok->in;
 	while (par_tok->redir_type[is_in])
 	{
 		i++;
 		if (par_tok->redir_type[is_in])
 			fd = open(par_tok->in[i], O_RDONLY);
+		else if (par_tok->redir_type[is_in_heredoc])
+			fd = heredeoc_fd;
 		if (fd == -1)
 		{
 			// fprintf(stderr, "something with %s is wrong\n", par_tok->in[i]);//remove after testing
@@ -35,7 +40,8 @@ static int	open_in(t_par_tok *par_tok, t_exp_tok *exp_tok)
 		}
 		if (par_tok->in[i + 1] == NULL)
 			break ;
-		close(fd);
+		if (fd != heredeoc_fd)
+			close(fd);
 		i++;
 	}
 	exp_tok->in = fd;

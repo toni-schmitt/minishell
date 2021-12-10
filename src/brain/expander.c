@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/10 11:37:40 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/10 11:58:48 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,12 +162,10 @@ static int	handle_tokens(t_exp_tok *exp_toks[], t_par_tok *par_toks[])
 	int	i;
 	int	pipe_type;
 
-	pipe_type = -1;
 	i = 0;
 	while (exp_toks[i] && par_toks[i])
 	{
-		if (par_toks[i]->type == is_pipe)
-			pipe_type = set_pipe_type(par_toks, i);
+		pipe_type = set_pipe_type(par_toks, i);
 		if (par_toks[i]->type == and || par_toks[i]->type == or)
 		{
 			if ((par_toks[i]->type == and && get_err_code() != EXIT_SUCCESS) \
