@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/09 21:47:19 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/10 11:37:40 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,10 +160,14 @@ static int	repinterprete_env_vars(t_par_tok *par_toks[], t_exp_tok *exp_toks[])
 static int	handle_tokens(t_exp_tok *exp_toks[], t_par_tok *par_toks[])
 {
 	int	i;
+	int	pipe_type;
 
+	pipe_type = -1;
 	i = 0;
 	while (exp_toks[i] && par_toks[i])
 	{
+		if (par_toks[i]->type == is_pipe)
+			pipe_type = set_pipe_type(par_toks, i);
 		if (par_toks[i]->type == and || par_toks[i]->type == or)
 		{
 			if ((par_toks[i]->type == and && get_err_code() != EXIT_SUCCESS) \
@@ -178,7 +182,7 @@ static int	handle_tokens(t_exp_tok *exp_toks[], t_par_tok *par_toks[])
 		else if (par_toks[i]->type == subshell)
 			set_err_code(handle_subshell(exp_toks[i]->cmd[0]));
 		else if (is_redir(par_toks[i]))
-			set_err_code(handle_redir(par_toks[i], exp_toks[i]));
+			set_err_code(handle_redir(par_toks[i], exp_toks[i], pipe_type));
 		else
 			set_err_code(executor(exp_toks[i]));
 		i++;

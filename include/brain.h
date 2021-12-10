@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 22:21:31 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/09 22:16:54 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/10 10:57:22 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ typedef struct s_expander_tokens
 	char			**cmd;
 	int				in;
 	int				out;
-	int				end[2];
 }	t_exp_tok;
 
 // BRAIN
