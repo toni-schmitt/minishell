@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/10 00:11:01 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/10 19:42:53 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,18 +165,24 @@ static int	handle_inbuilt_redir(t_exp_tok *exp_tok)
 	int	exit_status;
 	int	s;
 
-	if (exp_tok->in != 0)
-		dup2(exp_tok->in, 0);
-	s = dup(STDOUT_FILENO);
-	dup2(exp_tok->out, STDOUT_FILENO);
+	if (exp_tok->in != STDIN_FILENO)
+		dup2(exp_tok->in, STDIN_FILENO);
+	if (exp_tok->out != STDOUT_FILENO)
+	{
+		s = dup(STDOUT_FILENO);
+		dup2(exp_tok->out, STDOUT_FILENO);
+	}
 	exit_status = execute_inbuilt(exp_tok->cmd);
-	if (exp_tok->in != 0)
+	if (exp_tok->in != STDIN_FILENO)
 	{
 		close(exp_tok->in);
 		dup2(0, exp_tok->in);
 	}
-	dup2(s, STDOUT_FILENO);
-	close(s);
+	if (exp_tok->out != STDOUT_FILENO)
+	{
+		dup2(s, STDOUT_FILENO);
+		close(s);
+	}
 	return (exit_status);
 }
 
@@ -190,7 +196,7 @@ int	executor(t_exp_tok *exp_tok)
 	abs_cmd_path = NULL;
 	if (!is_valid_cmd(exp_tok->cmd[0], &abs_cmd_path))
 	{
-		printf("%s: command not found\n", exp_tok->cmd[0]);
+		printf("%s: command not found\n", exp_tok->cmd[0]); // pls print to stderr
 		return (EXIT_CMD_NOT_FOUND);
 	}
 	exit_status = execute_cmd(exp_tok, abs_cmd_path);

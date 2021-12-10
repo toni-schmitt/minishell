@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 12:51:20 by tblaase           #+#    #+#             */
-/*   Updated: 2021/12/10 13:03:30 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/10 19:40:56 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ static int	open_in(t_par_tok *par_tok, t_exp_tok *exp_tok)
 	fd = 0;
 	if (exp_tok->in != 0)
 		heredeoc_fd = exp_tok->in;
-	while (par_tok->redir_type[is_in])
+	// fprintf(stderr, "after handle redir commad %s has in:%d and out:%d\n", exp_tok->cmd[0], exp_tok->in, exp_tok->out);
+	while (par_tok->redir_type[is_in] || par_tok->redir_type[is_in_heredoc])
 	{
 		i++;
 		if (par_tok->redir_type[is_in])
@@ -40,7 +41,7 @@ static int	open_in(t_par_tok *par_tok, t_exp_tok *exp_tok)
 		}
 		if (par_tok->in[i + 1] == NULL)
 			break ;
-		if (fd != heredeoc_fd)
+		if (fd != heredeoc_fd && fd != 0 && fd != 1)
 			close(fd);
 		i++;
 	}
@@ -71,7 +72,8 @@ static int	open_out(t_par_tok *par_tok, t_exp_tok *exp_tok)
 		}
 		if (par_tok->out[i + 1] == NULL)
 			break ;
-		close(fd);
+		if (fd != 0 && fd != 1)
+			close(fd);
 		i++;
 	}
 	exp_tok->out = fd;

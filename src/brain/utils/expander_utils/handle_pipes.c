@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 10:44:24 by tblaase           #+#    #+#             */
-/*   Updated: 2021/12/10 13:02:12 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/10 19:39:51 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	handle_pipes(t_exp_tok *exp_tok, int pipe_type)
 	// fprintf(stderr, "last_pipe_out=%d\n", last_pipe_out);
 	if (pipe_type == -1)
 	{
-		if (last_pipe_out != 0)
+		if (last_pipe_out != 0 && last_pipe_out != 1)
 		{
 			close(last_pipe_out);
 			ft_putstr_fd("something with pipes went wrong pipe_type=-1\n", 2);//remove pipes_type after debugging
@@ -40,7 +40,7 @@ int	handle_pipes(t_exp_tok *exp_tok, int pipe_type)
 		}
 		if (exp_tok->in == 0)
 			exp_tok->in = last_pipe_out;
-		else
+		else if (last_pipe_out != 0 && last_pipe_out != 1)
 			close(last_pipe_out);
 		last_pipe_out = 0;
 	}
@@ -66,7 +66,7 @@ int	handle_pipes(t_exp_tok *exp_tok, int pipe_type)
 		}
 		if (exp_tok->in == 0)
 			exp_tok->in = last_pipe_out;
-		else
+		else if (last_pipe_out != 0 && last_pipe_out != 1)
 			close(last_pipe_out);
 		last_pipe_out = 0;
 		if (pipe(end) != 0)
