@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 17:23:59 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/03 10:57:07 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/10 19:35:35 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ char	*ft_append_len_div(char **dst, char *src, int len, char *div);
 char	*ft_in_front_div(char **dst, char *src, char *div);
 char	**ft_str_arr_realloc(char *array[], size_t size);
 char	**ft_add_single_str(char ***arr, int pos, char *new);
+char	**ft_sort_str_arr(char *unsorted[]);
 
 /* UTILS */
 int		ft_hexnbrlen(unsigned long long nbr);
