@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join_quotes_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/03 13:44:26 by tblaase           #+#    #+#             */
-/*   Updated: 2021/12/06 20:05:48 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/11 20:50:15 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,15 +105,15 @@ int	token_join_all_starts(char ***tokens, t_quotes *quo, int i)
 {
 	int	check;
 
-	if (ft_strchr(quo->start + 1, *quo->quote) != NULL)
+	if (quo == NULL)
+		return (EXIT_FAILURE);
+	if (ft_strchr(quo->start + 1, *quo->quote) != NULL && ft_strcmp((*tokens)[i], quo->start) == 0)
 	{
 		if (special_start(tokens, quo, i) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		else
 			return (EXIT_SUCCESS);
 	}
-	if (quo == NULL)
-		return (EXIT_FAILURE);
 	if (quo->len > 0)
 	{
 		check = start_one(tokens, quo);
