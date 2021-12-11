@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/10 19:42:53 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/11 13:12:54 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,8 @@ static int	execute_inbuilt(char *cmd[])
 		return (unset(cmd));
 	if (ft_strcmp(cmd[0], "pwd") == 0)
 		return (pwd());
+	if (ft_strcmp(cmd[0], "exit") == 0)
+		return (EXIT_CTRL_D);
 	return (EXIT_FAILURE);
 }
 /**
