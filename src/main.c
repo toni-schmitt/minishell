@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:28:36 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/11 13:16:30 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/11 13:54:34 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ static int	exit_routine(void *to_free, int exit_status)
 	return (exit_status);
 }
 
+static void	handle_sigstop(int sig)
+{
+	(void)sig;
+}
+
 static int	routine(void)
 {
 	char	*buf;
@@ -34,6 +39,7 @@ static int	routine(void)
 
 	while (true)
 	{
+		signal(SIGQUIT, handle_sigstop);
 		buf = readline("minishell$ ");
 		if (ft_strlen(buf) > 0)
 			add_history(buf);
