@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 20:05:39 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/07 19:30:49 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/11 13:20:13 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	init_curr_par_tok(void)
 	return (EXIT_SUCCESS);
 }
 
-void	free_par_toks(t_par_tok *par_toks[])
+int	free_par_toks(t_par_tok *par_toks[], int exit_code)
 {
 	int	i;
 
@@ -51,6 +51,7 @@ void	free_par_toks(t_par_tok *par_toks[])
 		i++;
 	}
 	free(par_toks);
+	return (exit_code);
 }
 
 /**
@@ -64,7 +65,7 @@ void	free_par_toks(t_par_tok *par_toks[])
  */
 int	free_parser(t_par_tok *par_tok[], t_iter *iter, int exit_status)
 {
-	free_par_toks(par_tok);
+	free_par_toks(par_tok, 0);
 	free(iter);
 	reset_iter();
 	reset_par_toks();

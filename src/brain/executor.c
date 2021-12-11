@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/11 13:12:54 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/11 13:36:33 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,8 @@ static bool	is_inbuilt(char *cmd)
 		return (true);
 	if (ft_strcmp(cmd, "pwd") == 0)
 		return (true);
+	if (ft_strcmp(cmd, "exit") == 0)
+		return (true);
 	return (false);
 }
 
@@ -153,7 +155,7 @@ static int	execute_inbuilt(char *cmd[])
 	if (ft_strcmp(cmd[0], "pwd") == 0)
 		return (pwd());
 	if (ft_strcmp(cmd[0], "exit") == 0)
-		return (EXIT_CTRL_D);
+		return (exit_inbuilt(cmd));
 	return (EXIT_FAILURE);
 }
 /**

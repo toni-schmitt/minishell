@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:35:35 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/09 21:48:33 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/11 13:19:58 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,11 +196,5 @@ int	parser(char *lexer_tokens[])
 		return (EXIT_SUCCESS);
 	tokens = get_par_toks();
 	// prnt_token(tokens);
-	if (expander(tokens) == EXIT_FAILURE)
-	{
-		free_par_toks(tokens);
-		return (EXIT_FAILURE);
-	}
-	free_par_toks(tokens);
-	return (EXIT_SUCCESS);
+	return (free_par_toks(tokens, expander(tokens)));
 }

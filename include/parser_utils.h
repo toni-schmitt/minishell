@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 20:11:39 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/04 23:04:00 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/11 13:17:41 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,6 @@ bool		try_get_tok_redir_buf( \
 	);
 
 char		*interprete_env_var(char *lex_tok);
-void		free_par_toks(t_par_tok *par_toks[]);
+int			free_par_toks(t_par_tok *par_toks[], int exit_code);
 
 #endif
