@@ -6,13 +6,13 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:00:54 by tblaase           #+#    #+#             */
-/*   Updated: 2021/12/11 17:39:30 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/11 17:41:22 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	export_error_loop(char **var, char **argv, int i)
+static int	export_error_loop(char **var, char **argv)
 {
 	int	j;
 
@@ -52,7 +52,7 @@ int	export_input_error(char **argv)
 		ft_free_str_array(&split);
 		if (var == NULL)
 			return (EXIT_FAILURE);
-		if (export_error_loop(&var, argv, i) == EXIT_FAILURE)
+		if (export_error_loop(&var, argv) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		i++;
 		ft_free_str(&var);
