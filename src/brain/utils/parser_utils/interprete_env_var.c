@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 23:13:27 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/11 13:43:38 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/11 16:47:55 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,21 @@ static char	*get_dir_items(void)
 	return (get_items_sorted(items));
 }
 
+static char	*get_var(char *lex_tok)
+{
+	char	*var;
+	int		i;
+
+	var = ft_calloc(ft_strlen(lex_tok) + 1, sizeof(*var));
+	if (var == NULL)
+		return (NULL);
+	lex_tok = ft_strchr(lex_tok, '$') + 1;
+	i = 0;
+	while (lex_tok && *lex_tok && ft_isalpha(*lex_tok))
+		var[i++] = *lex_tok++;
+	return (var);
+}
+
 /**
  * @brief  Interprets enviroment variables of current lexer token
  * @note   Frees current lex_tok if necessary
@@ -94,14 +109,14 @@ char	*interprete_env_var(char *lex_tok)
 
 	interpreted_token = lex_tok;
 	if (!ft_strchr(lex_tok, '\'') && ft_strlen(lex_tok) > 1 \
-	&& lex_tok[0] == '$')
+	&& ft_strchr(lex_tok, '$'))
 	{
 		if (ft_strstr(lex_tok, "$?"))
 		{
 			free(lex_tok);
 			return (ft_itoa(get_err_code()));
 		}
-		var = ft_substr(lex_tok, 1, ft_strlen(lex_tok));
+		var = get_var(lex_tok);
 		if (var == NULL)
 			return (NULL);
 		interpreted_token = get_env_var_value(get_envv(), var);
