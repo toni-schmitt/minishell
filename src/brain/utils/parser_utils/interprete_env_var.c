@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 23:13:27 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/11 16:47:55 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/11 17:33:14 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ static char	*get_var(char *lex_tok)
 	i = 0;
 	while (lex_tok && *lex_tok && ft_isalpha(*lex_tok))
 		var[i++] = *lex_tok++;
+	free(lex_tok);
 	return (var);
 }
 
@@ -121,9 +122,9 @@ char	*interprete_env_var(char *lex_tok)
 			return (NULL);
 		interpreted_token = get_env_var_value(get_envv(), var);
 		free(var);
-		free(lex_tok);
 	}
-	if (!ft_strchr(lex_tok, '\'') && ft_strchr(lex_tok, '*'))
+	if (!ft_strchr(lex_tok, '\'') && !ft_strchr(lex_tok, '\"') \
+	&& ft_strchr(lex_tok, '*'))
 	{
 		free(lex_tok);
 		return (get_dir_items());
