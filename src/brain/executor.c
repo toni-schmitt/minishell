@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/11 13:36:33 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/11 17:17:06 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,17 +190,64 @@ static int	handle_inbuilt_redir(t_exp_tok *exp_tok)
 	return (exit_status);
 }
 
+static char	*get_clean_cmd(char *cmd)
+{
+	char	*cleaned;
+	int		cmd_len;
+	int		i;
+	int		j;
+
+	cmd_len = ft_strlen(cmd);
+	if (cmd[0] != '\'' && cmd[0] != '\"')
+		return (cmd);
+	if (cmd[cmd_len - 1] != cmd[0])
+		return (cmd);
+	cleaned = ft_calloc(ft_strlen(cmd) + 1, sizeof(*cleaned));
+	if (cleaned == NULL)
+	{
+		free(cmd);
+		return (NULL);
+	}
+	i = 1;
+	j = 0;
+	while (i < cmd_len - 1)
+		cleaned[j++] = cmd[i++];
+	free(cmd);
+	return (cleaned);
+}
+
+static int	clean_exp_tok_cmds(t_exp_tok *exp_tok)
+{
+	int		i;
+
+	i = 0;
+	while (exp_tok->cmd[i])
+	{
+		exp_tok->cmd[i] = get_clean_cmd(exp_tok->cmd[i]);
+		if (exp_tok->cmd[i] == NULL)
+		{
+			ft_free_split(exp_tok->cmd);
+			return (EXIT_FAILURE);
+		}
+		i++;
+	}
+	return (EXIT_SUCCESS);
+}
+
 int	executor(t_exp_tok *exp_tok)
 {
 	int		exit_status;
 	char	*abs_cmd_path;
 
+	if (clean_exp_tok_cmds(exp_tok) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	if (is_inbuilt(exp_tok->cmd[0]))
 		return (handle_inbuilt_redir(exp_tok));
 	abs_cmd_path = NULL;
 	if (!is_valid_cmd(exp_tok->cmd[0], &abs_cmd_path))
 	{
-		printf("%s: command not found\n", exp_tok->cmd[0]); // pls print to stderr
+		ft_putstr_fd(exp_tok->cmd[0], STDERR_FILENO);
+		ft_putstr_fd(": command not found\n", STDERR_FILENO);
 		return (EXIT_CMD_NOT_FOUND);
 	}
 	exit_status = execute_cmd(exp_tok, abs_cmd_path);
