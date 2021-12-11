@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_input_error.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:00:54 by tblaase           #+#    #+#             */
-/*   Updated: 2021/11/24 14:50:35 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/11 17:39:30 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ static int	export_error_loop(char **var, char **argv, int i)
 	{
 		if (ft_isalnum((*var)[j]) == 0 && (*var)[j] != '_')
 		{
-			ft_printf("export: `%s': not a valid identifier\n", argv[i]);
+			ft_putstr_fd("export: ", STDERR_FILENO);
+			ft_putstr_fd(argv[1], STDERR_FILENO);
+			ft_putstr_fd(": not a valid identifier\n", STDERR_FILENO);
 			ft_free_str(var);
 			return (EXIT_FAILURE);
 		}

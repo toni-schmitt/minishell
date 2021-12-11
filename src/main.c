@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:28:36 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/11 14:18:30 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/11 17:38:49 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,10 @@ static int	handle_flags(int argc, char *argv[])
 
 	if (argc != 3 || ft_strcmp(argv[1], "-c") != 0)
 	{
-		printf("Usage: ./minishell [Flag] \"[Command]\"\n");
-		printf("\t-c\tExecute Command without promot\n");
+		ft_putstr_fd("Usage: ./minishell [Flag] \"[Command]\"\n", STDERR_FILENO);
+		ft_putstr_fd("\t-c\tExecute Command without promot\n", STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
-	printf("");
 	exit_code = lexer(argv[2]);
 	free_envv(get_envv());
 	return (exit_code);

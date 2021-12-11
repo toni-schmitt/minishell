@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 14:12:17 by tblaase           #+#    #+#             */
-/*   Updated: 2021/12/06 19:48:29 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/11 17:36:54 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char	*find_home(t_env *envv)
 	path = get_env_var_value(envv, "HOME");
 	if (ft_strlen(path) == 0)
 	{
-		ft_printf("cd: HOME not set\n");
+		ft_putstr_fd("cd: HOME not set\n", STDERR_FILENO);
 		ft_free_str(&path);
 	}
 	return (path);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:34:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/07 19:31:27 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/11 17:36:30 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int	lexer(char *line)
 	set_lex_toks(tokens);
 	if (!is_valid_syntax(tokens))
 	{
-		printf("minishell: Invalid Syntax at unspecified token\n");
+		ft_putstr_fd("minishell: Invalid Syntax at unspecified token\n", STDERR_FILENO);
 		ft_free_str_array(&tokens);
 		return (EXIT_SYNTAX_ERROR);
 	}
