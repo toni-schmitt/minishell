@@ -6,7 +6,7 @@
 #    By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
-#    Updated: 2021/12/11 14:18:41 by tschmitt         ###   ########.fr        #
+#    Updated: 2021/12/11 18:08:35 by tschmitt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,7 +99,7 @@ re: fclean all
 # TESTING RULES
 norm:
 	@echo $(G)Checking Norminette...$(X)
-	norminette
+	norminette | grep Error | egrep --color '.*Error!|$$'
 	@echo $(G)Done$(X)
 
 run: all
