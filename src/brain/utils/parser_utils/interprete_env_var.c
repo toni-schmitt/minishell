@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interprete_env_var.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 23:13:27 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/10 19:42:52 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/11 13:43:38 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static char	*get_dir_items(void)
 	size_t			items_size;
 	size_t			i;
 
-	d = opendir("/home/toni/repos/minishell");
+	d = opendir(".");
 	if (d == NULL)
 		return (NULL);
 	i = 0;
