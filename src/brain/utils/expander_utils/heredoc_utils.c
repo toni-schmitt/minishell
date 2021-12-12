@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 21:59:04 by toni              #+#    #+#             */
-/*   Updated: 2021/12/09 19:33:29 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/11 21:35:41 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,11 @@ int	wait_for_heredoc(t_par_tok *par_tok, t_exp_tok *exp_tok)
 		close(end[0]);
 		return (EXIT_FAILURE);
 	}
+	if (exp_tok->cmd == NULL && exp_tok->out != STDOUT_FILENO)
+	{
+		close(exp_tok->out);
+		exp_tok->out = STDOUT_FILENO;
+	}
 	return (EXIT_SUCCESS);
 }
 
@@ -98,6 +103,7 @@ int	wait_for_heredoc(t_par_tok *par_tok, t_exp_tok *exp_tok)
  */
 int	check_for_heredoc(t_par_tok *par_toks[])
 {
+	//think about deleting this, since toni said its not needed anymore
 	int	i;
 
 	i = 0;

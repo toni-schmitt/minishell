@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/11 13:39:33 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/12 15:12:36 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ static int	handle_tokens(t_exp_tok *exp_toks[], t_par_tok *par_toks[])
 			set_err_code(handle_subshell(exp_toks[i]->cmd[0]));
 		else if (is_redir(par_toks[i]))
 			set_err_code(handle_redir(par_toks[i], exp_toks[i], pipe_type));
-		else
+		else if (exp_toks[i]->cmd != NULL)
 			set_err_code(executor(exp_toks[i]));
 		i++;
 	}

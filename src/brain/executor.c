@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/11 17:17:06 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/11 21:22:04 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,7 +221,7 @@ static int	clean_exp_tok_cmds(t_exp_tok *exp_tok)
 	int		i;
 
 	i = 0;
-	while (exp_tok->cmd[i])
+	while (exp_tok && exp_tok->cmd && exp_tok->cmd[i])
 	{
 		exp_tok->cmd[i] = get_clean_cmd(exp_tok->cmd[i]);
 		if (exp_tok->cmd[i] == NULL)
@@ -239,6 +239,8 @@ int	executor(t_exp_tok *exp_tok)
 	int		exit_status;
 	char	*abs_cmd_path;
 
+	if (exp_tok->cmd == NULL)
+		return (EXIT_SUCCESS);
 	if (clean_exp_tok_cmds(exp_tok) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (is_inbuilt(exp_tok->cmd[0]))
