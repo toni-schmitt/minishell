@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/12 15:12:36 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/12 17:10:49 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static char	*get_subshell_cmd(char *cmd)
 	return (subshell_cmd);
 }
 
-static int	handle_subshell(char *cmd)
+static int	handle_subshell(t_exp_tok *exp_tok)
 {
 	pid_t	pid;
 	int		status;
@@ -112,7 +112,8 @@ static int	handle_subshell(char *cmd)
 		return (EXIT_FAILURE);
 	if (pid == 0)
 	{
-		cutted_cmd = get_subshell_cmd(cmd);
+		// add here input dup and dup output aswell
+		cutted_cmd = get_subshell_cmd(exp_tok->cmd[0]);
 		if (cutted_cmd == NULL)
 			return (EXIT_FAILURE);
 		status = lexer(cutted_cmd);
@@ -121,6 +122,8 @@ static int	handle_subshell(char *cmd)
 		return (get_err_code());
 	}
 	waitpid(pid, &status, 0);
+	// close input after first command if it was piped
+	// if output was a pipe this should be closed here too
 	set_err_code(WEXITSTATUS(status));
 	return (WEXITSTATUS(status));
 }
@@ -178,7 +181,7 @@ static int	handle_tokens(t_exp_tok *exp_toks[], t_par_tok *par_toks[])
 				return (EXIT_FAILURE);
 		}
 		else if (par_toks[i]->type == subshell)
-			set_err_code(handle_subshell(exp_toks[i]->cmd[0]));
+			set_err_code(handle_subshell(exp_toks[i]));
 		else if (is_redir(par_toks[i]))
 			set_err_code(handle_redir(par_toks[i], exp_toks[i], pipe_type));
 		else if (exp_toks[i]->cmd != NULL)
