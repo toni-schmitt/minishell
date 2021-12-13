@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/13 13:45:57 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/13 16:19:53 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,14 +143,14 @@ int	handle_subshell(t_exp_tok *exp_tok)
 	return (WEXITSTATUS(status));
 }
 
-static bool	is_redir(t_par_tok *par_tok)
-{
-	if (par_tok->redir_type[is_in] || par_tok->redir_type[is_in_heredoc] \
-	|| par_tok->redir_type[is_out] || par_tok->redir_type[is_out_append] \
-	|| par_tok->redir_type[is_pipe])
-		return (true);
-	return (false);
-}
+// static bool	is_redir(t_par_tok *par_tok)
+// {
+// 	if (par_tok->redir_type[is_in] || par_tok->redir_type[is_in_heredoc] \
+// 	|| par_tok->redir_type[is_out] || par_tok->redir_type[is_out_append] \
+// 	|| par_tok->redir_type[is_pipe])
+// 		return (true);
+// 	return (false);
+// }
 
 char	*interprete_env_var(char *lex_tok);
 
@@ -192,15 +192,10 @@ static int	handle_tokens(t_exp_tok *exp_toks[], t_par_tok *par_toks[])
 				set_err_code(EXIT_FAILURE);
 				return (EXIT_SUCCESS);
 			}
-			if (repinterprete_env_vars(&par_toks[i + 1], &exp_toks[i + 1]) == EXIT_FAILURE)
+			if (repinterprete_env_vars(&par_toks[i + 1], &exp_toks[i + 1]) == 1)
 				return (EXIT_FAILURE);
 		}
-		// else if (par_toks[i]->type == subshell)
-			// set_err_code(handle_subshell(exp_toks[i])); // now is in handle_redir
-		else if (is_redir(par_toks[i]))
-			set_err_code(handle_redir(par_toks[i], exp_toks[i], pipe_type));
-		else if (exp_toks[i]->cmd != NULL)
-			set_err_code(executor(exp_toks[i]));
+		set_err_code(handle_redir(par_toks[i], exp_toks[i], pipe_type));
 		i++;
 	}
 	return (EXIT_SUCCESS);
