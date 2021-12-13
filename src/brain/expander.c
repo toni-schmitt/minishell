@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/13 16:19:53 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/13 17:02:31 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,10 @@ int	handle_subshell(t_exp_tok *exp_tok)
 	char	*cutted_cmd;
 	t_env	*envv;
 
+	fprintf(stderr, "subshell entered\n"); // remove after debugging
+	fprintf(stderr, "subshell command is %s with in: %d and out %d\n", exp_tok->cmd[0], exp_tok->in, exp_tok->out);
 	envv = get_envv();
+	//handle_pipes_subshell to set input of first command right and output of the subshell right
 	envv->subshell_in = exp_tok->in;
 	envv->subshell_out = exp_tok->out;
 	pid = fork();
@@ -117,6 +120,7 @@ int	handle_subshell(t_exp_tok *exp_tok)
 		return (EXIT_FAILURE);
 	if (pid == 0)
 	{
+	fprintf(stderr, "here is in: %d and out: %d of the subshell\n", envv->subshell_in, envv->subshell_out);
 		if (envv->subshell_in != STDIN_FILENO)
 		{
 			if (dup2(envv->subshell_in, STDIN_FILENO) != 0)
@@ -131,12 +135,16 @@ int	handle_subshell(t_exp_tok *exp_tok)
 		if (cutted_cmd == NULL)
 			return (EXIT_FAILURE);
 		status = lexer(cutted_cmd);
+		if (envv->subshell_out != STDOUT_FILENO)
+		{
+			if (close(envv->subshell_out) == -1)
+				return (ft_perror(EXIT_FAILURE, "close error"));
+		}
 		free(cutted_cmd);
 		exit(get_err_code()); // why this and return below?
 		return (get_err_code());
 	}
 	waitpid(pid, &status, 0);
-	// if output was a pipe this should be closed here too
 	envv->subshell_in = 0;
 	envv->subshell_out = 1;
 	set_err_code(WEXITSTATUS(status));

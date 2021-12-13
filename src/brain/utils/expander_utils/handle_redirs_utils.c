@@ -6,24 +6,27 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 12:51:20 by tblaase           #+#    #+#             */
-/*   Updated: 2021/12/13 13:49:23 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/13 15:52:33 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "brain.h"
 #include "expander_utils.h"
+#include "env_var_utils.h"
 
 static int	open_in(t_par_tok *par_tok, t_exp_tok *exp_tok)
 {
 	int		i;
 	int		fd;
 	int		heredeoc_fd;
+	t_env	*envv;
 
 	// save the fd of the heredoc if there was one, if (exp_tok->in != 0)
+	envv = get_envv();
 	i = 0;
 	fd = 0;
-	if (exp_tok->in != 0)
+	if (exp_tok->in != STDIN_FILENO)
 		heredeoc_fd = exp_tok->in;
 	// fprintf(stderr, "after handle redir commad %s has in:%d and out:%d\n", exp_tok->cmd[0], exp_tok->in, exp_tok->out);
 	while (par_tok->redir_type[is_in] || par_tok->redir_type[is_in_heredoc])
@@ -37,12 +40,13 @@ static int	open_in(t_par_tok *par_tok, t_exp_tok *exp_tok)
 			return (ft_perror(EXIT_FAILURE, "open error"));
 		if (par_tok->in[i + 1] == NULL)
 			break ;
-		if (fd != heredeoc_fd && fd != 0 && fd != 1 && close(fd) == -1)
+		if (fd != heredeoc_fd && fd != STDIN_FILENO && fd != STDOUT_FILENO
+			&& fd != envv->subshell_in && close(fd) == -1)
 			return (ft_perror(EXIT_FAILURE, "close error"));
 		i++;
 	}
 	exp_tok->in = fd;
-	// fprintf(stderr, "the new fd for input is now %d\n", exp_tok->in);//remove after testing
+	// fprintf(stderr, "the new fd for input of %s is now %d\n", exp_tok->cmd[0], exp_tok->in);//remove after testing
 	return (EXIT_SUCCESS);
 }
 
@@ -70,6 +74,7 @@ static int	open_out(t_par_tok *par_tok, t_exp_tok *exp_tok)
 		i++;
 	}
 	exp_tok->out = fd;
+	// fprintf(stderr, "the new fd for output of %s is now %d\n", exp_tok->cmd[0], exp_tok->out);//remove after testing
 	return (EXIT_SUCCESS);
 }
 
@@ -81,7 +86,7 @@ int	handle_redir(t_par_tok *par_tok, t_exp_tok *exp_tok, int pipe_type)
 		return (EXIT_FAILURE);
 	if (open_out(par_tok, exp_tok) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	if (handle_pipes(exp_tok, pipe_type) == EXIT_FAILURE)
+	if (par_tok->type != subshell && handle_pipes(exp_tok, pipe_type) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (par_tok->type == subshell)
 		return (handle_subshell(exp_tok));
