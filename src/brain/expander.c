@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/13 16:13:01 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/13 17:02:31 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,15 +200,10 @@ static int	handle_tokens(t_exp_tok *exp_toks[], t_par_tok *par_toks[])
 				set_err_code(EXIT_FAILURE);
 				return (EXIT_SUCCESS);
 			}
-			if (repinterprete_env_vars(&par_toks[i + 1], &exp_toks[i + 1]) == EXIT_FAILURE)
+			if (repinterprete_env_vars(&par_toks[i + 1], &exp_toks[i + 1]) == 1)
 				return (EXIT_FAILURE);
 		}
-		// else if (par_toks[i]->type == subshell)
-			// set_err_code(handle_subshell(exp_toks[i])); // now is in handle_redir
-		// else if (is_redir(par_toks[i]) || par_toks[i]->type == subshell)
-			set_err_code(handle_redir(par_toks[i], exp_toks[i], pipe_type)); // always calls executor, so no need to call it only if is_redir
-		// else if (exp_toks[i]->cmd != NULL)
-		// 	set_err_code(executor(exp_toks[i]));
+		set_err_code(handle_redir(par_toks[i], exp_toks[i], pipe_type));
 		i++;
 	}
 	return (EXIT_SUCCESS);

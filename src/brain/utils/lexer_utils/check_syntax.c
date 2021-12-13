@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 15:00:19 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/09 18:35:34 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/13 16:22:34 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,6 @@
 #include "lexer_utils.h"
 
 bool	is_quote_token(char *lex_tok);
-
-static bool	first_token_not_special(char *lex_tok)
-{
-	if (ft_strlen(lex_tok) == 2)
-		if (ft_strstr(lex_tok, "&&") || ft_strstr(lex_tok, "||"))
-			return (false);
-	return (true);
-}
 
 static bool	is_redir(char *lex_tok)
 {
@@ -34,6 +26,24 @@ static bool	is_redir(char *lex_tok)
 	if (ft_strlen(lex_tok) == 1)
 	{
 		if (ft_strchr(lex_tok, '<') || ft_strchr(lex_tok, '>'))
+			return (true);
+	}
+	return (false);
+}
+
+static bool	is_special(char *lex_tok)
+{
+	if (ft_strlen(lex_tok) == 2)
+	{
+		if (ft_strstr(lex_tok, "&&") || ft_strstr(lex_tok, "||") \
+		|| ft_strstr(lex_tok, "<<") || ft_strstr(lex_tok, ">>"))
+			return (true);
+	}
+	if (ft_strlen(lex_tok) == 1)
+	{
+		if ((ft_strchr(lex_tok, '<') && !ft_strstr(lex_tok, "<<")) \
+		|| (ft_strchr(lex_tok, '>') && !ft_strstr(lex_tok, ">>")) \
+		|| (ft_strchr(lex_tok, '|') && !ft_strstr(lex_tok, "||")))
 			return (true);
 	}
 	return (false);
@@ -87,11 +97,11 @@ bool	is_valid_syntax(char *lex_toks[])
 	i = 0;
 	while (lex_toks[i])
 	{
-		if (!is_quote_token(lex_toks[i]) \
-		&& (!ft_strchr(lex_toks[i], '(') || !ft_strchr(lex_toks[i], ')')))
+		if (!is_quote_token(lex_toks[i]))
 		{
 			if (i == 0 || get_lex_toks()[i + 1] == NULL)
-				if (!first_token_not_special(lex_toks[i]))
+				if (ft_strlen(lex_toks[i]) == 2 \
+				&& (ft_strstr(lex_toks[i], "&&") || ft_strstr(lex_toks[i], "||")))
 					return (false);
 			if (get_lex_toks()[i + 1] == NULL)
 				if (is_redir(lex_toks[i]))
@@ -100,6 +110,9 @@ bool	is_valid_syntax(char *lex_toks[])
 				return (false);
 			if (!is_correc_pipe(lex_toks[i], lex_toks[i + 1]))
 				return (false);
+			if (ft_strchr(lex_toks[i], '(') && ft_strchr(lex_toks[i], ')'))
+				if (!is_special(lex_toks[i - 1]))
+					return (false);
 		}
 		i++;
 	}

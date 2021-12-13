@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/13 13:19:36 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/13 15:51:35 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ static bool	is_valid_cmd(char *cmd, char **abs_cmd_path)
 	int		i;
 
 	if (init(&path_splitted) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+		return (false);
 	i = 0;
 	while (path_splitted[i])
 	{
 		absolute_cmd_path = get_abs_cmd_path(path_splitted[i], cmd);
 		if (absolute_cmd_path == NULL)
-			return (EXIT_FAILURE);
+			return (false);
 		if (access(absolute_cmd_path, F_OK) == 0)
 		{
 			ft_free_split(path_splitted);
