@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 17:23:59 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/10 19:35:35 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/13 13:05:11 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,5 +126,6 @@ void	*ft_free(void **p);
 void	ft_free_str(char **str);
 void	ft_free_str_array(char ***arr);
 void	ft_free_single_str(char ***arr, int i);
+int		ft_perror(int exit_status, char *msg);
 
 #endif
