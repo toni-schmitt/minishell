@@ -6,13 +6,14 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/12 17:10:49 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/13 13:45:57 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "brain.h"
 #include "expander_utils.h"
+#include "env_var_utils.h"
 
 static int	free_exp_toks(t_exp_tok *exp_toks[], int exit_status)
 {
@@ -101,29 +102,43 @@ static char	*get_subshell_cmd(char *cmd)
 	return (subshell_cmd);
 }
 
-static int	handle_subshell(t_exp_tok *exp_tok)
+int	handle_subshell(t_exp_tok *exp_tok)
 {
 	pid_t	pid;
 	int		status;
 	char	*cutted_cmd;
+	t_env	*envv;
 
+	envv = get_envv();
+	envv->subshell_in = exp_tok->in;
+	envv->subshell_out = exp_tok->out;
 	pid = fork();
 	if (pid < 0)
 		return (EXIT_FAILURE);
 	if (pid == 0)
 	{
-		// add here input dup and dup output aswell
+		if (envv->subshell_in != STDIN_FILENO)
+		{
+			if (dup2(envv->subshell_in, STDIN_FILENO) != 0)
+				return (EXIT_FAILURE);
+		}
+		if (envv->subshell_out != STDOUT_FILENO)
+		{
+			if (dup2(envv->subshell_out, STDOUT_FILENO) != 0)
+				return (EXIT_FAILURE);
+		}
 		cutted_cmd = get_subshell_cmd(exp_tok->cmd[0]);
 		if (cutted_cmd == NULL)
 			return (EXIT_FAILURE);
 		status = lexer(cutted_cmd);
 		free(cutted_cmd);
-		exit(get_err_code());
+		exit(get_err_code()); // why this and return below?
 		return (get_err_code());
 	}
 	waitpid(pid, &status, 0);
-	// close input after first command if it was piped
 	// if output was a pipe this should be closed here too
+	envv->subshell_in = 0;
+	envv->subshell_out = 1;
 	set_err_code(WEXITSTATUS(status));
 	return (WEXITSTATUS(status));
 }
@@ -137,7 +152,7 @@ static bool	is_redir(t_par_tok *par_tok)
 	return (false);
 }
 
-char		*interprete_env_var(char *lex_tok);
+char	*interprete_env_var(char *lex_tok);
 
 static int	repinterprete_env_vars(t_par_tok *par_toks[], t_exp_tok *exp_toks[])
 {
@@ -180,8 +195,8 @@ static int	handle_tokens(t_exp_tok *exp_toks[], t_par_tok *par_toks[])
 			if (repinterprete_env_vars(&par_toks[i + 1], &exp_toks[i + 1]) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
 		}
-		else if (par_toks[i]->type == subshell)
-			set_err_code(handle_subshell(exp_toks[i]));
+		// else if (par_toks[i]->type == subshell)
+			// set_err_code(handle_subshell(exp_toks[i])); // now is in handle_redir
 		else if (is_redir(par_toks[i]))
 			set_err_code(handle_redir(par_toks[i], exp_toks[i], pipe_type));
 		else if (exp_toks[i]->cmd != NULL)

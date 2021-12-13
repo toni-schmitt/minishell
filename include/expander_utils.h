@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 22:00:00 by toni              #+#    #+#             */
-/*   Updated: 2021/12/10 11:37:53 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/13 12:14:56 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ int		wait_for_heredoc(t_par_tok *par_tok, t_exp_tok *exp_tok);
 int		handle_redir(t_par_tok *par_tok, t_exp_tok *exp_tok, int pipe_type);
 int		handle_pipes(t_exp_tok *exp_tok, int pipe_type);
 int		set_pipe_type(t_par_tok **par_toks, int i);
+int		handle_subshell(t_exp_tok *exp_tok);
 
 #endif

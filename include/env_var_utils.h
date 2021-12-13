@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_var_utils.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:52:36 by toni              #+#    #+#             */
-/*   Updated: 2021/12/07 15:47:05 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/13 12:19:49 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ typedef struct s_env
 	char	**env_var;
 	char	*pwd;
 	char	*oldpwd;
+	int		subshell_in;
+	int		subshell_out;
 }			t_env;
 
 // ENV VAR UTILS

@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/11 21:22:04 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/13 13:19:36 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,46 +80,38 @@ static int	execute_cmd(t_exp_tok *exp_tok, char *abs_cmd_path)
 {
 	pid_t	pid;
 	int		status;
+	t_env	*envv;
 
+	envv = get_envv();
 	pid = fork();
 	if (pid < 0)
 		return (EXIT_FAILURE);
 	if (pid == 0)
 	{
 		// fprintf(stderr, "changed stdin to %d\n", exp_tok->in);// remove after testing
-		dup2(exp_tok->in, STDIN_FILENO); // add protection
+		if (dup2(exp_tok->in, STDIN_FILENO) == -1)
+			return (EXIT_FAILURE);
 		// fprintf(stderr, "changed stdout to %d\n", exp_tok->out);//remove after testing
-		dup2(exp_tok->out, STDOUT_FILENO); // add protection
+		if (dup2(exp_tok->out, STDOUT_FILENO) == -1)
+			return (EXIT_FAILURE);
 		status = execve(abs_cmd_path, exp_tok->cmd, get_envv()->env_var);
-		if (exp_tok->in != STDIN_FILENO)
-			close(exp_tok->in);
-		if (exp_tok->out != STDOUT_FILENO)
-			close(exp_tok->out);
+		perror(NULL);
+		if (exp_tok->in != STDIN_FILENO) // this might cause a double close - > error
+		{
+			if (close(exp_tok->in) == -1)
+				status = ft_perror(EXIT_FAILURE, "close error");
+		}
+		if (exp_tok->out != STDOUT_FILENO && exp_tok->out != envv->subshell_out)
+		{
+			if (close(exp_tok->out) == -1)
+				status = ft_perror(EXIT_FAILURE, "close error");
+		}
 		return (status);
 	}
 	waitpid(pid, &status, 0);
 	status = WEXITSTATUS(status); // added for debugging
 	return (status);
 }
-
-// int	prepare_pipe_cmds(t_exp_tok *exp_toks[])
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (exp_toks[i]->type[is_pipe] && exp_toks[i + 1]->type[is_pipe])
-// 	{
-// 		if (pipe(exp_toks[i]->end) != 0)
-// 		{
-// 			perror("ERROR");
-// 			return (EXIT_FAILURE);
-// 		}
-// 		if (i == 0 && exp_toks[i + 1]->type[is_pipe] && exp_toks[i]->out == 1)
-// 			exp_toks->out = end[1];
-// 		i++;
-// 	}
-// 	return (EXIT_FAILURE);
-// }
 
 static bool	is_inbuilt(char *cmd)
 {
@@ -158,34 +150,47 @@ static int	execute_inbuilt(char *cmd[])
 		return (exit_inbuilt(cmd));
 	return (EXIT_FAILURE);
 }
+
 /**
- * @brief  This is stolen from somewhere, idk from where
+ * @brief  those dup / dup2 mix is due to it working in any other way
  * @note   i have no clue how or why this is working
- * @param  *exp_tok:
+ * @param  *exp_tok: the expander-token containing all the necessary info
  * @retval the exit status of the inbuilt function
  */
 static int	handle_inbuilt_redir(t_exp_tok *exp_tok)
 {
-	int	exit_status;
-	int	s;
+	int		exit_status;
+	int		s;
+	t_env	*envv;
 
+	envv = get_envv();
 	if (exp_tok->in != STDIN_FILENO)
-		dup2(exp_tok->in, STDIN_FILENO);
+	{
+		if (dup2(exp_tok->in, STDIN_FILENO) == -1)
+			return (ft_perror(EXIT_FAILURE, "dup2 error"));
+	}
 	if (exp_tok->out != STDOUT_FILENO)
 	{
 		s = dup(STDOUT_FILENO);
-		dup2(exp_tok->out, STDOUT_FILENO);
+		if (s == -1)
+			return (ft_perror(EXIT_FAILURE, "dup error"));
+		if (dup2(exp_tok->out, STDOUT_FILENO) == -1)
+			return (ft_perror(EXIT_FAILURE, "dup2 error"));
 	}
 	exit_status = execute_inbuilt(exp_tok->cmd);
 	if (exp_tok->in != STDIN_FILENO)
 	{
-		close(exp_tok->in);
-		dup2(0, exp_tok->in);
+		if (dup2(0, exp_tok->in) == -1)
+			exit_status = ft_perror(EXIT_FAILURE, "dup2 error");
+		if (close(exp_tok->in) == -1)
+			exit_status = ft_perror(EXIT_FAILURE, "close error");
 	}
-	if (exp_tok->out != STDOUT_FILENO)
+	if (exp_tok->out != STDOUT_FILENO && exp_tok->out != envv->subshell_out)
 	{
-		dup2(s, STDOUT_FILENO);
-		close(s);
+		if (dup2(s, envv->subshell_out) == -1)
+			exit_status = ft_perror(EXIT_FAILURE, "dup2 error");
+		if (close(s) == -1)
+			exit_status = ft_perror(EXIT_FAILURE, "close error");
 	}
 	return (exit_status);
 }

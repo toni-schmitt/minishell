@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/20 11:29:18 by tblaase           #+#    #+#             */
-/*   Updated: 2021/12/10 00:06:00 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/13 12:20:18 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ t_env	*init_envv(char **envp)
 	envv = ft_calloc(1, sizeof(t_env));
 	if (envv != NULL && envp != NULL && *envp != NULL)
 	{
+		envv->subshell_in = 0;
+		envv->subshell_out = 1;
 		envv->envp = envp;
 		envv->env_var = ft_str_arr_dup(envp);
 		envv->pwd = get_env_var_value(envv, "PWD");
