@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_puterror.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/22 20:42:48 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/08/24 16:14:30 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/13 13:39:11 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 int	ft_puterror(char *message)
 {
 	ft_printf("%s\n", message);
-	exit(EXIT_FAILURE);
+	exit(EXIT_FAILURE); // why exit and return?????
 	return (EXIT_FAILURE);
 }
