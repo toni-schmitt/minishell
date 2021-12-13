@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   brain.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 22:21:31 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/10 10:57:22 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/13 17:14:31 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BRAIN_H
 # define BRAIN_H
 
-# include <readline/history.h>
-# include <readline/readline.h>
+# include <stdlib.h>
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <stdbool.h>

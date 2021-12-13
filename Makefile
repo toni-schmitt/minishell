@@ -6,7 +6,7 @@
 #    By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
-#    Updated: 2021/12/11 18:08:35 by tschmitt         ###   ########.fr        #
+#    Updated: 2021/12/13 17:16:45 by tschmitt         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,8 @@ CC = gcc
 CC_FLAGS = -Wall -Werror -Wextra -g
 INCLUDE_FLAGS = -I ./include/ -I $(LIBFT_PATH)include/
 L_FLAGS = -lreadline
+READLINE = -L /Users/$(USER)/.brew/opt/readline/lib
+READLINE_INC = -I /Users/$(USER)/.brew/opt/readline/include
 RM = rm -f
 
 # EXECUTABLE
@@ -65,7 +67,7 @@ all: $(NAME)
 # @$(CC) $(CC_FLAGS) $(INCLUDE_FLAGS) $(L_FLAGS) $(LIBFT_NAME) $(OBJ) -o $(NAME)
 $(NAME): $(OBJ) $(LIBFT_NAME)
 	@echo $(Y)Compiling [$(NAME)]...$(X)
-	@$(CC) $(OBJ) ./libft/obj/*.o $(CC_FLAGS) $(INCLUDE_FLAGS) $(L_FLAGS) -o $(NAME)
+	@$(CC) $(OBJ) $(READLINE) $(READLINE_INC) $(CC_FLAGS) $(LIBFT_PATH)lib/libft.a $(L_FLAGS) -o $(NAME)
 	@echo $(G)Finished [$(NAME)]$(X)
 
 $(LIBFT_NAME): $(LIBFT_SRC)
@@ -75,7 +77,7 @@ $(LIBFT_NAME): $(LIBFT_SRC)
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@echo $(Y)Compiling [$@]...$(X)
 	@mkdir -p $(dir $@)
-	@$(CC) $(CC_FLAGS) $(INCLUDE_FLAGS) -o $@ -c $<
+	@$(CC) $(CC_FLAGS) $(READLINE_INC) $(INCLUDE_FLAGS) -o $@ -c $<
 	@printf $(UP)$(CUT)
 	@echo $(G)Finished [$@]$(X)
 	@printf $(UP)$(CUT)

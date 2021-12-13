@@ -6,13 +6,15 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:28:36 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/11 17:38:49 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/13 17:13:11 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "brain.h"
 #include "env_var_utils.h"
+#include <readline/history.h>
+#include <readline/readline.h>
 
 /*
  * STILL USES clear_history INSTEAD OF rl_clear_history
