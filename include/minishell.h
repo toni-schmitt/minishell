@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:29:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/11 14:18:21 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/13 17:59:06 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int		pwd(void);
 int		cd(char **argv);
 int		exit_inbuilt(char *args[]);
 
+void	handle_signals(void);
 void	handle_signal(int sig);
 
 #endif

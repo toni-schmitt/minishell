@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:28:36 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/13 17:13:11 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/13 17:59:48 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,33 @@ static int	handle_flags(int argc, char *argv[])
 	return (exit_code);
 }
 
-static void	handle_signals(void)
+static int	hide_ctrl_echo(void)
 {
-	signal(SIGINT, handle_signal);
-	signal(SIGQUIT, handle_signal);
+	t_exp_tok	*stty_tok;
+
+	stty_tok = malloc(sizeof(*stty_tok));
+	if (stty_tok == NULL)
+		return (EXIT_FAILURE);
+	stty_tok->cmd = ft_calloc(3, sizeof(*stty_tok->cmd));
+	if (stty_tok->cmd == NULL)
+		return (EXIT_FAILURE);
+	stty_tok->cmd[0] = ft_strdup("stty");
+	if (stty_tok->cmd[0] == NULL)
+		return (EXIT_FAILURE);
+	stty_tok->cmd[1] = ft_strdup("-echoctl");
+	if (stty_tok->cmd[1] == NULL)
+		return (EXIT_FAILURE);
+	stty_tok->in = STDIN_FILENO;
+	stty_tok->out = STDOUT_FILENO;
+	if (executor(stty_tok) == EXIT_FAILURE)
+	{
+		ft_free_split(stty_tok->cmd);
+		free(stty_tok);
+		return (EXIT_FAILURE);
+	}
+	ft_free_split(stty_tok->cmd);
+	free(stty_tok);
+	return (EXIT_SUCCESS);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -88,6 +111,8 @@ int	main(int argc, char *argv[], char *envp[])
 		return (EXIT_FAILURE);
 	set_envp(envp);
 	set_envv(envv);
+	if (hide_ctrl_echo() == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	if (argc != 1)
 		return (handle_flags(argc, argv));
 	if (routine() == EXIT_FAILURE)
