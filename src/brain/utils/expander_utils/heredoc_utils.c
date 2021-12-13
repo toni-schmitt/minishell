@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 21:59:04 by toni              #+#    #+#             */
-/*   Updated: 2021/12/11 21:35:41 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/13 13:37:23 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,7 @@ int	wait_for_heredoc(t_par_tok *par_tok, t_exp_tok *exp_tok)
 	int		end[2];
 
 	if (pipe(end) == -1)
-	{
-		perror("Error");
-		return (EXIT_FAILURE);
-	}
+		return (ft_perror(EXIT_FAILURE, "pipe error"));
 	// remove after testing until next //
 	// fprintf(stderr, "read end of the pipe: %d\n", end[0]);
 	// fprintf(stderr, "write end of the pipe: %d\n", end[1]);
@@ -59,8 +56,10 @@ int	wait_for_heredoc(t_par_tok *par_tok, t_exp_tok *exp_tok)
 	heredoc = get_heredoc(par_tok);
 	if (heredoc == NULL)
 	{
-		close(end[0]);
-		close(end[1]);
+		if (close(end[0]) == -1)
+			perror("close error");
+		if (close(end[1]) == -1)
+			perror("close error");
 		return (EXIT_FAILURE);
 	}
 	while (true)
@@ -68,11 +67,8 @@ int	wait_for_heredoc(t_par_tok *par_tok, t_exp_tok *exp_tok)
 		buf = readline("> ");
 		if (buf == NULL)
 		{
-			if (close(end[1]) != 0)
-			{
-				close(end[0]);
-				return (EXIT_FAILURE);
-			}
+			if (close(end[1]) == -1)
+				return (ft_perror(EXIT_FAILURE, "close error"));
 			return (EXIT_SUCCESS);
 		}
 		if (ft_strcmp(buf, heredoc) == 0)
@@ -82,14 +78,12 @@ int	wait_for_heredoc(t_par_tok *par_tok, t_exp_tok *exp_tok)
 		free(buf);
 	}
 	free(buf);
-	if (close(end[1]) != 0)
-	{
-		close(end[0]);
-		return (EXIT_FAILURE);
-	}
+	if (close(end[1]) == -1)
+		return (ft_perror(EXIT_FAILURE, "close error"));
 	if (exp_tok->cmd == NULL && exp_tok->out != STDOUT_FILENO)
 	{
-		close(exp_tok->out);
+		if (close(exp_tok->out) == -1)
+			return (ft_perror(EXIT_FAILURE, "close error"));
 		exp_tok->out = STDOUT_FILENO;
 	}
 	return (EXIT_SUCCESS);
