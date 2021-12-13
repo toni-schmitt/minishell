@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 23:13:27 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/11 17:33:14 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/13 15:48:47 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,15 +84,17 @@ static char	*get_dir_items(void)
 static char	*get_var(char *lex_tok)
 {
 	char	*var;
+	char	*lex_buf;
 	int		i;
 
-	var = ft_calloc(ft_strlen(lex_tok) + 1, sizeof(*var));
+	lex_buf = lex_tok;
+	var = ft_calloc(ft_strlen(lex_buf) + 1, sizeof(*var));
 	if (var == NULL)
 		return (NULL);
-	lex_tok = ft_strchr(lex_tok, '$') + 1;
+	lex_buf = ft_strchr(lex_buf, '$') + 1;
 	i = 0;
-	while (lex_tok && *lex_tok && ft_isalpha(*lex_tok))
-		var[i++] = *lex_tok++;
+	while (lex_buf && *lex_buf && ft_isalpha(*lex_buf))
+		var[i++] = *lex_buf++;
 	free(lex_tok);
 	return (var);
 }
