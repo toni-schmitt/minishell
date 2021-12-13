@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 15:00:19 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/13 16:22:34 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/13 17:31:52 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,6 @@ static bool	is_redir(char *lex_tok)
 
 static bool	is_special(char *lex_tok)
 {
-	if (ft_strlen(lex_tok) == 2)
-	{
-		if (ft_strstr(lex_tok, "&&") || ft_strstr(lex_tok, "||") \
-		|| ft_strstr(lex_tok, "<<") || ft_strstr(lex_tok, ">>"))
-			return (true);
-	}
 	if (ft_strlen(lex_tok) == 1)
 	{
 		if ((ft_strchr(lex_tok, '<') && !ft_strstr(lex_tok, "<<")) \
@@ -46,11 +40,19 @@ static bool	is_special(char *lex_tok)
 		|| (ft_strchr(lex_tok, '|') && !ft_strstr(lex_tok, "||")))
 			return (true);
 	}
+	if (ft_strlen(lex_tok) == 2)
+	{
+		if (ft_strstr(lex_tok, "&&") || ft_strstr(lex_tok, "||") \
+		|| ft_strstr(lex_tok, "<<") || ft_strstr(lex_tok, ">>"))
+			return (true);
+	}
 	return (false);
 }
 
 static bool	is_correct_special(char *lex_tok)
 {
+	if (ft_strchr(lex_tok, '(') && ft_strchr(lex_tok, ')'))
+		return (true);
 	if (ft_strlen(lex_tok) != 2)
 	{
 		if (ft_strstr(lex_tok, "&&") || ft_strstr(lex_tok, "||") \

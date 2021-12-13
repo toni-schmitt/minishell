@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:34:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/11 17:52:27 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/13 17:29:22 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ int	lexer(char *line)
 	{
 		ft_putstr_fd("minishell: Invalid Syntax at unspecified token\n", 2);
 		ft_free_str_array(&tokens);
+		set_err_code(EXIT_SYNTAX_ERROR);
 		return (EXIT_SYNTAX_ERROR);
 	}
 	exit_status = parser(tokens);
