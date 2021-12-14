@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 13:22:09 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/14 17:01:20 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/14 17:22:05 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	exit_inbuilt(char *args[])
 	args++;
 	if (*args)
 		exit_code = ft_atoi(*args);
+	else
+		exit_code = 0;
 	if (!is_valid_exit_arg(args))
 	{
 		ft_fprintf(STDERR_FILENO, "exit: not a valid argument\n");

@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:28:36 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/14 17:01:23 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/14 17:20:24 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,16 @@
  */
 static int	exit_routine(void *to_free, int exit_status)
 {
-	clear_history(); // CHANGE TO rl_clear_history();
+	char	**args;
+
+	if (exit_status == EXIT_CTRL_D)
+	{
+		args = ft_calloc(2, sizeof(*args));
+		args[0] = ft_strdup("exit");
+		exit_inbuilt(args);
+		ft_free_split(args);
+	}
+	rl_clear_history();
 	free(to_free);
 	free_envv(get_envv());
 	return (exit_status);
