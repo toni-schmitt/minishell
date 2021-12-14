@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/14 11:49:09 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/14 15:32:08 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static char	*get_subshell_cmd(char *cmd)
 	return (subshell_cmd);
 }
 
-static int	handle_subshell(t_exp_tok *exp_tok)
+int	handle_subshell(t_exp_tok *exp_tok)
 {
 	pid_t	pid;
 	int		status;
