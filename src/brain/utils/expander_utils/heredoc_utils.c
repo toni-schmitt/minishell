@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 21:59:04 by toni              #+#    #+#             */
-/*   Updated: 2021/12/13 17:14:50 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/14 11:53:18 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,8 @@ int	wait_for_heredoc(t_par_tok *par_tok, t_exp_tok *exp_tok)
 	heredoc = get_heredoc(par_tok);
 	if (heredoc == NULL)
 	{
-		if (close(end[0]) == -1)
-			perror("close error");
-		if (close(end[1]) == -1)
-			perror("close error");
+		close(end[0]);
+		close(end[1]);
 		return (EXIT_FAILURE);
 	}
 	while (true)
@@ -69,8 +67,11 @@ int	wait_for_heredoc(t_par_tok *par_tok, t_exp_tok *exp_tok)
 		buf = readline("> ");
 		if (buf == NULL)
 		{
-			if (close(end[1]) == -1)
-				return (ft_perror(EXIT_FAILURE, "close error"));
+			if (close(end[1]) != 0)
+			{
+				close(end[0]);
+				return (EXIT_FAILURE);
+			}
 			return (EXIT_SUCCESS);
 		}
 		if (ft_strcmp(buf, heredoc) == 0)
@@ -80,12 +81,14 @@ int	wait_for_heredoc(t_par_tok *par_tok, t_exp_tok *exp_tok)
 		free(buf);
 	}
 	free(buf);
-	if (close(end[1]) == -1)
-		return (ft_perror(EXIT_FAILURE, "close error"));
+	if (close(end[1]) != 0)
+	{
+		close(end[0]);
+		return (EXIT_FAILURE);
+	}
 	if (exp_tok->cmd == NULL && exp_tok->out != STDOUT_FILENO)
 	{
-		if (close(exp_tok->out) == -1)
-			return (ft_perror(EXIT_FAILURE, "close error"));
+		close(exp_tok->out);
 		exp_tok->out = STDOUT_FILENO;
 	}
 	return (EXIT_SUCCESS);

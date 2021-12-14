@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/13 15:51:35 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/14 11:48:14 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,7 @@ static int	execute_cmd(t_exp_tok *exp_tok, char *abs_cmd_path)
 {
 	pid_t	pid;
 	int		status;
-	t_env	*envv;
 
-	envv = get_envv();
 	pid = fork();
 	if (pid < 0)
 		return (EXIT_FAILURE);
@@ -90,22 +88,16 @@ static int	execute_cmd(t_exp_tok *exp_tok, char *abs_cmd_path)
 	{
 		// fprintf(stderr, "changed stdin to %d\n", exp_tok->in);// remove after testing
 		if (dup2(exp_tok->in, STDIN_FILENO) == -1)
-			return (EXIT_FAILURE);
+			return (ft_perror(EXIT_FAILURE, "dup2 error"));
 		// fprintf(stderr, "changed stdout to %d\n", exp_tok->out);//remove after testing
 		if (dup2(exp_tok->out, STDOUT_FILENO) == -1)
-			return (EXIT_FAILURE);
+			return (ft_perror(EXIT_FAILURE, "dup2 error"));
 		status = execve(abs_cmd_path, exp_tok->cmd, get_envv()->env_var);
 		perror(NULL);
-		if (exp_tok->in != STDIN_FILENO) // this might cause a double close - > error
-		{
-			if (close(exp_tok->in) == -1)
-				status = ft_perror(EXIT_FAILURE, "close error");
-		}
-		if (exp_tok->out != STDOUT_FILENO && exp_tok->out != envv->subshell_out)
-		{
-			if (close(exp_tok->out) == -1)
-				status = ft_perror(EXIT_FAILURE, "close error");
-		}
+		if (exp_tok->in != STDIN_FILENO)
+			close(exp_tok->in);
+		if (exp_tok->out != STDOUT_FILENO)
+			close(exp_tok->out);
 		return (status);
 	}
 	waitpid(pid, &status, 0);
@@ -150,25 +142,19 @@ static int	execute_inbuilt(char *cmd[])
 		return (exit_inbuilt(cmd));
 	return (EXIT_FAILURE);
 }
-
 /**
- * @brief  those dup / dup2 mix is due to it working in any other way
+ * @brief  This is stolen from somewhere, idk from where
  * @note   i have no clue how or why this is working
- * @param  *exp_tok: the expander-token containing all the necessary info
+ * @param  *exp_tok:
  * @retval the exit status of the inbuilt function
  */
 static int	handle_inbuilt_redir(t_exp_tok *exp_tok)
 {
-	int		exit_status;
-	int		s;
-	t_env	*envv;
+	int	exit_status;
+	int	s;
 
-	envv = get_envv();
-	if (exp_tok->in != STDIN_FILENO)
-	{
-		if (dup2(exp_tok->in, STDIN_FILENO) == -1)
-			return (ft_perror(EXIT_FAILURE, "dup2 error"));
-	}
+	if (exp_tok->in != STDIN_FILENO && dup2(exp_tok->in, STDIN_FILENO) == -1)
+		return (ft_perror(EXIT_FAILURE, "dup2 error"));
 	if (exp_tok->out != STDOUT_FILENO)
 	{
 		s = dup(STDOUT_FILENO);
@@ -180,17 +166,13 @@ static int	handle_inbuilt_redir(t_exp_tok *exp_tok)
 	exit_status = execute_inbuilt(exp_tok->cmd);
 	if (exp_tok->in != STDIN_FILENO)
 	{
-		if (dup2(0, exp_tok->in) == -1)
-			exit_status = ft_perror(EXIT_FAILURE, "dup2 error");
-		if (close(exp_tok->in) == -1)
-			exit_status = ft_perror(EXIT_FAILURE, "close error");
+		close(exp_tok->in);
+		dup2(0, exp_tok->in);
 	}
-	if (exp_tok->out != STDOUT_FILENO && exp_tok->out != envv->subshell_out)
+	if (exp_tok->out != STDOUT_FILENO)
 	{
-		if (dup2(s, envv->subshell_out) == -1)
-			exit_status = ft_perror(EXIT_FAILURE, "dup2 error");
-		if (close(s) == -1)
-			exit_status = ft_perror(EXIT_FAILURE, "close error");
+		dup2(s, STDOUT_FILENO);
+		close(s);
 	}
 	return (exit_status);
 }

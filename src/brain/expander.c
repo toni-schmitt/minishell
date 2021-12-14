@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/13 17:02:31 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/14 11:49:09 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,63 +102,41 @@ static char	*get_subshell_cmd(char *cmd)
 	return (subshell_cmd);
 }
 
-int	handle_subshell(t_exp_tok *exp_tok)
+static int	handle_subshell(t_exp_tok *exp_tok)
 {
 	pid_t	pid;
 	int		status;
 	char	*cutted_cmd;
-	t_env	*envv;
 
-	fprintf(stderr, "subshell entered\n"); // remove after debugging
-	fprintf(stderr, "subshell command is %s with in: %d and out %d\n", exp_tok->cmd[0], exp_tok->in, exp_tok->out);
-	envv = get_envv();
-	//handle_pipes_subshell to set input of first command right and output of the subshell right
-	envv->subshell_in = exp_tok->in;
-	envv->subshell_out = exp_tok->out;
 	pid = fork();
 	if (pid < 0)
 		return (EXIT_FAILURE);
 	if (pid == 0)
 	{
-	fprintf(stderr, "here is in: %d and out: %d of the subshell\n", envv->subshell_in, envv->subshell_out);
-		if (envv->subshell_in != STDIN_FILENO)
-		{
-			if (dup2(envv->subshell_in, STDIN_FILENO) != 0)
-				return (EXIT_FAILURE);
-		}
-		if (envv->subshell_out != STDOUT_FILENO)
-		{
-			if (dup2(envv->subshell_out, STDOUT_FILENO) != 0)
-				return (EXIT_FAILURE);
-		}
+		// add here input dup and dup output aswell
 		cutted_cmd = get_subshell_cmd(exp_tok->cmd[0]);
 		if (cutted_cmd == NULL)
 			return (EXIT_FAILURE);
 		status = lexer(cutted_cmd);
-		if (envv->subshell_out != STDOUT_FILENO)
-		{
-			if (close(envv->subshell_out) == -1)
-				return (ft_perror(EXIT_FAILURE, "close error"));
-		}
 		free(cutted_cmd);
-		exit(get_err_code()); // why this and return below?
-		return (get_err_code());
+		exit(get_err_code());
+		// return (get_err_code());
 	}
 	waitpid(pid, &status, 0);
-	envv->subshell_in = 0;
-	envv->subshell_out = 1;
+	// close input after first command if it was piped
+	// if output was a pipe this should be closed here too
 	set_err_code(WEXITSTATUS(status));
 	return (WEXITSTATUS(status));
 }
 
-// static bool	is_redir(t_par_tok *par_tok)
-// {
-// 	if (par_tok->redir_type[is_in] || par_tok->redir_type[is_in_heredoc] \
-// 	|| par_tok->redir_type[is_out] || par_tok->redir_type[is_out_append] \
-// 	|| par_tok->redir_type[is_pipe])
-// 		return (true);
-// 	return (false);
-// }
+static bool	is_redir(t_par_tok *par_tok)
+{
+	if (par_tok->redir_type[is_in] || par_tok->redir_type[is_in_heredoc] \
+	|| par_tok->redir_type[is_out] || par_tok->redir_type[is_out_append] \
+	|| par_tok->redir_type[is_pipe])
+		return (true);
+	return (false);
+}
 
 char	*interprete_env_var(char *lex_tok);
 
@@ -200,10 +178,15 @@ static int	handle_tokens(t_exp_tok *exp_toks[], t_par_tok *par_toks[])
 				set_err_code(EXIT_FAILURE);
 				return (EXIT_SUCCESS);
 			}
-			if (repinterprete_env_vars(&par_toks[i + 1], &exp_toks[i + 1]) == 1)
+			if (repinterprete_env_vars(&par_toks[i + 1], &exp_toks[i + 1]) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
 		}
-		set_err_code(handle_redir(par_toks[i], exp_toks[i], pipe_type));
+		else if (par_toks[i]->type == subshell)
+			set_err_code(handle_subshell(exp_toks[i]));
+		else if (is_redir(par_toks[i]))
+			set_err_code(handle_redir(par_toks[i], exp_toks[i], pipe_type));
+		else if (exp_toks[i]->cmd != NULL)
+			set_err_code(executor(exp_toks[i]));
 		i++;
 	}
 	return (EXIT_SUCCESS);
