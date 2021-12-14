@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 16:23:29 by toni              #+#    #+#             */
-/*   Updated: 2021/12/14 16:26:41 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/14 17:12:20 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	get_tokens(t_par_tok *par_toks[])
 				return (free_exp_toks(exp_toks, EXIT_FAILURE));
 		}
 		if (par_toks[i]->redir_type[is_in_heredoc])
-			if (wait_for_heredoc(par_toks[i], exp_toks[i]) == EXIT_FAILURE)
+			if (wait_for_heredoc(par_toks[i], exp_toks[i], NULL, NULL) == 1)
 				return (free_exp_toks(exp_toks, EXIT_FAILURE));
 		i++;
 	}

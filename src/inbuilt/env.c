@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 13:48:30 by tblaase           #+#    #+#             */
-/*   Updated: 2021/12/14 16:51:19 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/14 17:13:39 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	env(char **argv)
 			ft_fprintf(STDERR_FILENO, "env: %s: Premission denied\n", argv[1]);
 			return (126);
 		}
-		ft_fprintf(STDERR_FILENO, "env: %s: No such file or directory\n", argv[1]);
+		ft_fprintf(2, "env: %s: No such file or directory\n", argv[1]);
 		return (127);
 	}
 	i = 0;

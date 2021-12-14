@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 21:59:04 by toni              #+#    #+#             */
-/*   Updated: 2021/12/14 16:33:52 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/14 17:12:37 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,25 @@ static int	exit_close_fds(int fd1, int fd2, int exit_status)
 	return (exit_status);
 }
 
+static void	wait_for_heredoc_help(t_exp_tok *exp_tok)
+{
+	if (exp_tok->cmd == NULL && exp_tok->out != STDOUT_FILENO)
+	{
+		close(exp_tok->out);
+		exp_tok->out = STDOUT_FILENO;
+	}
+}
+
 /**
  * @brief  Waits in readline-prompt as long as heredoc is not typed
  * @note
  * @param  *par_tok:
  * @retval int to indicate success or failure
  */
-int	wait_for_heredoc(t_par_tok *par_tok, t_exp_tok *exp_tok)
+int	wait_for_heredoc(
+	t_par_tok *par_tok, t_exp_tok *exp_tok, char *buf, char *heredoc
+	)
 {
-	char	*buf;
-	char	*heredoc;
 	int		end[2];
 
 	if (pipe(end) == -1)
@@ -70,17 +79,11 @@ int	wait_for_heredoc(t_par_tok *par_tok, t_exp_tok *exp_tok)
 			return (exit_close_fds(end[1], -1, EXIT_SUCCESS));
 		if (ft_strcmp(buf, heredoc) == 0)
 			break ;
-		write(end[1], buf, ft_strlen(buf));
-		write(end[1], "\n", 1);
+		ft_fprintf(end[1], "%s\n", buf);
 		free(buf);
 	}
 	free(buf);
-	if (close(end[1]) != 0)
-		return (exit_close_fds(end[0], -1, EXIT_FAILURE));
-	if (exp_tok->cmd == NULL && exp_tok->out != STDOUT_FILENO)
-	{
-		close(exp_tok->out);
-		exp_tok->out = STDOUT_FILENO;
-	}
+	close(end[1]);
+	wait_for_heredoc_help(exp_tok);
 	return (EXIT_SUCCESS);
 }

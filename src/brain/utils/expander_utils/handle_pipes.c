@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 10:44:24 by tblaase           #+#    #+#             */
-/*   Updated: 2021/12/14 17:04:51 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/14 17:13:02 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 #include "brain.h"
 #include "expander_utils.h"
 
-static int	not_a_pipe(int	last_pipe_out)
+static int	not_a_pipe(int last_pipe_out)
 {
 	if (last_pipe_out != 0 && last_pipe_out != 1)
 	{
 		close(last_pipe_out);
-		ft_putstr_fd("Error opening pipe\n", 2);
+		ft_putstr_fd(STDERR_FILENO, "Error opening pipe\n");
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
@@ -29,7 +29,7 @@ static int	pipe_type_zero(int	*last_pipe_out, t_exp_tok *exp_tok)
 {
 	if (*last_pipe_out == 0)
 	{
-		ft_putstr_fd("Error opening pipe\n", 2);
+		ft_putstr_fd(STDERR_FILENO, "Error opening pipe\n");
 		return (EXIT_FAILURE);
 	}
 	if (exp_tok->in == 0)
@@ -60,7 +60,7 @@ static int	pipe_type_two(int	*last_pipe_out, t_exp_tok *exp_tok)
 
 	if (*last_pipe_out == 0)
 	{
-		ft_putstr_fd("Error opening pipe\n", 2);
+		ft_putstr_fd(STDERR_FILENO, "Error opening pipe\n");
 		return (EXIT_FAILURE);
 	}
 	if (exp_tok->in == 0)

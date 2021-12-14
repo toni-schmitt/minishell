@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/23 14:00:54 by tblaase           #+#    #+#             */
-/*   Updated: 2021/12/14 16:52:48 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/14 17:13:31 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	export_error_loop(char **var, char **argv)
 	{
 		if (ft_isalnum((*var)[j]) == 0 && (*var)[j] != '_')
 		{
-			ft_fprintf(STDERR_FILENO, "export: %s: not a valid identifier\n", argv[1]);
+			ft_fprintf(2, "export: %s: not a valid identifier\n", argv[1]);
 			ft_free_str(var);
 			return (EXIT_FAILURE);
 		}
