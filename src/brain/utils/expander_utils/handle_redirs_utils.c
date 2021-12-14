@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirs_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 12:51:20 by tblaase           #+#    #+#             */
-/*   Updated: 2021/12/14 11:52:07 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/14 16:09:53 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,10 @@ static int	open_in(t_par_tok *par_tok, t_exp_tok *exp_tok)
 	int		fd;
 	int		heredeoc_fd;
 
-	// save the fd of the heredoc if there was one, if (exp_tok->in != 0)
 	i = 0;
 	fd = 0;
 	if (exp_tok->in != STDIN_FILENO)
 		heredeoc_fd = exp_tok->in;
-	// fprintf(stderr, "after handle redir commad %s has in:%d and out:%d\n", exp_tok->cmd[0], exp_tok->in, exp_tok->out);
 	while (par_tok->redir_type[is_in] || par_tok->redir_type[is_in_heredoc])
 	{
 		i++;
@@ -34,7 +32,7 @@ static int	open_in(t_par_tok *par_tok, t_exp_tok *exp_tok)
 		else if (par_tok->redir_type[is_in_heredoc])
 			fd = heredeoc_fd;
 		if (fd == -1)
-		return (ft_perror(EXIT_FAILURE, "open error"));
+			return (ft_perror(EXIT_FAILURE, "open error"));
 		if (par_tok->in[i + 1] == NULL)
 			break ;
 		if (fd != heredeoc_fd && fd != 0 && fd != 1)
@@ -42,7 +40,6 @@ static int	open_in(t_par_tok *par_tok, t_exp_tok *exp_tok)
 		i++;
 	}
 	exp_tok->in = fd;
-	// fprintf(stderr, "the new fd for input is now %d\n", exp_tok->in);//remove after testing
 	return (EXIT_SUCCESS);
 }
 
@@ -62,7 +59,7 @@ static int	open_out(t_par_tok *par_tok, t_exp_tok *exp_tok)
 			&& ft_strcmp(par_tok->out[i++], ">>") == 0)
 			fd = open(par_tok->out[i], O_RDWR | O_CREAT | O_APPEND, 0644);
 		if (fd == -1)
-		return (ft_perror(EXIT_FAILURE, "open error"));
+			return (ft_perror(EXIT_FAILURE, "open error"));
 		if (par_tok->out[i + 1] == NULL)
 			break ;
 		if (fd != 0 && fd != 1)
