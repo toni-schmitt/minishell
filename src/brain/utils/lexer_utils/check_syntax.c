@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 15:00:19 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/13 17:31:52 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/14 15:37:20 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ bool	is_valid_syntax(char *lex_toks[])
 			if (!is_correc_pipe(lex_toks[i], lex_toks[i + 1]))
 				return (false);
 			if (ft_strchr(lex_toks[i], '(') && ft_strchr(lex_toks[i], ')'))
-				if (!is_special(lex_toks[i - 1]))
+				if (i != 0 && !is_special(lex_toks[i - 1]))
 					return (false);
 		}
 		i++;

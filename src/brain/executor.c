@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/14 11:48:14 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/14 15:50:31 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,32 +41,38 @@ static int	init(char **path_splitted[])
 	return (EXIT_SUCCESS);
 }
 
-static bool	is_valid_cmd(char *cmd, char **abs_cmd_path)
+/**
+ * @brief  Returns absolute command path of cmd or NULL if not found or error
+ * @note   
+ * @param  *cmd: 
+ * @retval 
+ */
+static char	*get_abs_cmd(char *cmd)
 {
 	char	**path_splitted;
 	char	*absolute_cmd_path;
 	int		i;
 
+	if (access(cmd, F_OK) == 0)
+		return (ft_strdup(cmd));
 	if (init(&path_splitted) == EXIT_FAILURE)
-		return (false);
+		return (NULL);
 	i = 0;
 	while (path_splitted[i])
 	{
 		absolute_cmd_path = get_abs_cmd_path(path_splitted[i], cmd);
 		if (absolute_cmd_path == NULL)
-			return (false);
+			return (NULL);
 		if (access(absolute_cmd_path, F_OK) == 0)
 		{
 			ft_free_split(path_splitted);
-			*abs_cmd_path = absolute_cmd_path;
-			return (true);
+			return (absolute_cmd_path);
 		}
-		free(absolute_cmd_path);
+		ft_free((void *)&absolute_cmd_path);
 		i++;
 	}
-	ft_free_str_array(&path_splitted);
-	*abs_cmd_path = NULL;
-	return (false);
+	ft_free_split(path_splitted);
+	return (NULL);
 }
 
 /**
@@ -232,8 +238,8 @@ int	executor(t_exp_tok *exp_tok)
 		return (EXIT_FAILURE);
 	if (is_inbuilt(exp_tok->cmd[0]))
 		return (handle_inbuilt_redir(exp_tok));
-	abs_cmd_path = NULL;
-	if (!is_valid_cmd(exp_tok->cmd[0], &abs_cmd_path))
+	abs_cmd_path = get_abs_cmd(exp_tok->cmd[0]);
+	if (abs_cmd_path == NULL)
 	{
 		ft_putstr_fd(exp_tok->cmd[0], STDERR_FILENO);
 		ft_putstr_fd(": command not found\n", STDERR_FILENO);
