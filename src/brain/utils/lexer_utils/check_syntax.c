@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 15:00:19 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/14 15:37:20 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/14 16:01:43 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@ bool	is_valid_syntax(char *lex_toks[])
 		if (!is_quote_token(lex_toks[i]))
 		{
 			if (i == 0 || get_lex_toks()[i + 1] == NULL)
-				if (ft_strlen(lex_toks[i]) == 2 \
-				&& (ft_strstr(lex_toks[i], "&&") || ft_strstr(lex_toks[i], "||")))
+				if (ft_strlen(lex_toks[i]) == 2 && (ft_strstr(lex_toks[i], "&&")
+						|| ft_strstr(lex_toks[i], "||")))
 					return (false);
 			if (get_lex_toks()[i + 1] == NULL)
 				if (is_redir(lex_toks[i]))
