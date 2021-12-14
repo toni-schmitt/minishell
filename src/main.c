@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:28:36 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/14 16:50:53 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/14 17:01:23 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,8 @@ static int	routine(void)
 		buf = readline("minishell$ ");
 		if (ft_strlen(buf) > 0)
 			add_history(buf);
-		if (buf == NULL || ft_strcmp(buf, "exit") == 0)
-		{
-			printf("exit\n");
+		if (buf == NULL)
 			return (exit_routine((void *)buf, EXIT_CTRL_D));
-		}
 		exit_code = lexer(buf);
 		if (exit_code == EXIT_FAILURE)
 			return (exit_routine((void *)buf, EXIT_FAILURE));
