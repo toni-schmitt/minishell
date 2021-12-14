@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 13:48:30 by tblaase           #+#    #+#             */
-/*   Updated: 2021/12/11 17:38:26 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/14 16:51:19 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,10 @@ int	env(char **argv)
 	{
 		if (access(argv[1], F_OK) == 0)
 		{
-			ft_putstr_fd("env: ", STDERR_FILENO);
-			ft_putstr_fd(argv[1], STDERR_FILENO);
-			ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
+			ft_fprintf(STDERR_FILENO, "env: %s: Premission denied\n", argv[1]);
 			return (126);
 		}
-		ft_putstr_fd("env: ", STDERR_FILENO);
-		ft_putstr_fd(argv[1], STDERR_FILENO);
-		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+		ft_fprintf(STDERR_FILENO, "env: %s: No such file or directory\n", argv[1]);
 		return (127);
 	}
 	i = 0;

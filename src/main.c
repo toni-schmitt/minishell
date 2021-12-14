@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:28:36 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/13 17:59:48 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/14 17:01:23 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,8 @@ static int	routine(void)
 		buf = readline("minishell$ ");
 		if (ft_strlen(buf) > 0)
 			add_history(buf);
-		if (buf == NULL || ft_strcmp(buf, "exit") == 0)
-		{
-			printf("exit\n");
+		if (buf == NULL)
 			return (exit_routine((void *)buf, EXIT_CTRL_D));
-		}
 		exit_code = lexer(buf);
 		if (exit_code == EXIT_FAILURE)
 			return (exit_routine((void *)buf, EXIT_FAILURE));
@@ -63,8 +60,8 @@ static int	handle_flags(int argc, char *argv[])
 
 	if (argc != 3 || ft_strcmp(argv[1], "-c") != 0)
 	{
-		ft_putstr_fd("Usage: ./minishell [Flag] \"[Command]\"\n", STDERR_FILENO);
-		ft_putstr_fd("\t-c\tExecute Command without promot\n", STDERR_FILENO);
+		ft_fprintf(STDERR_FILENO, "Usage: ./minishell [Flag] \"[Command]\"\n");
+		ft_fprintf(STDERR_FILENO, "\t-c\tExecute Command without promot\n");
 		return (EXIT_FAILURE);
 	}
 	exit_code = lexer(argv[2]);

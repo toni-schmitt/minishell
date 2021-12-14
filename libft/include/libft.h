@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 17:23:59 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/13 13:05:11 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/14 16:50:15 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,25 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 /* INPUT / OUTPUT */
-void	ft_putchar_fd(char c, int fd);
-void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
-void	ft_putnbr_fd(int nbr, int fd);
 int		ft_printf(const char *format, ...);
+int		ft_fprintf(int fd, const char *format, ...);
 int		ft_putlnbr(long nbr);
+int		ft_putlnbr_fd(int fd, long nbr);
 int		ft_putnbr(int nbr);
+int		ft_putnbr_fd(int fd, int nbr);
 int		ft_putstr(const char *str);
+int		ft_putstr_fd(int fd, char *s);
 int		ft_putchar(char c);
+int		ft_putchar_fd(char c, int fd);
 int		ft_putptr(void *ptr);
+int		ft_putptr_fd(int fd, void *ptr);
 int		ft_putunbr(unsigned int nbr);
+int		ft_putunbr_fd(int fd, unsigned int nbr);
 int		ft_putlhex(unsigned long long nbr);
+int		ft_putlhex_fd(int fd, unsigned long long nbr);
 int		ft_putuhex(unsigned long long nbr);
+int		ft_putuhex_fd(int fd, unsigned long long nbr);
 int		ft_puterror(char *message);
 int		putstderr(char *error_message);
 

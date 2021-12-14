@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 13:22:09 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/11 17:51:27 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/14 17:01:20 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static bool	is_valid_exit_arg(char *args[])
 	int	j;
 
 	i = 0;
-	while (args[i])
+	while (args && args[i])
 	{
 		j = 0;
 		while (args[i][j])
@@ -39,15 +39,16 @@ int	exit_inbuilt(char *args[])
 	if (ft_strncmp(*args, "exit", ft_strlen(*args)) != 0)
 		return (EXIT_FAILURE);
 	args++;
-	exit_code = ft_atoi(*args);
+	if (*args)
+		exit_code = ft_atoi(*args);
 	if (!is_valid_exit_arg(args))
 	{
-		ft_putstr_fd("exit: not a valid argument\n", STDERR_FILENO);
+		ft_fprintf(STDERR_FILENO, "exit: not a valid argument\n");
 		exit_code = 255;
 	}
 	if (*(++args))
 	{
-		ft_putstr_fd("exit: too many arguments\n", STDERR_FILENO);
+		ft_fprintf(STDERR_FILENO, "exit: too many arguments\n");
 		printf("exit\n");
 		return (EXIT_FAILURE);
 	}
