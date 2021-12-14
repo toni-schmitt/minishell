@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
+/*   ft_putptr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/07/08 20:16:50 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/14 16:39:00 by toni             ###   ########.fr       */
+/*   Created: 2021/07/22 16:03:18 by tschmitt          #+#    #+#             */
+/*   Updated: 2021/12/14 16:44:03 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "libft.h"
 
-int	ft_putchar_fd(char c, int fd)
+int	ft_putptr_fd(int fd, void *ptr)
 {
-	return (write(fd, &c, 1));
+	return (ft_putstr_fd(fd, "0x") + \
+	ft_putlhex_fd(fd, (unsigned long long)ptr));
 }

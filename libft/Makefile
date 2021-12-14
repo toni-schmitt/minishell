@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+         #
+#    By: toni <toni@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/02 15:48:40 by tblaase           #+#    #+#              #
-#    Updated: 2021/12/13 13:05:28 by tblaase          ###   ########.fr        #
+#    Updated: 2021/12/14 16:48:00 by toni             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,8 @@ ARFLAGS = -crs
 
 # Locations
 SRC_IO = \
+	ft_fprintf.c ft_putlhex_fd.c ft_putlnbr_fd.c ft_putptr_fd.c \
+	ft_putuhex_fd.c ft_putunbr_fd.c \
 	ft_printf.c ft_putchar_fd.c ft_putchar.c ft_putendl_fd.c ft_putlhex.c ft_putlnbr.c \
 	ft_putnbr.c ft_putptr.c ft_putstr_fd.c ft_putstr.c ft_putuhex.c ft_putunbr.c \
 	ft_puterror.c ft_putstderr.c ft_putnbr_fd.c
