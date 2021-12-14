@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/14 16:22:30 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/14 16:53:34 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,7 @@ int	executor(t_exp_tok *exp_tok)
 	abs_cmd_path = get_abs_cmd(exp_tok->cmd[0]);
 	if (abs_cmd_path == NULL)
 	{
-		ft_putstr_fd(exp_tok->cmd[0], STDERR_FILENO);
-		ft_putstr_fd(": command not found\n", STDERR_FILENO);
+		ft_fprintf(STDERR_FILENO, "%s: command not found\n", exp_tok->cmd[0]);
 		return (EXIT_CMD_NOT_FOUND);
 	}
 	exit_status = execute_cmd(exp_tok, abs_cmd_path);

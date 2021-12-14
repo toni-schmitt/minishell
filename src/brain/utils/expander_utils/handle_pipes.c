@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/10 10:44:24 by tblaase           #+#    #+#             */
-/*   Updated: 2021/12/14 16:22:12 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/14 16:54:10 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	handle_pipes(t_exp_tok *exp_tok, int pipe_type)
 		if (last_pipe_out != 0 && last_pipe_out != 1)
 		{
 			close(last_pipe_out);
-			ft_putstr_fd("Error opening pipe\n", 2);
+			ft_fprintf(STDERR_FILENO, "Error opening pipe\n");
 			return (EXIT_FAILURE);
 		}
 		return (EXIT_SUCCESS);
@@ -33,7 +33,7 @@ int	handle_pipes(t_exp_tok *exp_tok, int pipe_type)
 	{
 		if (last_pipe_out == 0)
 		{
-			ft_putstr_fd("Error opening pipe\n", 2);
+			ft_fprintf(STDERR_FILENO, "Error opening pipe\n");
 			return (EXIT_FAILURE);
 		}
 		if (exp_tok->in == 0)
@@ -56,7 +56,7 @@ int	handle_pipes(t_exp_tok *exp_tok, int pipe_type)
 	{
 		if (last_pipe_out == 0)
 		{
-			ft_putstr_fd("Error opening pipe\n", 2);
+			ft_fprintf(STDERR_FILENO, "Error opening pipe\n");
 			return (EXIT_FAILURE);
 		}
 		if (exp_tok->in == 0)
