@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 14:16:12 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/15 18:24:46 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/15 18:45:09 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	handle_cmd_signal(int sig)
 {
 	if (sig == SIGINT)
 	{
+		set_err_code(130);
 		printf("\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
