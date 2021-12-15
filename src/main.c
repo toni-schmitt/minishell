@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:28:36 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/14 17:20:24 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/15 17:58:10 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ static int	exit_routine(void *to_free, int exit_status)
 
 	if (exit_status == EXIT_CTRL_D)
 	{
-		args = ft_calloc(2, sizeof(*args));
+		args = ft_calloc(3, sizeof(*args));
 		args[0] = ft_strdup("exit");
+		args[1] = ft_strdup("0");
 		exit_inbuilt(args);
 		ft_free_split(args);
 	}
