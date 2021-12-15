@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 20:11:39 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/11 13:17:41 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/15 23:19:53 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # define EXIT_BREAK 3
 # include <stdbool.h>
+# include "brain.h"
 
 typedef struct s_func_args
 {
@@ -45,6 +46,7 @@ bool		is_special_token(char *lex_tok);
 int			init_curr_par_tok(void);
 int			free_parser(t_par_tok *par_tok[], t_iter *iter, int exit_status);
 size_t		get_tokens_size(char *lex_toks[]);
+char		*get_dir_items(void);
 
 // REDIR UTILS
 
