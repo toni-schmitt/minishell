@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:28:36 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/15 17:58:10 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/15 18:23:46 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,6 @@ static int	routine(void)
 		exit_code = lexer(buf);
 		if (exit_code == EXIT_FAILURE)
 			return (exit_routine((void *)buf, EXIT_FAILURE));
-		if (exit_code == EXIT_CTRL_D)
-		{
-			printf("exit\n");
-			return (exit_routine((void *)buf, EXIT_CTRL_D));
-		}
 		free(buf);
 	}
 	return (exit_routine((void *)buf, EXIT_FAILURE));
@@ -112,7 +107,7 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_env	*envv;
 
-	handle_signals();
+	handle_global_signals();
 	envv = init_envv(envp);
 	if (envv == NULL)
 		return (EXIT_FAILURE);

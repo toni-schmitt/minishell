@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 14:16:12 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/13 17:59:02 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/15 18:24:46 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,37 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-void	handle_signals(void)
-{
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, SIG_IGN);
-	signal(SIGINT, handle_signal);
-}
-
-void	handle_signal(int sig)
+static void	handle_cmd_signal(int sig)
 {
 	if (sig == SIGINT)
 	{
-		write(1, "\n", 1);
-		rl_replace_line("", 0);
+		printf("\n");
 		rl_on_new_line();
+		rl_replace_line("", 0);
+	}
+}
+
+static void	handle_global_signal(int sig)
+{
+	if (sig == SIGINT)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
+}
+
+void	handle_cmd_signals(void)
+{
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, handle_cmd_signal);
+}
+
+void	handle_global_signals(void)
+{
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGINT, handle_global_signal);
 }

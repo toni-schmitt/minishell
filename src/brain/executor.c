@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/14 16:53:34 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/15 18:24:00 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ static int	execute_cmd(t_exp_tok *exp_tok, char *abs_cmd_path)
 	pid_t	pid;
 	int		status;
 
+	handle_cmd_signals();
 	pid = fork();
 	if (pid < 0)
 		return (EXIT_FAILURE);
@@ -106,6 +107,7 @@ static int	execute_cmd(t_exp_tok *exp_tok, char *abs_cmd_path)
 		return (status);
 	}
 	waitpid(pid, &status, 0);
+	handle_global_signals();
 	return (WEXITSTATUS(status));
 }
 
