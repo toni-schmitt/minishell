@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 15:00:19 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/16 00:00:42 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/16 00:02:49 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ static bool	is_redir(char *lex_tok)
 
 static bool	is_special(char *lex_tok)
 {
-	if (lex_tok == NULL)
-		return (true);
 	if (ft_strlen(lex_tok) == 1)
 	{
 		if ((ft_strchr(lex_tok, '<') && !ft_strstr(lex_tok, "<<")) \
@@ -115,7 +113,7 @@ bool	is_valid_syntax(char *lex_toks[])
 			if (!is_correc_pipe(lex_toks[i], lex_toks[i + 1]))
 				return (false);
 			if (ft_strchr(lex_toks[i], '(') && ft_strchr(lex_toks[i], ')'))
-				if (i != 0 && (is_special(lex_toks[i - 1]) || is_special(lex_toks[i + 1])))
+				if (i != 0 && is_special(lex_toks[i - 1]))
 					return (false);
 		}
 		i++;
