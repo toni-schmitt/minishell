@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 13:22:09 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/16 19:42:13 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/16 20:04:55 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	exit_inbuilt(char *args[])
 		ft_fprintf(STDERR_FILENO, "exit: not a valid argument\n");
 		exit_code = 255;
 	}
-	if (args[i] && args[++i])
+	else if (args[i] && args[++i])
 	{
 		ft_fprintf(STDERR_FILENO, "exit: too many arguments\n");
 		printf("exit\n");
