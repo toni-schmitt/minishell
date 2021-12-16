@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+         #
+#    By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/19 18:30:46 by tschmitt          #+#    #+#              #
-#    Updated: 2021/12/15 23:18:28 by tschmitt         ###   ########.fr        #
+#    Updated: 2021/12/16 22:14:36 by tblaase          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ SRC = $(SRC_PATH)main.c \
 		$(BRAIN_GETTER_SETTER_PATH)envp_get_set.c $(BRAIN_GETTER_SETTER_PATH)iter_get_set.c $(BRAIN_GETTER_SETTER_PATH)lexer_get_set.c $(BRAIN_GETTER_SETTER_PATH)par_tok_get_set.c $(BRAIN_GETTER_SETTER_PATH)expander_get_set.c \
 		$(PARSER_UTILS_PATH)get_tokens_utils.c $(PARSER_UTILS_PATH)get_tokens.c $(PARSER_UTILS_PATH)interprete_env_var.c $(PARSER_UTILS_PATH)parser_utils.c $(PARSER_UTILS_PATH)tok_redir_utils.c $(PARSER_UTILS_PATH)get_dir_items.c \
 		$(EXPANDER_UTILS_PATH)heredoc_utils.c $(EXPANDER_UTILS_PATH)handle_redirs_utils.c $(EXPANDER_UTILS_PATH)handle_pipes.c $(EXPANDER_UTILS_PATH)set_pipe_type.c $(EXPANDER_UTILS_PATH)expander_utils.c \
-		$(SRC_PATH)brain/utils/executor_utils/executor_utils.c
+		$(SRC_PATH)brain/utils/executor_utils/executor_utils.c $(SRC_PATH)brain/utils/executor_utils/executor_utils_two.c
 OBJ = $(patsubst $(SRC_PATH)%.c, $(OBJ_PATH)%.o, $(SRC))
 LIBFT_SRC = $(LIBFT_PATH)src/*/*.c
 
