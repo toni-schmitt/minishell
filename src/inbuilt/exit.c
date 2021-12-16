@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 13:22:09 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/16 20:04:55 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/16 21:56:21 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	exit_inbuilt(char *args[])
 	if (args[i])
 		exit_code = ft_atoi(args[i]);
 	else
-		exit_code = 0;
+		exit_code = get_err_code();
 	if (!is_valid_exit_arg(args + i))
 	{
 		ft_fprintf(STDERR_FILENO, "exit: not a valid argument\n");

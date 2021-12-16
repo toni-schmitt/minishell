@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:28:36 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/15 18:23:46 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/16 22:03:21 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	exit_routine(void *to_free, int exit_status)
 	{
 		args = ft_calloc(3, sizeof(*args));
 		args[0] = ft_strdup("exit");
-		args[1] = ft_strdup("0");
+		args[1] = ft_itoa(get_err_code());
 		exit_inbuilt(args);
 		ft_free_split(args);
 	}
