@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 23:13:27 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/16 16:44:38 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/16 17:52:47 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,17 @@ static char	*get_env_variable(char *lex_tok, char *var)
 	// fprintf(stderr, "var-v:%s\n", var_value);
 	// exit(1); // only for running with valgrind
 	if (var_value == NULL)
+	{
+		ft_fprintf(2, "allocation failed\n");
 		return (NULL);
+	}
 	// fprintf(stderr, "l:%s\nv:%s\n", lex_tok, var);
 	env_var = ft_calloc(ft_strlen(lex_tok) + ft_strlen(var_value) + 1, sizeof(*env_var));
 	if (env_var == NULL)
+	{
+		ft_fprintf(2, "allocation failed\n");
 		return (NULL);
+	}
 	i = 0;
 	j = 0;
 	// fprintf(stderr, "l:%s\nv:%s\n", lex_tok, var);
@@ -50,7 +56,10 @@ static char	*get_env_variable(char *lex_tok, char *var)
 	env_var = ft_append(&env_var, var_value);
 	fprintf(stderr, "2: %s\n", env_var);
 	if (env_var == NULL)
+	{
+		ft_fprintf(2, "$%s not found or has no value\n", var); //this will show the error message when $VAR has no value or was not found, but should not terminate minishell
 		return (NULL);
+	}
 	while ((lex_tok[i] == '$') || (lex_tok[i] && ft_isalpha(lex_tok[i])))
 		i++;
 	env_var = ft_append(&env_var, lex_tok + i);
