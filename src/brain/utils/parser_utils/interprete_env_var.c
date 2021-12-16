@@ -6,7 +6,7 @@
 /*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 23:13:27 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/16 19:56:45 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/16 19:57:52 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ static char	*get_var(char *lex_tok)
 char	*interprete_env_var(char *lex_tok)
 {
 	char	*interpreted_token;
-	char	*var;
 
 	interpreted_token = lex_tok;
 	if (lex_tok[0] != '\'' && ft_strlen(lex_tok) > 1 \
