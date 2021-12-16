@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:35:35 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/16 18:19:14 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/16 19:16:41 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,22 +79,12 @@ static int	get_tokens(char *lex_toks[])
 static char	**interprete_env_vars(char *lex_toks[])
 {
 	int		i;
-	char	*temp;
+	// char	*temp;
 
 	i = 0;
 	while (lex_toks[i])
 	{
-		temp = interprete_env_var(lex_toks[i]);
-		// if (ft_strlen(temp) == 0)
-		// {
-		// 	fprintf(stderr, "temp for %s was NULL or 0 bytes long\n", lex_toks[i]);
-		// 	// free(temp);
-		// 	i++;
-		// 	continue ;
-		// }
-		if (ft_strcmp(temp, lex_toks[i]) != 0)
-			free(lex_toks[i]);
-		lex_toks[i] = temp;
+		lex_toks[i] = interprete_env_var(lex_toks[i]);
 		if (lex_toks[i] == NULL)
 			return (NULL);
 		if (ft_strstr(lex_toks[i], "&&") || ft_strstr(lex_toks[i], "||"))

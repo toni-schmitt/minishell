@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_append.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/15 17:39:22 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/09 20:13:26 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/16 19:04:30 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ char	*ft_append(char **dst, char *src)
 		dst_buf = *dst;
 	appendet_len = ft_strlen(dst_buf) + ft_strlen(src);
 	if (appendet_len == 0)
+	{
+		ft_free((void *)dst);
 		return (NULL);
+	}
 	appendet = malloc((appendet_len + 1) * sizeof(*appendet));
 	if (appendet == NULL)
 		return (NULL);
