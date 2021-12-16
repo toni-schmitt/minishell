@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/16 22:21:20 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/16 22:25:23 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,9 @@ int	executor(t_exp_tok *exp_tok)
 	if (is_inbuilt(exp_tok->cmd[0]))
 		return (handle_inbuilt_redir(exp_tok));
 	abs_cmd_path = get_abs_cmd(exp_tok->cmd[0]);
-	if (abs_cmd_path == NULL)
+	if (abs_cmd_path == NULL || ft_strlen(exp_tok->cmd[0]) == 0)
 	{
+		free(abs_cmd_path);
 		ft_fprintf(STDERR_FILENO, "%s: command not found\n", exp_tok->cmd[0]);
 		return (EXIT_CMD_NOT_FOUND);
 	}
