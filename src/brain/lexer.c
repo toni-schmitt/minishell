@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:34:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/14 16:53:11 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/16 20:25:16 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ static char	*get_subshell_token(char *tokens[], int *i)
 	subshell_count = get_subshell_count(tokens, *i);
 	while (tokens[*i] && subshell_count)
 	{
-		if (ft_strchr(tokens[*i], ')') && !ft_strstr(tokens[*i], ")\0") \
-		&& subshell_count == 1)
+		if (subshell_count == 1 && ft_strchr(tokens[*i], ')') \
+		&& ft_strncmp(tokens[*i], ")\0", ft_strlen(tokens[*i])) != 0)
 			return (get_end_of_subshell(tokens, i, subshell_token));
 		subshell_token = ft_append(&subshell_token, tokens[*i]);
 		if (subshell_token == NULL)
@@ -68,7 +68,7 @@ static char	*get_subshell_token(char *tokens[], int *i)
 		subshell_token = ft_append(&subshell_token, " ");
 		if (subshell_token == NULL)
 			return (NULL);
-		if (token_is_subshell(tokens[*i]))
+		if (ft_strchr(tokens[*i], '(') || ft_strchr(tokens[*i], ')'))
 			subshell_count--;
 		(*i)++;
 	}
