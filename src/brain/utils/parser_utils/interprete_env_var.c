@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interprete_env_var.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 23:13:27 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/15 23:46:11 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/16 15:30:56 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,18 @@ static char	*get_env_variable(char *lex_tok, char *var)
 	int		j;
 
 	fprintf(stderr, "lex_tok before getenv call: [%s]\n", lex_tok);
+	fprintf(stderr, "lex tok has adress %p\n", lex_tok);
 	// fprintf(stderr, "l:%s\nv:%s\n", lex_tok, var);
-	var_value = getenv(var);
-	// var_value = get_env_var_value(get_envv(), var);
+	// var_value = getenv(var);
+	var_value = get_env_var_value(get_envv(), var); // think about not returning a malloce'd value but mallocing it right aftere this like next 4 lines show
+	// if (ft_strlen(var_value) > 0)
+	// var_value = ft_strdup(va_value);
+	//else
+	// var_value = ft_calloc(1, sizeof(var_value));
+	fprintf(stderr, "var_value has adress %p\n", var_value);
 	fprintf(stderr, "lex_tok after getenv call: [%s]\n", lex_tok);
 	// fprintf(stderr, "var-v:%s\n", var_value);
+	exit(1); // only for running with valgrind
 	if (var_value == NULL)
 		return (NULL);
 	// fprintf(stderr, "l:%s\nv:%s\n", lex_tok, var);
@@ -50,7 +57,7 @@ static char	*get_env_variable(char *lex_tok, char *var)
 	fprintf(stderr, "3: env_var:%s\nlex_tok + i: %s\n", env_var, lex_tok + i);
 	if (env_var == NULL)
 		return (NULL);
-	// free(var_value);
+	free(var_value);
 	return (env_var);
 }
 
