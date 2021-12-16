@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 23:13:27 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/16 15:30:56 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/16 16:44:38 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static char	*get_env_variable(char *lex_tok, char *var)
 	fprintf(stderr, "var_value has adress %p\n", var_value);
 	fprintf(stderr, "lex_tok after getenv call: [%s]\n", lex_tok);
 	// fprintf(stderr, "var-v:%s\n", var_value);
-	exit(1); // only for running with valgrind
+	// exit(1); // only for running with valgrind
 	if (var_value == NULL)
 		return (NULL);
 	// fprintf(stderr, "l:%s\nv:%s\n", lex_tok, var);
@@ -75,7 +75,7 @@ static char	*get_var(char *lex_tok)
 	i = 0;
 	while (lex_buf && *lex_buf && ft_isalpha(*lex_buf))
 		var[i++] = *lex_buf++;
-	free(lex_tok);
+	// free(lex_tok);
 	return (var);
 }
 
