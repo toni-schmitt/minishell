@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interprete_env_var.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/26 23:13:27 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/16 19:15:41 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/16 19:56:45 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,17 @@ static char	*get_env_variable(char *lex_tok, char *var)
 	char	*env_var;
 	char	*var_value;
 	int		i;
-	int		j;
 
 	var_value = get_env_var_value(get_envv(), var);
+	free(var);
 	if (var_value == NULL)
 		return (NULL);
 	env_var = ft_calloc(ft_strlen(lex_tok) + ft_strlen(var_value) + 1, 1);
 	if (env_var == NULL)
 		return (NULL);
-	i = 0;
-	j = 0;
-	while (lex_tok[i] && lex_tok[i] != '$')
-		env_var[j++] = lex_tok[i++];
+	i = -1;
+	while (lex_tok[++i] && lex_tok[i] != '$')
+		env_var[i] = lex_tok[i];
 	env_var = ft_append(&env_var, var_value);
 	if (env_var == NULL)
 		return (var_value);
@@ -81,12 +80,7 @@ char	*interprete_env_var(char *lex_tok)
 			free(lex_tok);
 			return (ft_itoa(get_err_code()));
 		}
-		var = get_var(lex_tok);
-		if (var == NULL)
-			return (NULL);
-		fprintf(stderr, "l:%s\nv:%s\n", lex_tok, var);
-		interpreted_token = get_env_variable(lex_tok, var);
-		free(var);
+		interpreted_token = get_env_variable(lex_tok, get_var(lex_tok));
 		free(lex_tok);
 		return (interpreted_token);
 	}

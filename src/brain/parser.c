@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:35:35 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/16 19:16:41 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/16 19:43:49 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ static int	get_tokens(char *lex_toks[])
 static char	**interprete_env_vars(char *lex_toks[])
 {
 	int		i;
-	// char	*temp;
 
 	i = 0;
 	while (lex_toks[i])

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:44:55 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/15 23:44:57 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/16 19:52:36 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,14 @@ static int	execute_cmd(t_exp_tok *exp_tok, char *abs_cmd_path)
 	if (pid == 0)
 	{
 		if (exp_tok->in != STDIN_FILENO && dup2(exp_tok->in, STDIN_FILENO) == -1)
-		return (ft_perror(EXIT_FAILURE, "dup2 error"));
+			return (ft_perror(EXIT_FAILURE, "dup2 error"));
 		if (exp_tok->out != STDOUT_FILENO)
 		{
-		s = dup(STDOUT_FILENO);
-		if (s == -1)
-			return (ft_perror(EXIT_FAILURE, "dup error"));
-		if (dup2(exp_tok->out, STDOUT_FILENO) == -1)
-			return (ft_perror(EXIT_FAILURE, "dup2 error"));
+			s = dup(STDOUT_FILENO);
+			if (s == -1)
+				return (ft_perror(EXIT_FAILURE, "dup error"));
+			if (dup2(exp_tok->out, STDOUT_FILENO) == -1)
+				return (ft_perror(EXIT_FAILURE, "dup2 error"));
 		}
 		status = execve(abs_cmd_path, exp_tok->cmd, get_envv()->env_var);
 		perror(NULL);
