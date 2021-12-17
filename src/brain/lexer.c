@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:34:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/17 15:31:51 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/17 16:01:45 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,26 +109,21 @@ int	lexer(char *line)
 	char	**tokens;
 	int		exit_status;
 
+	if (!is_valid_line_syntax(line))
+		return (exit_on_syntax_error());
 	tokens = ft_split_set(line, " \t\r\v\f\n");
 	if (join_quotes(&tokens) == EXIT_FAILURE)
 	{
 		ft_free_str_array(&tokens);
 		return (EXIT_FAILURE);
 	}
-	if (tokens == NULL)
-		return (EXIT_FAILURE);
 	tokens = adjust_tokens(tokens);
 	if (tokens == NULL)
 		return (EXIT_FAILURE);
 	set_lex_toks(tokens);
 	if (!is_valid_syntax(tokens))
-	{
-		ft_fprintf(STDERR_FILENO, "minishell: Invalid Syntax at token\n");
-		ft_free_str_array(&tokens);
-		set_err_code(EXIT_SYNTAX_ERROR);
-		return (EXIT_SYNTAX_ERROR);
-	}
+		return (exit_on_syntax_error());
 	exit_status = parser(tokens);
-	ft_free_str_array(&tokens);
+	ft_free_split(tokens);
 	return (exit_status);
 }
