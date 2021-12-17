@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_dir_items.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 23:11:46 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/15 23:12:23 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/17 15:04:49 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static char	*get_items_sorted(char **unsorted)
 	char	*items;
 	int		i;
 
+	items = NULL;
 	unsorted = ft_sort_str_arr(unsorted);
 	i = 0;
 	while (unsorted[i])
