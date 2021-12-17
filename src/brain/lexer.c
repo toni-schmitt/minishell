@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:34:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/17 15:16:07 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/17 15:31:51 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,9 @@ static char	**adjust_tokens(char **tokens)
 			adjusted[i[1]] = ft_strdup(tokens[i[0]++]);
 		else
 			adjusted[i[1]] = get_next_token(&tokens[i[0]]);
-		if (adjusted[i[1]] == NULL)
+		if (adjusted[i[1]++] == NULL)
 			return (free_tokens(tokens, adjusted));
-		if (adjusted[++i[1]] == NULL)
+		if ((size_t)i[1] == adjusted_size - 1)
 			adjusted = ft_str_arr_realloc(adjusted, adjusted_size += 10);
 	}
 	ft_free_str_array(&tokens);
