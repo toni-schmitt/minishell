@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 22:35:27 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/02 16:49:01 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/17 15:17:23 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,34 +48,6 @@ size_t	get_next_token_size(char *token, char next_special)
 			size++;
 			token++;
 		}
-	}
-	return (size);
-}
-
-size_t	get_new_tokens_size(char **tokens)
-{
-	size_t	size;
-	int		i;
-	int		j;
-
-	size = 0;
-	i = 0;
-	while (tokens[i])
-	{
-		if (token_is_subshell(tokens[i]))
-			i = jump_to_end_of_subshell(tokens, i) - 1;
-		else if (token_is_unadjusted(tokens[i]))
-		{
-			j = 0;
-			while (tokens[i][j])
-			{
-				if (is_special_char(tokens[i][j], tokens[i][j + 1]))
-					size += 2;
-				j++;
-			}
-		}
-		size++;
-		i++;
 	}
 	return (size);
 }

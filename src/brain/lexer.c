@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:34:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/16 20:25:16 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/17 15:16:07 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,25 +78,27 @@ static char	*get_subshell_token(char *tokens[], int *i)
 static char	**adjust_tokens(char **tokens)
 {
 	char	**adjusted;
-	int		i;
-	int		j;
+	size_t	adjusted_size;
+	int		i[2];
 
-	adjusted = ft_calloc(get_new_tokens_size(tokens) + 1, sizeof(*adjusted));
+	adjusted_size = 50;
+	adjusted = ft_calloc(adjusted_size + 1, sizeof(*adjusted));
 	if (adjusted == NULL)
 		return (NULL);
-	i = 0;
-	j = 0;
-	while (tokens[i])
+	i[0] = 0;
+	i[1] = 0;
+	while (tokens[i[0]])
 	{
-		if (token_is_subshell(tokens[i]))
-			adjusted[j] = get_subshell_token(tokens, &i);
-		else if (!token_is_unadjusted(tokens[i]))
-			adjusted[j] = ft_strdup(tokens[i++]);
+		if (token_is_subshell(tokens[i[0]]))
+			adjusted[i[1]] = get_subshell_token(tokens, &i[0]);
+		else if (!token_is_unadjusted(tokens[i[0]]))
+			adjusted[i[1]] = ft_strdup(tokens[i[0]++]);
 		else
-			adjusted[j] = get_next_token(&tokens[i]);
-		if (adjusted[j] == NULL)
+			adjusted[i[1]] = get_next_token(&tokens[i[0]]);
+		if (adjusted[i[1]] == NULL)
 			return (free_tokens(tokens, adjusted));
-		j++;
+		if (adjusted[++i[1]] == NULL)
+			adjusted = ft_str_arr_realloc(adjusted, adjusted_size += 10);
 	}
 	ft_free_str_array(&tokens);
 	return (adjusted);
