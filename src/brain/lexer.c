@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:34:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/17 16:01:45 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/17 17:25:55 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static char	**adjust_tokens(char **tokens)
 	i[1] = 0;
 	while (tokens[i[0]])
 	{
-		if (token_is_subshell(tokens[i[0]]))
+		if (tokens[i[0]][0] == '(')
 			adjusted[i[1]] = get_subshell_token(tokens, &i[0]);
 		else if (!token_is_unadjusted(tokens[i[0]]))
 			adjusted[i[1]] = ft_strdup(tokens[i[0]++]);
@@ -125,5 +125,6 @@ int	lexer(char *line)
 		return (exit_on_syntax_error());
 	exit_status = parser(tokens);
 	ft_free_split(tokens);
+	reset_lex_toks();
 	return (exit_status);
 }
