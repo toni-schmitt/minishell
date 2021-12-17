@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/14 16:30:26 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/17 16:33:58 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static int	handle_tokens(t_exp_tok *exp_toks[], t_par_tok *par_toks[])
 			|| (par_toks[i]->type == or && get_err_code() == EXIT_SUCCESS))
 			{
 				set_err_code(EXIT_FAILURE);
-				return (EXIT_SUCCESS);
+				i++;
 			}
 			repinterprete_env_vars(&par_toks[i + 1], &exp_toks[i + 1]);
 		}
