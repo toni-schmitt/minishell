@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 15:42:45 by toni              #+#    #+#             */
-/*   Updated: 2021/12/17 16:13:23 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/17 17:18:33 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ static int	jump_to_end_of_symbol(char *line, char symbol, int i)
 
 static bool	is_correct_subshell(char *line, int i)
 {
-	while (line[i] && ft_isspace(line[i]))
+	while (i > 0 && line[i] && ft_isspace(line[i]))
 		i--;
-	if (line[i] != '&' || line[i] != '|')
+	if (i > 0 && (line[i] != '&' && line[i] != '|'))
 		return (false);
 	return (true);
 }
@@ -50,7 +50,7 @@ bool	is_valid_line_syntax(char *line)
 		if (line[i] == '\"')
 			i = jump_to_end_of_symbol(line, '\"', i);
 		if (line[i] == '(')
-			if (!is_correct_subshell(line, i))
+			if (!is_correct_subshell(line, i - 1))
 				return (false);
 		if (line[i] == ';' || line[i] == '\\')
 			return (false);

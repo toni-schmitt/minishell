@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 15:00:19 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/16 00:09:27 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/17 17:21:50 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static bool	is_special(char *lex_tok, int special_kind)
 
 static bool	is_correct_special(char *lex_tok)
 {
-	if (ft_strchr(lex_tok, '(') && ft_strchr(lex_tok, ')'))
+	if (lex_tok[0] == '(' && ft_strchr(lex_tok, ')'))
 		return (true);
 	if (ft_strlen(lex_tok) != 2)
 	{
