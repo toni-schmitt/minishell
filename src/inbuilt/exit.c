@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/11 13:22:09 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/18 21:33:10 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/18 21:35:51 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	exit_inbuilt(char *args[])
 	else if (args[i] && args[++i])
 	{
 		ft_fprintf(STDERR_FILENO, "exit: too many arguments\n");
-		printf("exit\n");
+		ft_fprintf(STDERR_FILENO, "exit\n");
 		return (EXIT_FAILURE);
 	}
 	ft_fprintf(STDERR_FILENO, "exit\n");
