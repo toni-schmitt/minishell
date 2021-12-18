@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 19:02:18 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/10 20:03:02 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/18 17:16:58 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,8 @@ int	get_tok_type(char *lex_tok, t_iter *iter)
 		par_tok->redir_type[is_in_heredoc] = true;
 	if (ft_strlen(lex_tok) == 2 && ft_strstr(lex_tok, ">>"))
 		par_tok->redir_type[is_out_append] = true;
-	if (ft_strchr(lex_tok, '(') && ft_strchr(lex_tok, ')'))
+	if ((lex_tok[0] != '\'' && lex_tok[0] != '\"') \
+	&& (ft_strchr(lex_tok, '(') && ft_strchr(lex_tok, ')')))
 		par_tok->type = subshell;
 	return (EXIT_SUCCESS);
 }
