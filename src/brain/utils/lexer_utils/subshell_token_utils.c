@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   subshell_token_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/09 22:35:19 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/11/26 22:28:28 by tschmitt         ###   ########.fr       */
+/*   Updated: 2021/12/19 20:01:25 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*get_end_of_subshell(char *tokens[], int *i, char *sub_tok)
 	char	*tmp;
 	int		sub_len;
 
-	sub_len = ft_strchr(tokens[*i], ')') - tokens [*i];
+	sub_len = ft_strrchr(tokens[*i], ')') - tokens [*i];
 	tmp = ft_substr(tokens[*i], 0, sub_len + 1);
 	sub_tok = ft_append(&sub_tok, tmp);
 	free(tmp);
