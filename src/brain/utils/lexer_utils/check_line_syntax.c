@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 15:42:45 by toni              #+#    #+#             */
-/*   Updated: 2021/12/18 17:08:23 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/19 19:52:49 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,6 @@ int	exit_on_syntax_error(void)
 	set_err_code(EXIT_SYNTAX_ERROR);
 	ft_free_split(get_lex_toks());
 	return (EXIT_SYNTAX_ERROR);
-}
-
-static int	jump_to_end_of_symbol(char *line, char symbol, int i)
-{
-	while (line[i] && line[i] != symbol)
-		i++;
-	return (i);
 }
 
 static bool	is_correct_subshell(char *line, int i)
@@ -47,17 +40,44 @@ static bool	has_opening_bracket(char *line, int i)
 	return (true);
 }
 
+static int	count_subshell_chars(char *line, char c)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (line[i])
+	{		
+		if (line[i] == '\'')
+			while (line[++i] && line[i] != '\'')
+				;
+		if (line[i] == '\"')
+			while (line[++i] && line[i] != '\"')
+				;
+		if (line[i] == c)
+			count++;
+		if (line[i])
+			i++;
+	}
+	return (count);
+}
+
 bool	is_valid_line_syntax(char *line)
 {
 	int	i;
 
 	i = 0;
+	if (count_subshell_chars(line, '(') != count_subshell_chars(line, ')'))
+		return (false);
 	while (line[i])
 	{
 		if (line[i] == '\'')
-			i = jump_to_end_of_symbol(line, '\'', i + 1);
+			while (line[++i] && line[i] != '\'')
+				;
 		if (line[i] == '\"')
-			i = jump_to_end_of_symbol(line, '\"', i + 1);
+			while (line[++i] && line[i] != '\"')
+				;
 		if (line[i] == '(')
 			if (!is_correct_subshell(line, i - 1))
 				return (false);
@@ -66,7 +86,8 @@ bool	is_valid_line_syntax(char *line)
 				return (false);
 		if (line[i] == ';' || line[i] == '\\')
 			return (false);
-		i++;
+		if (line[i])
+			i++;
 	}
 	return (true);
 }
