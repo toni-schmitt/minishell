@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:39:06 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/19 19:04:53 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/19 20:04:20 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,6 @@
 #include "brain.h"
 #include "expander_utils.h"
 #include "env_var_utils.h"
-
-static char	*get_subshell_cmd(char *cmd)
-{
-	char	*subshell_cmd;
-	int		cmd_len;
-	int		i;
-	int		j;
-
-	cmd_len = ft_strlen(cmd);
-	subshell_cmd = ft_calloc(cmd_len + 1, sizeof(*subshell_cmd));
-	if (subshell_cmd == NULL)
-		return (NULL);
-	i = 1;
-	j = 0;
-	while (i < cmd_len - 2)
-	{
-		subshell_cmd[j] = cmd[i];
-		i++;
-		j++;
-	}
-	return (subshell_cmd);
-}
 
 int	handle_subshell(t_exp_tok *exp_tok)
 {
@@ -48,7 +26,8 @@ int	handle_subshell(t_exp_tok *exp_tok)
 		return (EXIT_FAILURE);
 	if (pid == 0)
 	{
-		cutted_cmd = get_subshell_cmd(exp_tok->cmd[0]);
+		cutted_cmd = ft_substr(exp_tok->cmd[0], 1, \
+		ft_strrchr(exp_tok->cmd[0], ')') - exp_tok->cmd[0] - 1);
 		if (cutted_cmd == NULL)
 			return (EXIT_FAILURE);
 		status = lexer(cutted_cmd);
