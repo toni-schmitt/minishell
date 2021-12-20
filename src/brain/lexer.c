@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tschmitt <tschmitt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 21:34:02 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/17 17:25:55 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/20 16:19:11 by tschmitt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static char	*get_subshell_token(char *tokens[], int *i)
 	while (tokens[*i] && subshell_count)
 	{
 		if (subshell_count == 1 && ft_strchr(tokens[*i], ')') \
-		&& ft_strncmp(tokens[*i], ")\0", ft_strlen(tokens[*i])) != 0)
+		&& ft_strlen(ft_strrchr(tokens[*i], ')')) != 1)
 			return (get_end_of_subshell(tokens, i, subshell_token));
 		subshell_token = ft_append(&subshell_token, tokens[*i]);
 		if (subshell_token == NULL)
