@@ -6,7 +6,7 @@
 /*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 16:18:33 by toni              #+#    #+#             */
-/*   Updated: 2021/12/14 16:21:15 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/20 01:59:18 by toni             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,22 @@ int	clean_exp_tok_cmds(t_exp_tok *exp_tok)
 int	handle_inbuilt_redir(t_exp_tok *exp_tok)
 {
 	int	exit_status;
-	int	s;
+	int	saved_fds[2];
 
-	if (exp_tok->in != STDIN_FILENO && dup2(exp_tok->in, STDIN_FILENO) == -1)
-		return (ft_perror(EXIT_FAILURE, "dup2 error"));
+	if (exp_tok->in != STDIN_FILENO)
+	{
+		saved_fds[STDIN_FILENO] = dup(STDIN_FILENO);
+		if (saved_fds[STDIN_FILENO] == -1)
+			return (ft_perror(EXIT_FAILURE, "Piping error"));
+		if (dup2(exp_tok->in, STDIN_FILENO) == -1)
+			return (ft_perror(EXIT_FAILURE, "Piping error"));
+	}
+	// if (exp_tok->in != STDIN_FILENO && dup2(exp_tok->in, STDIN_FILENO) == -1)
+		// return (ft_perror(EXIT_FAILURE, "dup2 error"));
 	if (exp_tok->out != STDOUT_FILENO)
 	{
-		s = dup(STDOUT_FILENO);
-		if (s == -1)
+		saved_fds[STDOUT_FILENO] = dup(STDOUT_FILENO);
+		if (saved_fds[STDOUT_FILENO] == -1)
 			return (ft_perror(EXIT_FAILURE, "dup error"));
 		if (dup2(exp_tok->out, STDOUT_FILENO) == -1)
 			return (ft_perror(EXIT_FAILURE, "dup2 error"));
@@ -82,13 +90,15 @@ int	handle_inbuilt_redir(t_exp_tok *exp_tok)
 	exit_status = execute_inbuilt(exp_tok->cmd);
 	if (exp_tok->in != STDIN_FILENO)
 	{
-		close(exp_tok->in);
-		dup2(0, exp_tok->in);
+		dup2(saved_fds[STDIN_FILENO], STDIN_FILENO);
+		close(saved_fds[STDIN_FILENO]);
+		// close(exp_tok->in);
+		// dup2(STDIN_FILENO, exp_tok->in);
 	}
 	if (exp_tok->out != STDOUT_FILENO)
 	{
-		dup2(s, STDOUT_FILENO);
-		close(s);
+		dup2(saved_fds[STDOUT_FILENO], STDOUT_FILENO);
+		close(saved_fds[STDOUT_FILENO]);
 	}
 	return (exit_status);
 }
