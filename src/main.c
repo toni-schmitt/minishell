@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/19 18:28:36 by tschmitt          #+#    #+#             */
-/*   Updated: 2021/12/16 22:03:21 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/20 16:41:43 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static int	hide_ctrl_echo(void)
 	stty_tok->cmd = ft_calloc(3, sizeof(*stty_tok->cmd));
 	if (stty_tok->cmd == NULL)
 		return (EXIT_FAILURE);
-	stty_tok->cmd[0] = ft_strdup("stty");
+	stty_tok->cmd[0] = ft_strdup("/bin/stty");
 	if (stty_tok->cmd[0] == NULL)
 		return (EXIT_FAILURE);
 	stty_tok->cmd[1] = ft_strdup("-echoctl");
