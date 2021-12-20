@@ -26,8 +26,7 @@ static int	open_in(t_par_tok *par_tok, t_exp_tok *exp_tok)
 		heredeoc_fd = exp_tok->in;
 	while (par_tok->redir_type[is_in] || par_tok->redir_type[is_in_heredoc])
 	{
-		i++;
-		if (par_tok->redir_type[is_in])
+		if (ft_strncmp(par_tok->in[i++], "<<", 2) != 0)
 			fd = open(par_tok->in[i], O_RDONLY);
 		else if (par_tok->redir_type[is_in_heredoc])
 			fd = heredeoc_fd;
