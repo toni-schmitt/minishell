@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_redirs_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 12:51:20 by tblaase           #+#    #+#             */
-/*   Updated: 2021/12/14 16:09:53 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/20 15:23:52 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,10 @@ int	handle_redir(t_par_tok *par_tok, t_exp_tok *exp_tok, int pipe_type)
 		return (EXIT_FAILURE);
 	if (handle_pipes(exp_tok, pipe_type) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
+	if (par_tok->redir_type[is_pipe] == true)
+		exp_tok->is_pipe = true;
+	else
+		exp_tok->is_pipe = false;
 	if (par_tok->type == subshell)
 		return (handle_subshell(exp_tok));
 	exit_status = executor(exp_tok);

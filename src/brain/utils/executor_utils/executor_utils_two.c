@@ -6,7 +6,7 @@
 /*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 22:07:38 by tblaase           #+#    #+#             */
-/*   Updated: 2021/12/16 22:20:42 by tblaase          ###   ########.fr       */
+/*   Updated: 2021/12/20 15:18:54 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,37 @@ int	execute_child(t_exp_tok *exp_tok, char *abs_cmd_path, int status)
 	}
 	exit(status);
 	return (status);
+}
+
+int	execute_inbuilt_child(t_exp_tok *exp_tok)
+{
+	pid_t	pid;
+	int		exit_status;
+
+	pid = fork();
+	if (pid == -1)
+		return (EXIT_FAILURE);
+	else if (pid == 0)
+	{
+		exit_status = execute_inbuilt(exp_tok);
+		exit(exit_status);
+		return (exit_status);
+	}
+	waitpid(pid, &exit_status, 0);
+	return (exit_status);
+}
+
+int	execute_inbuilt_reset_fds(t_exp_tok *exp_tok, int saved_fds[2])
+{
+	if (exp_tok->in != STDIN_FILENO)
+	{
+		dup2(saved_fds[STDIN_FILENO], STDIN_FILENO);
+		close(saved_fds[STDIN_FILENO]);
+	}
+	if (exp_tok->out != STDOUT_FILENO)
+	{
+		dup2(saved_fds[STDOUT_FILENO], STDOUT_FILENO);
+		close(saved_fds[STDOUT_FILENO]);
+	}
+	return (EXIT_SUCCESS);
 }

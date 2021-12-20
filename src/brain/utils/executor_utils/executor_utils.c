@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 16:18:33 by toni              #+#    #+#             */
-/*   Updated: 2021/12/20 01:59:18 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/20 15:22:25 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,15 @@ int	clean_exp_tok_cmds(t_exp_tok *exp_tok)
 }
 
 /**
- * @brief  This is stolen from somewhere, idk from where
- * @note   i have no clue how or why this is working
+ * @brief
+ * @note
  * @param  *exp_tok:
  * @retval the exit status of the inbuilt function
  */
 int	handle_inbuilt_redir(t_exp_tok *exp_tok)
 {
-	int	exit_status;
-	int	saved_fds[2];
+	int		exit_status;
+	int		saved_fds[2];
 
 	if (exp_tok->in != STDIN_FILENO)
 	{
@@ -77,8 +77,6 @@ int	handle_inbuilt_redir(t_exp_tok *exp_tok)
 		if (dup2(exp_tok->in, STDIN_FILENO) == -1)
 			return (ft_perror(EXIT_FAILURE, "Piping error"));
 	}
-	// if (exp_tok->in != STDIN_FILENO && dup2(exp_tok->in, STDIN_FILENO) == -1)
-		// return (ft_perror(EXIT_FAILURE, "dup2 error"));
 	if (exp_tok->out != STDOUT_FILENO)
 	{
 		saved_fds[STDOUT_FILENO] = dup(STDOUT_FILENO);
@@ -87,19 +85,11 @@ int	handle_inbuilt_redir(t_exp_tok *exp_tok)
 		if (dup2(exp_tok->out, STDOUT_FILENO) == -1)
 			return (ft_perror(EXIT_FAILURE, "dup2 error"));
 	}
-	exit_status = execute_inbuilt(exp_tok->cmd);
-	if (exp_tok->in != STDIN_FILENO)
-	{
-		dup2(saved_fds[STDIN_FILENO], STDIN_FILENO);
-		close(saved_fds[STDIN_FILENO]);
-		// close(exp_tok->in);
-		// dup2(STDIN_FILENO, exp_tok->in);
-	}
-	if (exp_tok->out != STDOUT_FILENO)
-	{
-		dup2(saved_fds[STDOUT_FILENO], STDOUT_FILENO);
-		close(saved_fds[STDOUT_FILENO]);
-	}
+	if (exp_tok->is_pipe == true)
+		exit_status = execute_inbuilt_child(exp_tok);
+	else
+		exit_status = execute_inbuilt(exp_tok);
+	execute_inbuilt_reset_fds(exp_tok, saved_fds);
 	return (exit_status);
 }
 
@@ -122,21 +112,21 @@ bool	is_inbuilt(char *cmd)
 	return (false);
 }
 
-int	execute_inbuilt(char *cmd[])
+int	execute_inbuilt(t_exp_tok *exp_tok)
 {
-	if (ft_strcmp(cmd[0], "echo") == 0)
-		return (echo(cmd));
-	if (ft_strcmp(cmd[0], "export") == 0)
-		return (export(cmd));
-	if (ft_strcmp(cmd[0], "env") == 0)
-		return (env(cmd));
-	if (ft_strcmp(cmd[0], "cd") == 0)
-		return (cd(cmd));
-	if (ft_strcmp(cmd[0], "unset") == 0)
-		return (unset(cmd));
-	if (ft_strcmp(cmd[0], "pwd") == 0)
+	if (ft_strcmp(exp_tok->cmd[0], "echo") == 0)
+		return (echo(exp_tok->cmd));
+	if (ft_strcmp(exp_tok->cmd[0], "export") == 0)
+		return (export(exp_tok->cmd));
+	if (ft_strcmp(exp_tok->cmd[0], "env") == 0)
+		return (env(exp_tok->cmd));
+	if (ft_strcmp(exp_tok->cmd[0], "cd") == 0)
+		return (cd(exp_tok->cmd));
+	if (ft_strcmp(exp_tok->cmd[0], "unset") == 0)
+		return (unset(exp_tok->cmd));
+	if (ft_strcmp(exp_tok->cmd[0], "pwd") == 0)
 		return (pwd());
-	if (ft_strcmp(cmd[0], "exit") == 0)
-		return (exit_inbuilt(cmd));
+	if (ft_strcmp(exp_tok->cmd[0], "exit") == 0)
+		return (exit_inbuilt(exp_tok->cmd));
 	return (EXIT_FAILURE);
 }

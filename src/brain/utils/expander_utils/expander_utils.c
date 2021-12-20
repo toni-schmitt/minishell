@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toni <toni@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: tblaase <tblaase@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 16:23:29 by toni              #+#    #+#             */
-/*   Updated: 2021/12/14 17:12:20 by toni             ###   ########.fr       */
+/*   Updated: 2021/12/20 15:29:43 by tblaase          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	init(t_exp_tok **exp_tok)
 	(*exp_tok)->cmd = NULL;
 	(*exp_tok)->in = 0;
 	(*exp_tok)->out = 1;
+	(*exp_tok)->is_pipe = false;
 	return (EXIT_SUCCESS);
 }
 
