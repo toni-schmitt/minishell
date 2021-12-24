@@ -19,6 +19,7 @@ people faced when Windows didn’t exist.
 ### Some of the restrictions
 ![grafik](https://user-images.githubusercontent.com/85116019/147352152-0c597a42-7a7b-4a0b-b1c3-bb57f5e2cd49.png)
 
+## Our Minishell
 ### The basic functionalities of the project
 - this is a shell that can be compiled by running<br>`make all`<br>and then<br>`./minishell`<br>or instead you can run<br>`make run`
 - now you are greeted with a prompt `minishell$ `&nbsp;waiting for input
