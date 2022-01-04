@@ -10,11 +10,13 @@
   - [Expander](https://github.com/toni-schmitt/minishell#expander)
   - [Executor](https://github.com/toni-schmitt/minishell#executor)
 - [Examples](https://github.com/toni-schmitt/minishell#some-example-outputs)
+  - [syntax error](https://github.com/toni-schmitt/minishell#wrong-syntax) 
 
 ## Short description of the subject
 
 The goal of the subject was to recreate some of the functionalities of bash (Version 3.2).<br>
-To see the exact requirements, check Chapter III and IV of the [subject pdf](https://github.com/toni-schmitt/minishell/blob/main/readme_additions/en.subject.pdf).
+To see the exact requirements, check Chapter III and IV of the [subject pdf](https://github.com/toni-schmitt/minishell/blob/main/readme_additions/en.subject.pdf).<br>
+If you find any problems with our minishell, [here](https://github.com/toni-schmitt/minishell/issues/new/choose) is the possibility to open an issue.<br>
 ## From the [subject pdf](https://github.com/toni-schmitt/minishell/blob/main/readme_additions/en.subject.pdf)
 ### Introduction
 ```
@@ -33,8 +35,8 @@ people faced when Windows didn’t exist.
 ### The basic functionalities of the project
 - this is a shell that can be compiled by running<br>`make all`<br>and then to run it<br>`./minishell`<br>or instead you can run<br>`make run`
 - now you are greeted with a prompt `minishell$ `&nbsp;waiting for input just like any other shell
-- this project uses the readline libraries `readline/history.h` and `readline/readline.h` you can install those via `brew install readline` or `apt-get install libreadline-dev`
-- thanks to those there is a working history of used commands
+- this project uses the readline libraries `readline/history.h` and `readline/readline.h` you can install those via `brew install readline` or `apt-get install libreadline-dev`, thanks to those there is a working history of used commands
+- there is some memory-leaks caused by the readline-library
 
 ### The basic structure of our minishell
 Just like most of the other shells we have divided our shell into 4 parts:
@@ -55,8 +57,8 @@ Now the given input i.e. `cat <<eof >file1 && cat file1 && abc || wc <file1 | ca
 | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |
 | `cat` | `<<eof` | `>file1` | `&&` | `cat` | `file1` | `&&` | `abc` | `\|\|` | `wc` | `<file1` | `\|` | `cat` | `>file2` |
 
-[back to Contents](https://github.com/toni-schmitt/minishell#contents)
-[back to basic structure](https://github.com/toni-schmitt/minishell#the-basic-functionalities-of-the-project)
+[back to contents](https://github.com/toni-schmitt/minishell#contents)<br>
+[back to basic structure](https://github.com/toni-schmitt/minishell#the-basic-functionalities-of-the-project)<br>
 
 ----------
 
@@ -77,26 +79,29 @@ typedef struct s_parser_tok
 }	t_par_tok;
 ```
 So after the syntax-check the parser is able to get the command and its arguments as well as the redirections connected to the command.<br>
-[back to Contents](https://github.com/toni-schmitt/minishell#contents)
-[back to basic structure](https://github.com/toni-schmitt/minishell#the-basic-functionalities-of-the-project)
+[back to contents](https://github.com/toni-schmitt/minishell#contents)<br>
+[back to basic structure](https://github.com/toni-schmitt/minishell#the-basic-functionalities-of-the-project)<br>
 
 ----------
 
 ### Expander
-[back to Contents](https://github.com/toni-schmitt/minishell#contents)
-[back to basic structure](https://github.com/toni-schmitt/minishell#the-basic-functionalities-of-the-project)
+[back to contents](https://github.com/toni-schmitt/minishell#contents)<br>
+[back to basic structure](https://github.com/toni-schmitt/minishell#the-basic-functionalities-of-the-project)<br>
 
 ----------
 
 ### Executor
-[back to Contents](https://github.com/toni-schmitt/minishell#contents)
-[back to basic structure](https://github.com/toni-schmitt/minishell#the-basic-functionalities-of-the-project)
+[back to contents](https://github.com/toni-schmitt/minishell#contents)<br>
+[back to basic structure](https://github.com/toni-schmitt/minishell#the-basic-functionalities-of-the-project)<br>
 
 ----------
 
 ### Some example outputs
 
-wrong syntax:<br>
-If some form of wrong syntax gets detected, `Invalid Syntax` is printed and the error value `$?` is set to `258`<br>
+#### wrong syntax
+If some form of wrong syntax gets detected, `Invalid Syntax at token` is printed and the error value `$?` is set to `258`<br>
 ![syntax_error](https://github.com/toni-schmitt/minishell/blob/main/readme_additions/syntax_error.jpg)<br>
-[back to Contents](https://github.com/toni-schmitt/minishell#contents)
+#### invalid command
+If there was an invalid command used, `command not found` is printed and the error value `$?` is set to `127`<br>
+![invalid_command](https://github.com/toni-schmitt/minishell/blob/main/readme_additions/invalid_command.jpg)<br>
+[back to contents](https://github.com/toni-schmitt/minishell#contents)<br>
