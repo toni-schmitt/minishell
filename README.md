@@ -2,6 +2,13 @@
 ## As beautiful as a shell.<br>
 ## from [@tschmitt](https://github.com/toni-schmitt) and [@tblaase](https://github.com/tblaase)<br>
 ![result](https://github.com/toni-schmitt/minishell/blob/main/readme_additions/minishell_result.jpg)
+## Contents
+- [Introduction](https://github.com/toni-schmitt/minishell#introduction)
+- [Our Minishell](https://github.com/toni-schmitt/minishell#our-minishell)
+  - [Lexer](https://github.com/toni-schmitt/minishell#lexer)
+  - [Parser](https://github.com/toni-schmitt/minishell#parser)
+  - [Expander](https://github.com/toni-schmitt/minishell#expander)
+  - [Executor](https://github.com/toni-schmitt/minishell#executor)
 
 ## Short description of the subject
 
@@ -40,7 +47,7 @@ Those parts all have different tasks.<br>
 ----------
 
 ### Lexer
-The lexer will get the input from the prompt once the user pressed `enter` and create to called `lexer_tokens` from it.<br>
+The lexer will get the input from the prompt once the user pressed `enter` and create so called `lexer_tokens` from it<br>
 The lexer_tokens are a 2D char array `char *lexer_tokens[]`<br>
 Now the given input i.e. `cat <<eof >file1 && cat file1 && abc || wc <file1 | cat >file2` will result in `lexer_tokens` like<br>
 | lex_tok[0] | lex_tok[1] | lex_tok[2] | lex_tok[3] | lex_tok[4] | lex_tok[5] | lex_tok[6] | lex_tok[7] | lex_tok[8] | lex_tok[9] | lex_tok[10] | lex_tok[11] | lex_tok[12] | lex_tok[13] |
@@ -79,3 +86,9 @@ So after the syntax-check the parser is able to get the command and its argument
 [back to basic structure](https://github.com/toni-schmitt/minishell#the-basic-functionalities-of-the-project)
 
 ----------
+
+### Some example outputs
+
+wrong syntax:<br>
+If some form of wrong syntax gets detected, `Invalid Syntax` is printed and the error value `$?` is set to `258`<br>
+![syntax_error](https://github.com/toni-schmitt/minishell/blob/main/readme_additions/syntax_error.jpg)
