@@ -9,6 +9,7 @@
   - [Parser](https://github.com/toni-schmitt/minishell#parser)
   - [Expander](https://github.com/toni-schmitt/minishell#expander)
   - [Executor](https://github.com/toni-schmitt/minishell#executor)
+- [Examples](https://github.com/toni-schmitt/minishell#some-example-outputs)
 
 ## Short description of the subject
 
@@ -54,6 +55,9 @@ Now the given input i.e. `cat <<eof >file1 && cat file1 && abc || wc <file1 | ca
 | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |
 | `cat` | `<<eof` | `>file1` | `&&` | `cat` | `file1` | `&&` | `abc` | `\|\|` | `wc` | `<file1` | `\|` | `cat` | `>file2` |
 
+[back to Contents](https://github.com/toni-schmitt/minishell#contents)
+[back to basic structure](https://github.com/toni-schmitt/minishell#the-basic-functionalities-of-the-project)
+
 ----------
 
 ### Parser
@@ -73,16 +77,19 @@ typedef struct s_parser_tok
 }	t_par_tok;
 ```
 So after the syntax-check the parser is able to get the command and its arguments as well as the redirections connected to the command.<br>
+[back to Contents](https://github.com/toni-schmitt/minishell#contents)
 [back to basic structure](https://github.com/toni-schmitt/minishell#the-basic-functionalities-of-the-project)
 
 ----------
 
 ### Expander
+[back to Contents](https://github.com/toni-schmitt/minishell#contents)
 [back to basic structure](https://github.com/toni-schmitt/minishell#the-basic-functionalities-of-the-project)
 
 ----------
 
 ### Executor
+[back to Contents](https://github.com/toni-schmitt/minishell#contents)
 [back to basic structure](https://github.com/toni-schmitt/minishell#the-basic-functionalities-of-the-project)
 
 ----------
@@ -91,4 +98,5 @@ So after the syntax-check the parser is able to get the command and its argument
 
 wrong syntax:<br>
 If some form of wrong syntax gets detected, `Invalid Syntax` is printed and the error value `$?` is set to `258`<br>
-![syntax_error](https://github.com/toni-schmitt/minishell/blob/main/readme_additions/syntax_error.jpg)
+![syntax_error](https://github.com/toni-schmitt/minishell/blob/main/readme_additions/syntax_error.jpg)<br>
+[back to Contents](https://github.com/toni-schmitt/minishell#contents)
