@@ -10,7 +10,8 @@
   - [Expander](https://github.com/toni-schmitt/minishell#expander)
   - [Executor](https://github.com/toni-schmitt/minishell#executor)
 - [Examples](https://github.com/toni-schmitt/minishell#some-example-outputs)
-  - [syntax error](https://github.com/toni-schmitt/minishell#wrong-syntax) 
+  - [wrong syntax](https://github.com/toni-schmitt/minishell#wrong-syntax)
+  - [invalid command](https://github.com/toni-schmitt/minishell#invalid-command)
 
 ## Short description of the subject
 
