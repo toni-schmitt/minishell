@@ -88,6 +88,7 @@ So after the syntax-check the parser is able to get the command and its argument
 The expander will take the parser tokens as argument.<br>
 The expander will interprete the environment variables into their corresponding value.<br>
 It also handles subshells, creates pipes and handles all the opening of input-/output-redirections and storing the correct ones in the executor tokens.<br>
+Subshells are executed by creating a child process which runs minishell without readline reading the input, but directly handing the correct, unparsed commands to it. And after the lexer is done, it will call the parser and so on.<br>
 After passing every of those parts without errors, it calls the executor in a loop and gives the executor the correct values to work with.<br>
 After a call of the executor, an error value, similar to errno, is set to the exit code of the executor.<br>
 This error value can be checked by running `echo $?` and is used for the `&&` and `||` logic.<br><br>
