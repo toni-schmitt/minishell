@@ -16,9 +16,9 @@
 ## Short description of the subject
 
 The goal of the subject was to recreate some of the functionalities of bash (Version 3.2).<br>
-To see the exact requirements, check Chapter III and IV of the [subject pdf](https://github.com/toni-schmitt/minishell/blob/main/readme_additions/en.subject.pdf).<br>
+To see the exact requirements, check Chapter III and IV of the subject pdf.<br>
 If you find any problems with our minishell, [here](https://github.com/toni-schmitt/minishell/issues/new/choose) is the possibility to open an issue.<br>
-## From the [subject pdf](https://github.com/toni-schmitt/minishell/blob/main/readme_additions/en.subject.pdf)
+## From the subject pdf
 ### Introduction
 ```
 The existence of shells is linked to the very existence of IT. At the time, all coders agreed
@@ -30,7 +30,7 @@ With Minishell, you’ll be able to travel through time and come back to problem
 people faced when Windows didn’t exist.
 ```
 ### Some of the restrictions
-![subject_restrctions](https://github.com/toni-schmitt/minishell/blob/main/readme_additions/minishell_from_subject_pdf.jpg)
+![subject_restrictions](https://github.com/toni-schmitt/minishell/blob/main/readme_additions/minishell_from_subject_pdf.jpg)
 
 ## Our Minishell
 ### The basic functionalities of the project
